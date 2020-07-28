@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "now-playing",
+  "version": "${version}",
+  "name": "Now Playing",
+  "description": "Shows a 'now playing' popup whenever music changes.",
+  "authors": [
+    "AppleTheGolden"
+  ],
+  "contact": {
+    "sources": "https://github.com/Scotsguy/now-playing"
+  },
+  "license": "MIT",
+  "icon": "assets/now_playing/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.github.scotsguy.nowplaying.NowPlaying"
+    ]
+  },
+  "mixins": [
+    "now-playing.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.9.0",
+    "minecraft": "1.16.x",
+    "fabric-resource-loader-v0": "*"
+  }
+}
