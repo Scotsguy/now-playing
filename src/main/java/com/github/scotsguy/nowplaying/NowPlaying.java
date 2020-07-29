@@ -1,5 +1,7 @@
 package com.github.scotsguy.nowplaying;
 
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -8,13 +10,6 @@ import net.fabricmc.api.Environment;
 public class NowPlaying implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        /*
-        MinecraftClient client = MinecraftClient.getInstance();
-        SoundManager manager = client.getSoundManager();
-        SoundSystem soundSystem = ((SoundManagerAccessor) manager).getSoundSystem();
-        SoundInstanceListener listener = new NowPlayingListener();
-        soundSystem.registerListener(new NowPlayingListener());
-
-         */
+        AutoConfig.register(NowPlayingConfig.class, JanksonConfigSerializer::new);
     }
 }

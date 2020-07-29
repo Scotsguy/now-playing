@@ -11,11 +11,16 @@ import net.minecraft.text.TranslatableText;
 
 public class NowPlayingToast implements Toast {
     private final Text description;
+    private final ItemStack itemStack;
     private boolean justUpdated;
     private long startTime;
 
     public NowPlayingToast(Text description) {
+        this(description, new ItemStack(Items.MUSIC_DISC_CAT));
+    }
+    public NowPlayingToast(Text description, ItemStack itemStack) {
         this.description = description;
+        this.itemStack = itemStack;
     }
 
     @Override
@@ -25,7 +30,6 @@ public class NowPlayingToast implements Toast {
         manager.drawTexture(matrices, 0, 0, 0, 32, this.method_29049(), this.method_29050());
         manager.getGame().textRenderer.draw(matrices, new TranslatableText("now_playing.toast.now_playing"), 30.0F, 7.0F, -11534256);
         manager.getGame().textRenderer.draw(matrices, this.description, 30.0F, 18.0F, -16777216);
-        ItemStack itemStack = new ItemStack(Items.MUSIC_DISC_CAT);
         matrices.push();
         manager.getGame().getItemRenderer().renderInGui(itemStack, 9, 8);
         matrices.pop();

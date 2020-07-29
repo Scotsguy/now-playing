@@ -3,7 +3,9 @@
   "package": "com.github.scotsguy.nowplaying.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "SubtitlesHudMixin"
+    "MinecraftClientMixin",
+    "MusicDiscItemAccessor",
+    "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
