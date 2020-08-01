@@ -22,7 +22,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 
 version = "${mod_version}"
 group = maven_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "${archives_base_name}-${minecraft_version}"
+archivesBaseName = "${archives_base_name}-forge-"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
