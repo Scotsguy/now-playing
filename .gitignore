@@ -3,5 +3,5 @@
 out
 build
 run
-
+logs
 *.iml

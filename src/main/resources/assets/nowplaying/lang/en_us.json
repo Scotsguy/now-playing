@@ -1,18 +1,6 @@
 {
   "now_playing.toast.now_playing": "Now Playing:",
 
-  "text.autoconfig.now-playing.title": "Now Playing Config",
-
-  "text.autoconfig.now-playing.option.musicStyle": "Notification Style (Music)",
-  "text.autoconfig.now-playing.option.musicStyle.@Tooltip": "How the 'Now Playing' notification should be displayed when music plays normally.",
-
-  "text.autoconfig.now-playing.option.jukeboxStyle": "Notification Style (Jukebox)",
-  "text.autoconfig.now-playing.option.jukeboxStyle.@Tooltip": "How the 'Now Playing' notification should be displayed when music plays from a jukebox.",
-
-  "now_playing.config.style.hotbar": "Hotbar",
-  "now_playing.config.style.toast": "Toast",
-  "now_playing.config.style.disabled": "Disabled",
-
   "now_playing.sound.minecraft:music/game/calm1": "C418 - Minecraft",
   "now_playing.sound.minecraft:music/game/calm2": "C418 - Clark",
   "now_playing.sound.minecraft:music/game/calm3": "C418 - Sweden",
