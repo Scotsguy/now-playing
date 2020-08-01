@@ -17,10 +17,8 @@ apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.matthewprenger.cursegradle'
 
-plugins{
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
-}
 
 version = "${mod_version}"
 group = maven_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
