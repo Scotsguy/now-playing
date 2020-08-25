@@ -27,7 +27,7 @@ public class NowPlayingToast implements Toast {
     public Visibility draw(MatrixStack matrices, ToastManager manager, long startTime) {
         manager.getGame().getTextureManager().bindTexture(TOASTS_TEX);
         RenderSystem.color3f(1.0F, 1.0F, 1.0F);
-        manager.drawTexture(matrices, 0, 0, 0, 32, this.method_29049(), this.method_29050());
+        manager.drawTexture(matrices, 0, 0, 0, 32, this.getWidth(), this.getHeight());
         manager.getGame().textRenderer.draw(matrices, new TranslatableText("now_playing.toast.now_playing"), 30.0F, 7.0F, -11534256);
         manager.getGame().textRenderer.draw(matrices, this.description, 30.0F, 18.0F, -16777216);
         matrices.push();

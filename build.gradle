@@ -22,10 +22,14 @@ dependencies {
 
     include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_version)))
 
-    include(modApi("me.shedaniel.cloth:config-2:4.6.0"))
+    include(modApi("me.shedaniel.cloth:config-2:4.6.0") {
+        exclude module:"fabric-api"
+    })
     include(modImplementation("me.sargunvohra.mcmods:autoconfig1u:3.2.0-unstable"))
 
-    modImplementation "io.github.prospector:modmenu:1.14.5+build.30"
+    modImplementation("io.github.prospector:modmenu:1.14.6+build.31") {
+        exclude module:"fabric-api"
+    }
 }
 
 processResources {
