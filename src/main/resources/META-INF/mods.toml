@@ -14,15 +14,8 @@ authors="AppleTheGolden, JayJay1989BE"
 description="Shows a 'now playing' popup whenever a song starts to play."
 
 [[dependencies.nowplaying]]
-    modId="forge"
-    mandatory=true
-    versionRange="[33,)"
-    ordering="NONE"
-    side="CLIENT"
-
-[[dependencies.nowplaying]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.2]"
+    versionRange="[1.16.3,)"
     ordering="NONE"
     side="CLIENT"

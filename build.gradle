@@ -76,7 +76,7 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compile 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
+    compile 'org.spongepowered:mixin:0.8.+'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
