@@ -1,7 +1,7 @@
 package com.github.scotsguy.nowplaying.mixin;
 
 import com.github.scotsguy.nowplaying.NowPlayingConfig;
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.text.Text;

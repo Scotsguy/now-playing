@@ -1,7 +1,7 @@
 package com.github.scotsguy.nowplaying;
 
-import com.github.scotsguy.nowplaying.mixin.MusicDiscItemAccessor;
 import com.mojang.datafixers.kinds.IdF;
+import com.github.scotsguy.nowplaying.mixin.MusicDiscItemAccessor;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.client.sound.WeightedSoundSet;
 import net.minecraft.item.MusicDiscItem;
