@@ -1,12 +1,12 @@
 {
   "required": true,
   "package": "com.github.scotsguy.nowplaying.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_16",
   "refmap": "main.nowplaying.refmap.json",
   "mixins": [
-    "MinecraftClientMixin",
-    "MusicDiscItemAccessor",
-    "WorldRendererMixin"
+    "MinecraftMixin",
+    "RecordItemAccessor",
+    "LevelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

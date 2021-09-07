@@ -1,33 +1,38 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
-        maven { url = 'https://plugins.gradle.org/m2/' }
+        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+        maven { url = "https://maven.minecraftforge.net" }
+        maven { url = "https://sizableshrimp.me/maven" }
+        maven { url = "https://maven.parchmentmc.org" }
+        maven { url = "https://plugins.gradle.org/m2/" }
+        mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        classpath group: 'org.spongepowered', name:'mixingradle', version: '0.7-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+        classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.matthewprenger.cursegradle'
-
 
 version = "${mod_version}"
 group = maven_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${archives_base_name}"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(16))
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: "snapshot", version: "${mmc_version}"
+    mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -36,7 +41,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-            arg "-mixin.config=nowplaying.mixins.json"
+            arg "-mixin.config=" + modid + ".mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 nowplaying {
                     source sourceSets.main
@@ -48,6 +55,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+            arg "-mixin.config=" + modid + ".mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 nowplaying {
                     source sourceSets.main
@@ -59,6 +69,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+            arg "-mixin.config=" + modid + ".mixins.json"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args '--mod', 'nowplaying', '--all', '--output', file('src/generated/resources/')
             mods {
                 nowplaying {
@@ -69,14 +82,21 @@ minecraft {
     }
 }
 
+configurations {
+    library
+    implementation.extendsFrom library
+}
+
 repositories {
-    maven { url = 'https://dist.creeper.host/Sponge/maven' }
-    maven { url = 'https://maven.tterrag.com/' }
+    maven { // Mixins for early 1.17
+        url 'https://repo.spongepowered.org/repository/maven-public/'
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compile 'org.spongepowered:mixin:0.8.+'
+    library 'org.spongepowered:mixin:0.8.4-SNAPSHOT'
+    annotationProcessor 'org.spongepowered:mixin:0.8.4-SNAPSHOT:processor'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -90,7 +110,7 @@ jar {
                 "Implementation-Version": "${version}",
                 "Implementation-Vendor" :"AppleTheGolden, JayJay1989BE",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "nowplaying.mixins.json"
+                "MixinConfigs": "${modid}.mixins.json"
         ])
     }
 }
@@ -133,7 +153,6 @@ curseforge {
     }
 }
 
-
 // configure the maven publication
 publishing {
     publications {
@@ -148,6 +167,17 @@ publishing {
     }
 }
 
+minecraft.runs.all {
+    lazyToken('minecraft_classpath') {
+        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+    }
+}
+afterEvaluate {
+    configurations.compileClasspath.resolvedConfiguration.firstLevelModuleDependencies.each { dep ->
+        dependencies.annotationProcessor([group: dep.moduleGroup, name: dep.moduleName, version: dep.moduleVersion])
+    }
+}
+
 mixin {
-    add sourceSets.main, "main.nowplaying.refmap.json"
+    add sourceSets.main, "main.${modid}.refmap.json"
 }

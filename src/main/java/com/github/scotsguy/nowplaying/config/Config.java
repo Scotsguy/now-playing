@@ -9,6 +9,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.nio.file.Path;
 
@@ -40,13 +41,12 @@ public class Config {
     }
 
     @SubscribeEvent
-    public static void onLoad(ModConfig.Loading configEvent) {
+    public static void onLoad(ModConfigEvent.Loading configEvent) {
         NowPlaying.LOGGER.debug("Loaded {} config file {}", NowPlaying.MODID, configEvent.getConfig().getFileName());
-
     }
 
     @SubscribeEvent
-    public static void onFileChange(ModConfig.Reloading configEvent) {
+    public static void onFileChange(ModConfigEvent.Reloading configEvent) {
         NowPlaying.LOGGER.fatal(CORE, "{} config just got changed on the file system!", NowPlaying.MODID);
     }
 

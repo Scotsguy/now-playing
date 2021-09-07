@@ -1,11 +1,9 @@
 package com.github.scotsguy.nowplaying.mixin;
 
 import com.github.scotsguy.nowplaying.NowPlayingListener;
-
-import net.minecraft.client.GameConfiguration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
-
+import net.minecraft.client.main.GameConfig;
+import net.minecraft.client.sounds.SoundManager;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
-public class MinecraftClientMixin {
+public class MinecraftMixin {
     @Shadow @Final
-    private SoundHandler soundManager;
+    private SoundManager soundManager;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    void registerSoundInstanceListener(GameConfiguration gameConfig, CallbackInfo ci) {
-        soundManager.registerListener(new NowPlayingListener());
+    void registerSoundInstanceListener(GameConfig gameConfig, CallbackInfo ci) {
+        soundManager.addListener(new NowPlayingListener());
     }
 }
