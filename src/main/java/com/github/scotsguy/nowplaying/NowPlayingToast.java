@@ -31,10 +31,10 @@ public class NowPlayingToast implements Toast {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         manager.drawTexture(matrices, 0, 0, 0, 32, this.getWidth(), this.getHeight());
-        manager.getGame().textRenderer.draw(matrices, new TranslatableText("now_playing.toast.now_playing"), 30.0F, 7.0F, -11534256);
-        manager.getGame().textRenderer.draw(matrices, this.description, 30.0F, 18.0F, -16777216);
+        manager.getClient().textRenderer.draw(matrices, new TranslatableText("now_playing.toast.now_playing"), 30.0F, 7.0F, -11534256);
+        manager.getClient().textRenderer.draw(matrices, this.description, 30.0F, 18.0F, -16777216);
         matrices.push();
-        manager.getGame().getItemRenderer().renderInGui(itemStack, 9, 8);
+        manager.getClient().getItemRenderer().renderInGui(itemStack, 9, 8);
         matrices.pop();
 
         return startTime - this.startTime >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
