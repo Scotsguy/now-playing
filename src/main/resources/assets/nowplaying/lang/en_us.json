@@ -1,6 +1,18 @@
 {
   "now_playing.toast.now_playing": "Now Playing:",
 
+  "text.autoconfig.now-playing.title": "Now Playing Config",
+
+  "text.autoconfig.now-playing.option.musicStyle": "Notification Style (Music)",
+  "text.autoconfig.now-playing.option.musicStyle.@Tooltip": "How the 'Now Playing' notification should be displayed when music plays normally.",
+
+  "text.autoconfig.now-playing.option.jukeboxStyle": "Notification Style (Jukebox)",
+  "text.autoconfig.now-playing.option.jukeboxStyle.@Tooltip": "How the 'Now Playing' notification should be displayed when music plays from a jukebox.",
+
+  "now_playing.config.style.hotbar": "Hotbar",
+  "now_playing.config.style.toast": "Toast",
+  "now_playing.config.style.disabled": "Disabled",
+
   "now_playing.sound.minecraft:music/game/calm1": "C418 - Minecraft",
   "now_playing.sound.minecraft:music/game/calm2": "C418 - Clark",
   "now_playing.sound.minecraft:music/game/calm3": "C418 - Sweden",
@@ -27,6 +39,15 @@
   "now_playing.sound.minecraft:music/game/water/shuniji": "C418 - Shuniji",
   "now_playing.sound.minecraft:music/game/water/axolotl": "C418 - Axolotl",
   "now_playing.sound.minecraft:music/game/water/dragon_fish": "C418 - Dragon Fish",
+
+  "now_playing.sound.minecraft:music/game/an_ordinary_day": "Kumi Tanioka - An Ordinary Day",
+  "now_playing.sound.minecraft:music/game/comforting_memories": "Kumi Tanioka - Comforting Memories",
+  "now_playing.sound.minecraft:music/game/floating_dream": "Kumi Tanioka - Floating Dream",
+  "now_playing.sound.minecraft:music/game/infinite_amethyst": "Lena Raine - Infinite Amethyst",
+  "now_playing.sound.minecraft:music/game/left_to_bloom": "Lena Raine - Left to Bloom",
+  "now_playing.sound.minecraft:music/game/one_more_day": "Lena Raine - One More Day",
+  "now_playing.sound.minecraft:music/game/stand_tall": "Lena Raine - Stand Tall",
+  "now_playing.sound.minecraft:music/game/wending": "Lena Raine - Wending",
 
   "now_playing.sound.minecraft:music/game/nether/nether1": "C418 - Concrete Halls",
   "now_playing.sound.minecraft:music/game/nether/nether2": "C418 - Dead Voxel",

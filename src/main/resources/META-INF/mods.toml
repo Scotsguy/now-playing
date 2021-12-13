@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[33,)"
+loaderVersion="[39,)"
 issueTrackerURL="https://github.com/Scotsguy/now-playing/issues"
 license="MIT"
 
@@ -16,6 +16,6 @@ description="Shows a 'now playing' popup whenever a song starts to play."
 [[dependencies.nowplaying]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.17.1,)"
+    versionRange="[1.18,)"
     ordering="NONE"
     side="CLIENT"

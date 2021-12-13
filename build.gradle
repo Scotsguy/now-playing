@@ -28,7 +28,7 @@ version = "${mod_version}"
 group = maven_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${archives_base_name}"
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(16))
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
@@ -95,8 +95,8 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    library 'org.spongepowered:mixin:0.8.4-SNAPSHOT'
-    annotationProcessor 'org.spongepowered:mixin:0.8.4-SNAPSHOT:processor'
+    library 'org.spongepowered:mixin:0.8.5-SNAPSHOT'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5-SNAPSHOT:processor'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
