@@ -15,10 +15,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.github.scotsguy.nowplaying.NowPlaying"
+      "com.github.scotsguy.nowplaying.fabric.NowPlayingFabric"
     ],
     "modmenu": [
-      "com.github.scotsguy.nowplaying.ModMenuIntegration"
+      "com.github.scotsguy.nowplaying.fabric.ModMenuIntegration"
     ]
   },
   "mixins": [

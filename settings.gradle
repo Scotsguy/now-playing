@@ -8,6 +8,18 @@ pluginManagement {
             name = 'Cotton'
             url = 'https://server.bbkr.space/artifactory/libs-release/'
         }
+        maven {
+            name = 'Architectury'
+            url = "https://maven.architectury.dev/" }
+        maven {
+            name = 'Forge'
+            url = "https://maven.minecraftforge.net/" }
         gradlePluginPortal()
     }
 }
+
+include("common")
+include("fabric")
+include("forge")
+
+rootProject.name = "now-playing"

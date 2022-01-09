@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[39,)"
+issueTrackerURL="https://github.com/Scotsguy/now-playing/issues"
+license="MIT"
+
+[[mods]]
+modId="nowplaying"
+version="${version}"
+displayName="Now Playing"
+displayURL="https://github.com/Scotsguy/now-playing"
+logoFile="nowplaying.png"
+credits="Thanks to the Forge Team for their work"
+authors="AppleTheGolden, JayJay1989BE"
+description="Shows a 'now playing' popup whenever a song starts to play."
+
+[[dependencies.nowplaying]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18,)"
+ordering="NONE"
+side="CLIENT"

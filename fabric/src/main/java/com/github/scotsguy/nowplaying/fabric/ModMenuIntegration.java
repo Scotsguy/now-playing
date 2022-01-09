@@ -1,5 +1,6 @@
-package com.github.scotsguy.nowplaying;
+package com.github.scotsguy.nowplaying.fabric;
 
+import com.github.scotsguy.nowplaying.NowPlayingConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
