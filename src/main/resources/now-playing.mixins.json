@@ -3,15 +3,13 @@
   "package": "com.github.scotsguy.nowplaying.mixin",
   "compatibilityLevel": "JAVA_16",
   "client": [
-    "MinecraftClientMixin",
-    "MusicDiscItemAccessor",
-    "ToastManagerEntryMixin",
-    "WorldRendererMixin"
+    "MinecraftMixin",
+    "RecordItemAccessor",
+    "ToastInstanceMixin",
+    "LevelRendererMixin",
+    "ToastVisibilityAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": [
-    "ToastVisibilityAccessor"
-  ]
+  }
 }

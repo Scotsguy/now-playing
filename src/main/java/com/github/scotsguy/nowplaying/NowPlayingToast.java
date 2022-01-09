@@ -1,41 +1,41 @@
 package com.github.scotsguy.nowplaying;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.toast.Toast;
-import net.minecraft.client.toast.ToastManager;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class NowPlayingToast implements Toast {
-    private final Text description;
+    private final Component description;
     private final ItemStack itemStack;
     private boolean justUpdated;
     private long startTime;
 
-    public NowPlayingToast(Text description) {
+    public NowPlayingToast(Component description) {
         this(description, new ItemStack(Items.MUSIC_DISC_CAT));
     }
-    public NowPlayingToast(Text description, ItemStack itemStack) {
+    public NowPlayingToast(Component description, ItemStack itemStack) {
         this.description = description;
         this.itemStack = itemStack;
     }
 
     @Override
-    public Visibility draw(MatrixStack matrices, ToastManager manager, long startTime) {
+    public Visibility render(PoseStack matrices, ToastComponent manager, long startTime) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, TEXTURE);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        manager.drawTexture(matrices, 0, 0, 0, 32, this.getWidth(), this.getHeight());
-        manager.getClient().textRenderer.draw(matrices, new TranslatableText("now_playing.toast.now_playing"), 30.0F, 7.0F, -11534256);
-        manager.getClient().textRenderer.draw(matrices, this.description, 30.0F, 18.0F, -16777216);
-        matrices.push();
-        manager.getClient().getItemRenderer().renderInGui(itemStack, 9, 8);
-        matrices.pop();
+        manager.blit(matrices, 0, 0, 0, 32, this.width(), this.height());
+        manager.getMinecraft().font.draw(matrices, new TranslatableComponent("now_playing.toast.now_playing"), 30.0F, 7.0F, -11534256);
+        manager.getMinecraft().font.draw(matrices, this.description, 30.0F, 18.0F, -16777216);
+        matrices.pushPose();
+        manager.getMinecraft().getItemRenderer().renderAndDecorateFakeItem(itemStack, 9, 8);
+        matrices.popPose();
 
         return startTime - this.startTime >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
     }
