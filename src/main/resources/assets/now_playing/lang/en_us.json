@@ -9,6 +9,9 @@
   "text.autoconfig.now-playing.option.jukeboxStyle": "Notification Style (Jukebox)",
   "text.autoconfig.now-playing.option.jukeboxStyle.@Tooltip": "How the 'Now Playing' notification should be displayed when music plays from a jukebox.",
 
+  "text.autoconfig.now-playing.option.silenceWoosh": "Silent Notifications",
+  "text.autoconfig.now-playing.option.silenceWoosh.@Tooltip": "Whether the 'Now Playing' notification should be silent.",
+
   "now_playing.config.style.hotbar": "Hotbar",
   "now_playing.config.style.toast": "Toast",
   "now_playing.config.style.disabled": "Disabled",

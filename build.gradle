@@ -13,8 +13,6 @@ group = project.maven_group
 
 repositories {
     maven { url "https://maven.shedaniel.me/" }
-    // Backup for Terraformers'
-    maven { url "https://maven.kotlindiscord.com/repository/terraformers/" }
     maven { url "https://maven.terraformersmc.com" }
 }
 
@@ -26,7 +24,7 @@ dependencies {
     //include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_version)))
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    include(modApi("me.shedaniel.cloth:cloth-config-fabric:6.0.45") {
+    include(modApi("me.shedaniel.cloth:cloth-config-fabric:6.1.48") {
         exclude module:"fabric-api"
     })
 

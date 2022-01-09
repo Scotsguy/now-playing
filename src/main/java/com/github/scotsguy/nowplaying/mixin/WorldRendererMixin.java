@@ -17,6 +17,5 @@ public class WorldRendererMixin {
         if (config.jukeboxStyle == NowPlayingConfig.Style.Hotbar) {
             inGameHud.setRecordPlayingOverlay(text);
         }
-
     }
 }

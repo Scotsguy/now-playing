@@ -17,6 +17,9 @@ public class NowPlayingConfig implements ConfigData {
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     public Style jukeboxStyle = Style.Hotbar;
 
+    @ConfigEntry.Gui.Tooltip
+    public boolean silenceWoosh = false;
+
     public enum Style implements SelectionListEntry.Translatable {
         Hotbar {
             @Override

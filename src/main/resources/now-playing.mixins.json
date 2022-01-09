@@ -5,9 +5,13 @@
   "client": [
     "MinecraftClientMixin",
     "MusicDiscItemAccessor",
+    "ToastManagerEntryMixin",
     "WorldRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+    "ToastVisibilityAccessor"
+  ]
 }
