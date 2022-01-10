@@ -22,15 +22,14 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: ${{ success() }}
         with:
-          files: build/libs/*.jar
+          files: release/*.jar
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release to CurseForge
-        uses: eskatos/gradle-command-action@v1.3.2
+        uses: gradle/gradle-build-action@v2
         if: ${{ success() }}
         with:
-          gradle-version: wrapper
-          arguments: curseforge --stacktrace
+          arguments: :fabric:curseforge :forge:curseforge --stacktrace
         env:
           CURSE_API_KEY: ${{ secrets.CURSE_API_KEY }}

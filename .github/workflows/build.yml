@@ -24,9 +24,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Fabric
-          path: fabric/build/libs/*.jar
+          path: |
+          fabric/build/libs/*.jar
+          release/now-playing-fabric*.jar
       - name: Upload Forge Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Forge
-          path: forge/build/libs/*.jar
+          path: |
+          forge/build/libs/*.jar
+          release/now-playing-forge*.jar
