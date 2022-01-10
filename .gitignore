@@ -1,7 +1,8 @@
 .gradle
 .idea
+.vscode
 out
 build
 run
-
+.architectury-transformer
 *.iml

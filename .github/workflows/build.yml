@@ -17,11 +17,16 @@ jobs:
         with:
           java-version: 17
       - name: Build
-        uses: eskatos/gradle-command-action@v1.3.2
+        uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: wrapper
           arguments: build --stacktrace
-      - name: Upload Artifacts
+      - name: Upload Fabric Artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: build/libs/*.jar
+          name: Fabric
+          path: fabric/build/libs/*.jar
+      - name: Upload Forge Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Forge
+          path: forge/build/libs/*.jar

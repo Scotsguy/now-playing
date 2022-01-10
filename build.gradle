@@ -13,9 +13,14 @@ architectury {
 subprojects {
     apply plugin: "dev.architectury.loom"
     apply plugin: 'io.github.juuxel.loom-quiltflower-mini'
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+    apply plugin: "maven-publish"
 
-    loom {
-        silentMojangMappingsLicense()
+    repositories {
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.terraformersmc.com" }
+        maven { url "https://maven.parchmentmc.org" }
     }
 
     dependencies {
@@ -25,26 +30,18 @@ subprojects {
             parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}@zip")
         }
     }
-}
-
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
 
     archivesBaseName = rootProject.archives_base_name
     version = rootProject.mod_version
     group = rootProject.maven_group
 
-    repositories {
-        maven { url "https://maven.shedaniel.me/" }
-        maven { url "https://maven.terraformersmc.com" }
-        maven { url "https://maven.parchmentmc.org" }
-    }
-
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
         options.release = 17
+    }
+
+    loom {
+        silentMojangMappingsLicense()
     }
 
     java {

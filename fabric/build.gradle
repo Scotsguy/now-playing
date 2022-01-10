@@ -40,6 +40,8 @@ processResources {
     }
 }
 
+archivesBaseName += "-fabric"
+
 shadowJar {
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"

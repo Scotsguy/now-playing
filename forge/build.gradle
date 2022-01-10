@@ -2,8 +2,6 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
-
-
 architectury {
     platformSetupLoomIde()
     forge()
@@ -28,7 +26,8 @@ dependencies {
 
 loom {
     forge {
-        mixinConfig "now-playing.mixins.json"
+        mixinConfig "now-playing.mixins.common.json"
+        mixinConfig "now-playing.mixins.forge.json"
     }
 }
 
@@ -39,6 +38,8 @@ processResources {
         expand "version": project.version
     }
 }
+
+archivesBaseName += "-forge"
 
 shadowJar {
     exclude "fabric.mod.json"
