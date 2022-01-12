@@ -19,3 +19,5 @@ mandatory=true
 versionRange="[1.18,)"
 ordering="NONE"
 side="CLIENT"
+
+# TODO: config dependency

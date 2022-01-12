@@ -8,7 +8,6 @@ pluginManagement {
             name = 'Cotton'
             url = 'https://server.bbkr.space/artifactory/libs-release/'
         }
-        maven { url 'https://maven.buildserver.be/releases'} // Backup for Architectury
         maven {
             name = 'Architectury'
             url = "https://maven.architectury.dev/" }
@@ -18,6 +17,8 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+enableFeaturePreview('VERSION_CATALOGS')
 
 include("common")
 include("fabric")

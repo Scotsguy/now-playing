@@ -1,13 +1,13 @@
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "0.10.0-SNAPSHOT" apply false
-    id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1' apply false
-    id 'com.matthewprenger.cursegradle' version '1.4.0' apply false
+    alias(libs.plugins.architectury)
+    alias(libs.plugins.loom) apply false
+    alias(libs.plugins.quiltflower) apply false
+    alias(libs.plugins.cursegradle) apply false
 
 }
 
 architectury {
-    minecraft = rootProject.minecraft_version
+    minecraft = libs.versions.minecraft.get()
 }
 
 subprojects {
@@ -25,10 +25,10 @@ subprojects {
     }
 
     dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        minecraft libs.minecraft
         mappings loom.layered() {
             officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:${rootProject.parchment_version}@zip")
+            parchment("org.parchmentmc.data:parchment-${libs.versions.minecraft.get()}:${libs.versions.parchment.get()}@zip")
         }
     }
 

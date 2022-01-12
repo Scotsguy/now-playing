@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    alias(libs.plugins.shadow)
 }
 
 architectury {
@@ -16,9 +16,9 @@ configurations {
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
+    forge "net.minecraftforge:forge:${libs.versions.minecraft.get()}-${libs.versions.forge.get()}"
 
-    modApi("me.shedaniel.cloth:cloth-config-forge:6.1.48")
+    modApi libs.cloth.forge
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
@@ -83,7 +83,7 @@ curseforge {
     project {
         id = project.curseforge_id
         releaseType = 'release'
-        addGameVersion project.minecraft_version
+        addGameVersion libs.versions.minecraft.get()
         addGameVersion 'Forge'
         setChangelog 'For the changelog, please see https://github.com/Scotsguy/now-playing/releases'
         mainArtifact(remapJar) {
