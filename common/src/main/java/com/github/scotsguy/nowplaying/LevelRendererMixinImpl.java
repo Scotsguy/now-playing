@@ -1,4 +1,4 @@
-package com.github.scotsguy.nowplaying.mixin;
+package com.github.scotsguy.nowplaying;
 
 import com.github.scotsguy.nowplaying.NowPlayingConfig;
 import me.shedaniel.autoconfig.AutoConfig;

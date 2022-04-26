@@ -1,6 +1,6 @@
 package com.github.scotsguy.nowplaying.fabric.mixin;
 
-import com.github.scotsguy.nowplaying.mixin.LevelRendererMixinImpl;
+import com.github.scotsguy.nowplaying.LevelRendererMixinImpl;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.network.chat.Component;
