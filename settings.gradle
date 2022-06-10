@@ -10,10 +10,12 @@ pluginManagement {
         }
         maven {
             name = 'Architectury'
-            url = "https://maven.architectury.dev/" }
+            url = "https://maven.architectury.dev/"
+        }
         maven {
             name = 'Forge'
-            url = "https://maven.minecraftforge.net/" }
+            url = "https://maven.minecraftforge.net/"
+        }
         gradlePluginPortal()
     }
 }
@@ -22,6 +24,7 @@ enableFeaturePreview('VERSION_CATALOGS')
 
 include("common")
 include("fabric")
+include("quilt")
 include("forge")
 
 rootProject.name = "now-playing"

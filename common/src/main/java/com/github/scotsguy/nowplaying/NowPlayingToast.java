@@ -8,7 +8,6 @@ import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -63,7 +62,7 @@ public class NowPlayingToast implements Toast {
             this.renderBackgroundRow(poseStack, manager, width, 32 - m, height - m, m);
         }
         // Draw "Now Playing"
-        manager.getMinecraft().font.draw(poseStack, new TranslatableComponent("now_playing.toast.now_playing"), TEXT_LEFT_MARGIN, 7.0F, -11534256);
+        manager.getMinecraft().font.draw(poseStack, Component.translatable("now_playing.toast.now_playing"), TEXT_LEFT_MARGIN, 7.0F, -11534256);
 
         // Draw song title
         for (int i = 0; i < textLines.size(); ++i) {

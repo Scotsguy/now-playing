@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.loom) apply false
     alias(libs.plugins.quiltflower) apply false
     alias(libs.plugins.cursegradle) apply false
-
 }
 
 architectury {
@@ -13,36 +12,44 @@ architectury {
 subprojects {
     apply plugin: "dev.architectury.loom"
     apply plugin: 'io.github.juuxel.loom-quiltflower'
+
+    dependencies {
+        minecraft libs.minecraft
+        if (libs.versions.useParchment.get() == "1") {
+            mappings loom.layered() {
+                officialMojangMappings()
+                parchment("org.parchmentmc.data:parchment-${libs.versions.minecraft.get()}:${libs.versions.parchment.get()}@zip")
+            }
+        } else {
+            mappings loom.officialMojangMappings()
+        }
+    }
+
+    loom {
+        silentMojangMappingsLicense()
+    }
+}
+
+allprojects {
     apply plugin: "java"
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
     apply plugin: "com.matthewprenger.cursegradle"
 
-    repositories {
-        maven { url "https://maven.shedaniel.me/" }
-        maven { url "https://maven.terraformersmc.com" }
-        maven { url "https://maven.parchmentmc.org" }
-    }
-
-    dependencies {
-        minecraft libs.minecraft
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${libs.versions.minecraft.get()}:${libs.versions.parchment.get()}@zip")
-        }
-    }
-
     archivesBaseName = rootProject.archives_base_name
     version = rootProject.mod_version
     group = rootProject.maven_group
 
+    repositories {
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.terraformersmc.com" }
+        maven { url "https://maven.parchmentmc.org" }
+        maven { url "https://maven.quiltmc.org/repository/release/" }
+    }
+
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
         options.release = 17
-    }
-
-    loom {
-        silentMojangMappingsLicense()
     }
 
     java {

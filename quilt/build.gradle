@@ -4,7 +4,7 @@ plugins {
 
 architectury {
     platformSetupLoomIde()
-    fabric()
+    loader("quilt")
 }
 
 configurations {
@@ -12,16 +12,17 @@ configurations {
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
-    developmentFabric.extendsFrom common
+    developmentQuilt.extendsFrom common
 }
 
 dependencies {
-    modImplementation libs.fabric.loader
-    modApi libs.fabric.api
+    modImplementation libs.quilt.loader
+    modApi libs.quilt.api
 
     modApi(libs.cloth.fabric) {
         exclude module:"fabric-api"
     }
+
     include libs.cloth.fabric
 
     modImplementation(libs.modmenu) {
@@ -29,29 +30,33 @@ dependencies {
     }
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionQuilt")) { transitive false }
 }
 
 processResources {
+    inputs.property "group", rootProject.maven_group
     inputs.property "version", project.version
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
+    filesMatching("quilt.mod.json") {
+        expand "group": rootProject.maven_group,
+                "version": project.version
     }
 }
 
-archivesBaseName += "-fabric"
+archivesBaseName += "-quilt"
 
 shadowJar {
+    exclude "architectury.common.json"
+
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
 }
 
 remapJar {
+    injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
     classifier null
-    destinationDirectory.set(new File(rootDir, "release"))
 }
 
 jar {
@@ -83,16 +88,17 @@ curseforge {
         id = project.curseforge_id
         releaseType = 'release'
         addGameVersion libs.versions.minecraft.get()
-        addGameVersion 'Fabric'
+        addGameVersion 'Quilt'
         setChangelog 'For the changelog, please see https://github.com/Scotsguy/now-playing/releases'
         mainArtifact(remapJar) {
             displayName = "v$project.version"
             relations {
-                requiredDependency 'fabric-api'
+                requiredDependency 'quilt-api'
                 embeddedLibrary 'cloth-config'
             }
         }
     }
+
 
     options {
         forgeGradleIntegration = false
@@ -113,3 +119,4 @@ publishing {
         // Add repositories to publish to here.
     }
 }
+
