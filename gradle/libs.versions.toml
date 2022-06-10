@@ -13,11 +13,11 @@ quilt-loader = "0.16.0"
 quilt-fabric-api = "1.0.0-beta.13+0.51.1-1.18.2"
 
 # See https://maven.shedaniel.me/me/shedaniel/cloth/cloth-config/
-cloth-config = "6.2.57"
+cloth-config = "7.0.69"
 # See https://github.com/TerraformersMC/ModMenu/releases
-modmenu = "3.1.0"
+modmenu = "4.0.0"
 
-architectury = "4.1.32"
+architectury = "5.6.22"
 architectury-plugin = "3.4-SNAPSHOT"
 loom = "0.11.0-SNAPSHOT"
 loom-quiltflower = "1.6.0"
