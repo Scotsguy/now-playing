@@ -84,6 +84,7 @@ curseforge {
         releaseType = 'release'
         addGameVersion libs.versions.minecraft.get()
         addGameVersion 'Fabric'
+        addGameVersion 'Quilt'
         setChangelog 'For the changelog, please see https://github.com/Scotsguy/now-playing/releases'
         mainArtifact(remapJar) {
             displayName = "v$project.version"

@@ -8,7 +8,7 @@ modId="nowplaying"
 version="${version}"
 displayName="Now Playing"
 displayURL="https://github.com/Scotsguy/now-playing"
-logoFile="assets/now_playing/icon.png"
+logoFile="icon.png"
 credits="Thanks to the Forge Team for their work"
 authors="AppleTheGolden, JayJay1989BE"
 description="Shows a 'now playing' popup whenever a song starts to play."
@@ -20,4 +20,9 @@ versionRange="[1.19,)"
 ordering="NONE"
 side="CLIENT"
 
-# TODO: config dependency
+[[dependencies.nowplaying]]
+modId="cloth_config"
+mandatory=true
+versionRange="[7,)"
+ordering="NONE"
+side="CLIENT"
