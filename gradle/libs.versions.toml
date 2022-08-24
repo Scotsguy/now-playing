@@ -1,26 +1,24 @@
 [versions]
-useParchment = "0"
+useParchment = "1"
 # See https://fabricmc.net/develop/
-minecraft = "1.19"
-fabric-loader = "0.14.7"
-fabric-api = "0.55.3+1.19"
+minecraft = "1.19.2"
+fabric-loader = "0.14.9"
+fabric-api = "0.60.0+1.19.2"
 
-forge = "41.0.16"
+forge = "43.1.2"
 # See https://github.com/ParchmentMC/Parchment/wiki/Getting-Started
-parchment = "2022.03.13"
+parchment = "2022.08.21"
 
-quilt-loader = "0.16.0"
-quilt-fabric-api = "1.0.0-beta.13+0.51.1-1.18.2"
 
 # See https://maven.shedaniel.me/me/shedaniel/cloth/cloth-config/
-cloth-config = "7.0.69"
+cloth-config = "8.0.75"
 # See https://github.com/TerraformersMC/ModMenu/releases
-modmenu = "4.0.0"
+modmenu = "4.0.6"
 
-architectury = "5.6.22"
+#architectury = "5.6.22"
 architectury-plugin = "3.4-SNAPSHOT"
 loom = "0.11.0-SNAPSHOT"
-loom-quiltflower = "1.6.0"
+loom-quiltflower = "1.7.+"
 cursegradle = "1.4.0"
 shadow = "7.0.0"
 
@@ -32,9 +30,6 @@ fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fab
 cloth-common = { module = "me.shedaniel.cloth:cloth-config", version.ref = "cloth-config" }
 cloth-fabric = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config" }
 cloth-forge = { module = "me.shedaniel.cloth:cloth-config-forge", version.ref = "cloth-config" }
-
-quilt-loader = { module = "org.quiltmc:quilt-loader", version.ref = "quilt-loader" }
-quilt-api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilt-fabric-api" }
 
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
