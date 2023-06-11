@@ -1,12 +1,10 @@
 package com.github.scotsguy.nowplaying;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
@@ -34,11 +32,7 @@ public class NowPlayingToast implements Toast {
     }
 
     @Override
-    public Visibility render(@NotNull PoseStack poseStack, @NotNull ToastComponent manager, long startTime) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
+    public Visibility render(@NotNull GuiGraphics guiGraphics, @NotNull ToastComponent toastComponent, long startTime) {
         int width = this.width();
         int height = this.height();
         Font font = Minecraft.getInstance().gui.getFont();
@@ -46,47 +40,45 @@ public class NowPlayingToast implements Toast {
 
         if (width == 160 && textLines.size() <= 1) {
             // Draw the whole toast from the texture
-            manager.blit(poseStack, 0, 0, 0, 32, width, height);
+            guiGraphics.blit(TEXTURE, 0, 0, 0, 32, width, height);
         } else {
             height = height + Math.max(0, textLines.size() - 1) * 12;
             int m = Math.min(4, height - 28);
             // Draw the top border
-            this.renderBackgroundRow(poseStack, manager, width, 0, 0, 28);
+            this.renderBackgroundRow(guiGraphics, toastComponent, width, 0, 0, 28);
 
             // Draw plain background
             for (int n = 28; n < height - m; n += 10) {
-                this.renderBackgroundRow(poseStack, manager, width, 16 /* middle */, n, Math.min(16, height - n - m));
+                this.renderBackgroundRow(guiGraphics, toastComponent, width, 16 /* middle */, n, Math.min(16, height - n - m));
             }
 
             // Draw the bottom border
-            this.renderBackgroundRow(poseStack, manager, width, 32 - m, height - m, m);
+            this.renderBackgroundRow(guiGraphics, toastComponent, width, 32 - m, height - m, m);
         }
         // Draw "Now Playing"
-        manager.getMinecraft().font.draw(poseStack, Component.translatable("now_playing.toast.now_playing"), TEXT_LEFT_MARGIN, 7.0F, -11534256);
+        guiGraphics.drawString(toastComponent.getMinecraft().font, Component.translatable("now_playing.toast.now_playing"), TEXT_LEFT_MARGIN, 7, -11534256, false);
 
         // Draw song title
         for (int i = 0; i < textLines.size(); ++i) {
-            manager.getMinecraft().font.draw(poseStack, textLines.get(i), TEXT_LEFT_MARGIN, (float) (18 + i * 12), -16777216);
+            guiGraphics.drawString(toastComponent.getMinecraft().font, textLines.get(i), TEXT_LEFT_MARGIN, (18 + i * 12), -16777216, false);
         }
 
         // Draw icon
-        poseStack.pushPose();
-        manager.getMinecraft().getItemRenderer().renderAndDecorateFakeItem(itemStack, 9, (height / 2) - (16 / 2));
-        poseStack.popPose();
+        guiGraphics.renderFakeItem(itemStack, 9, (height / 2) - (16 / 2));
 
         return startTime - this.startTime >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
     }
 
-    private void renderBackgroundRow(PoseStack poseStack, ToastComponent toastComponent, int i, int vOffset, int y, int vHeight) {
+    private void renderBackgroundRow(GuiGraphics guiGraphics, ToastComponent toastComponent, int i, int vOffset, int y, int vHeight) {
         int uWidth = vOffset == 0 ? 20 : 5;
         int n = Math.min(60, i - uWidth);
-        toastComponent.blit(poseStack, 0, y, 0, 32 + vOffset, uWidth, vHeight);
+        guiGraphics.blit(TEXTURE, 0, y, 0, 32 + vOffset, uWidth, vHeight);
 
         for (int o = uWidth; o < i - n; o += 64) {
-            toastComponent.blit(poseStack, o, y, 32, 32 + vOffset, Math.min(64, i - o - n), vHeight);
+            guiGraphics.blit(TEXTURE, o, y, 32, 32 + vOffset, Math.min(64, i - o - n), vHeight);
         }
 
-        toastComponent.blit(poseStack, i - n, y, 160 - n, 32 + vOffset, n, vHeight);
+        guiGraphics.blit(TEXTURE, i - n, y, 160 - n, 32 + vOffset, n, vHeight);
     }
 
 }
