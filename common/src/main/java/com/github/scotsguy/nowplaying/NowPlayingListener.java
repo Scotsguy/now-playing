@@ -4,6 +4,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.client.sounds.WeighedSoundEvents;
@@ -15,9 +16,14 @@ import net.minecraft.world.item.RecordItem;
 @Environment(EnvType.CLIENT)
 public class NowPlayingListener implements SoundEventListener {
     @Override
-    public void onPlaySound(SoundInstance sound, WeighedSoundEvents soundSet) {
-        if (sound.getSource() == SoundSource.MUSIC) {
-            Component name = Util.getSoundName(sound);
+    public void onPlaySound(SoundInstance soundInstance, WeighedSoundEvents soundEvents) {
+        Options options = Minecraft.getInstance().options;
+        SoundSource soundSource = soundInstance.getSource();
+        if (options.getSoundSourceVolume(SoundSource.MASTER) <= 0.0 || options.getSoundSourceVolume(soundSource) <= 0.0) {
+            return; // Minecraft occasionally likes to play silent sounds
+        }
+        if (soundSource == SoundSource.MUSIC) {
+            Component name = Util.getSoundName(soundInstance);
             if (name == null) return;
 
             NowPlayingConfig config = AutoConfig.getConfigHolder(NowPlayingConfig.class).getConfig();
@@ -25,13 +31,13 @@ public class NowPlayingListener implements SoundEventListener {
             if (config.musicStyle == NowPlayingConfig.Style.Toast) {
                 Minecraft.getInstance().getToasts().addToast(new NowPlayingToast(name));
             } else if (config.musicStyle == NowPlayingConfig.Style.Hotbar) {
-                Minecraft.getInstance().gui.setOverlayMessage(Component.translatable("record.nowPlaying", name), true);
+                Minecraft.getInstance().gui.setNowPlaying(name);
             }
-        } else if (sound.getSource() == SoundSource.RECORDS) {
+        } else if (soundSource == SoundSource.RECORDS) {
             NowPlayingConfig config = AutoConfig.getConfigHolder(NowPlayingConfig.class).getConfig();
             if (config.jukeboxStyle != NowPlayingConfig.Style.Toast) return;
 
-            RecordItem disc = Util.getDiscFromSound(sound);
+            RecordItem disc = Util.getDiscFromSound(soundInstance);
             if (disc == null) return;
 
             Minecraft.getInstance().getToasts().addToast(new NowPlayingToast(disc.getDisplayName(), new ItemStack(disc)));
