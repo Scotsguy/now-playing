@@ -7,3 +7,4 @@ run
 .architectury-transformer
 *.iml
 release
+bin/
