@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.architectury)
     alias(libs.plugins.loom) apply false
-    alias(libs.plugins.quiltflower) apply false
+    alias(libs.plugins.vineflower) apply false
     alias(libs.plugins.cursegradle) apply false
 }
 
@@ -11,7 +11,7 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
-    apply plugin: 'io.github.juuxel.loom-quiltflower'
+    apply plugin: 'io.github.juuxel.loom-vineflower'
 
     dependencies {
         minecraft libs.minecraft
