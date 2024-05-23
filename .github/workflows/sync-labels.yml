@@ -9,8 +9,6 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    env:
-      LABEL_SYNC_TOKEN: ${{ secrets.LABEL_SYNC_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,5 +20,4 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npx github-label-sync -a '${{ secrets.LABEL_SYNC_TOKEN }}' -l '.github/labels.yml' ${{ github.repository }}
-        if: env.LABEL_SYNC_TOKEN != null
+      - run: npx github-label-sync -a '${{ secrets.GITHUB_TOKEN }}' -l '.github/labels.yml' ${{ github.repository }}
