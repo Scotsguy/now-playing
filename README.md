@@ -15,6 +15,13 @@ Shows a popup whenever the active music track changes.
 
 </center></div>
 
+Have you ever wondered what all the songs in Minecraft are actually called? Sure, you could check 
+the soundtrack to find out, but then you have to listen to every song, hoping it's the one you're 
+thinking of.
+
+With this mod, wonder no more! A toast will pop up in the top right corner of your screen or just 
+above your hotbar (configurable), telling you what song you're about to listen to.
+
 ### License
 
 [MIT](https://mit-license.org/)
