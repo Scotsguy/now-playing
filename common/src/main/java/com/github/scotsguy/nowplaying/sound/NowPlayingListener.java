@@ -16,11 +16,11 @@ public class NowPlayingListener implements SoundEventListener {
     @Override
     public void onPlaySound(SoundInstance sound, @NotNull WeighedSoundEvents soundSet, float f) {
         Config config = Config.get();
+        Minecraft minecraft = Minecraft.getInstance();
+        Component name = Sound.getSoundName(sound);
 
         if (sound.getSource() == SoundSource.MUSIC) {
-            Component name = Sound.getSoundName(sound);
-            Minecraft minecraft = Minecraft.getInstance();
-            var message = Component.translatable("record.nowPlaying", name);
+            Component message = Component.translatable("record.nowPlaying", name);
 
             if (config.options.musicStyle == Config.Options.Style.Toast) {
                 minecraft.getToasts().addToast(new NowPlayingToast(name));
@@ -39,7 +39,12 @@ public class NowPlayingListener implements SoundEventListener {
             RecordItem disc = Sound.getDiscFromSound(sound);
             if (disc == null) return;
 
-            Minecraft.getInstance().getToasts().addToast(new NowPlayingToast(disc.getDisplayName(), new ItemStack(disc)));
+            minecraft.getToasts().addToast(new NowPlayingToast(disc.getDisplayName(), new ItemStack(disc)));
+
+            if (config.options.narrate) {
+                Component message = Component.translatable("record.nowPlaying", disc.getDisplayName());
+                minecraft.getNarrator().sayNow(message);
+            }
         }
     }
 }
