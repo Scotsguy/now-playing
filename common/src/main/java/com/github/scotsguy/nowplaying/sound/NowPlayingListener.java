@@ -22,7 +22,7 @@ public class NowPlayingListener implements SoundEventListener {
                 Minecraft.getInstance().getToasts().addToast(new NowPlayingToast(name));
             }
             else if (Config.get().options.musicStyle == Config.Options.Style.Hotbar) {
-                Minecraft.getInstance().gui.setOverlayMessage(name, true);
+                Minecraft.getInstance().gui.setNowPlaying(name);
             }
         }
         else if (sound.getSource() == SoundSource.RECORDS) {
