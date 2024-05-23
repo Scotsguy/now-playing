@@ -15,9 +15,9 @@
 
     "entrypoints": {
         "main": [],
-        "client": ["${mod_group}.${mod_id}.${mod_name}Fabric"],
+        "client": ["${mod_group}.nowplaying.NowPlayingFabric"],
         "server": [],
-        "modmenu": ["${mod_group}.${mod_id}.gui.screen.ModMenuIntegration"]
+        "modmenu": ["${mod_group}.nowplaying.gui.screen.ModMenuIntegration"]
     },
 
     "mixins": [
@@ -31,7 +31,7 @@
         "java": [$java_versions_fabric_list],
         "minecraft": [$minecraft_versions_fabric_list],
         "fabricloader": [$fabric_loader_versions_list],
-        "fabric-lifecycle-events-v1": [$fabric_api_versions_list]
+        "fabric-api": [$fabric_api_versions_list]
     },
 
     "recommends": {

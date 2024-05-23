@@ -3,7 +3,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_name}-Fabric-${minecraft_version}"
+    archivesName = "${mod_id}-fabric-${minecraft_version}"
 }
 
 dependencies {
@@ -16,10 +16,6 @@ dependencies {
 
     modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
-
-    // JiJ Fabric API libraries
-//    dependencies.include(fabricApi.module("fabric-api-base", fabric_api_version))
-//    dependencies.include(fabricApi.module("fabric-lifecycle-events-v1", fabric_api_version))
 
     modImplementation("maven.modrinth:modmenu:${modmenu_version}")
 

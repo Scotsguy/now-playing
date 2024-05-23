@@ -3,7 +3,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_name}-NeoForge-${minecraft_version}"
+    archivesName = "${mod_id}-neoforge-${minecraft_version}"
 }
 
 dependencies {

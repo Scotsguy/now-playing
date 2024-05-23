@@ -5,7 +5,7 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.ConfigScreenHandler;
 
-@Mod(NowPlaying.MOD_ID)
+@Mod(NowPlaying.MOD_ID_NEOFORGE)
 public class NowPlayingNeoForge {
     public NowPlayingNeoForge() {
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
