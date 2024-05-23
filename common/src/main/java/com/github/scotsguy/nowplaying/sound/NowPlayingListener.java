@@ -15,18 +15,26 @@ import org.jetbrains.annotations.NotNull;
 public class NowPlayingListener implements SoundEventListener {
     @Override
     public void onPlaySound(SoundInstance sound, @NotNull WeighedSoundEvents soundSet, float f) {
+        Config config = Config.get();
+
         if (sound.getSource() == SoundSource.MUSIC) {
             Component name = Sound.getSoundName(sound);
+            Minecraft minecraft = Minecraft.getInstance();
+            var message = Component.translatable("record.nowPlaying", name);
 
-            if (Config.get().options.musicStyle == Config.Options.Style.Toast) {
-                Minecraft.getInstance().getToasts().addToast(new NowPlayingToast(name));
+            if (config.options.musicStyle == Config.Options.Style.Toast) {
+                minecraft.getToasts().addToast(new NowPlayingToast(name));
             }
-            else if (Config.get().options.musicStyle == Config.Options.Style.Hotbar) {
-                Minecraft.getInstance().gui.setNowPlaying(name);
+            else if (config.options.musicStyle == Config.Options.Style.Hotbar) {
+                Minecraft.getInstance().gui.setOverlayMessage(message, true);
+            }
+
+            if (config.options.narrate) {
+                minecraft.getNarrator().sayNow(message);
             }
         }
         else if (sound.getSource() == SoundSource.RECORDS) {
-            if (Config.get().options.jukeboxStyle != Config.Options.Style.Toast) return;
+            if (config.options.jukeboxStyle != Config.Options.Style.Toast) return;
 
             RecordItem disc = Sound.getDiscFromSound(sound);
             if (disc == null) return;

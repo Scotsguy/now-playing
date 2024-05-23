@@ -32,11 +32,13 @@ public class Config {
         public static final Style defaultJukeboxStyle = Style.Hotbar;
         public static final boolean defaultSilenceWoosh = true;
         public static final boolean defaultSimpleToast = false;
+        public static final boolean defaultNarrate = true;
 
         public Style musicStyle = defaultMusicStyle;
         public Style jukeboxStyle = defaultJukeboxStyle;
         public boolean silenceWoosh = defaultSilenceWoosh;
         public boolean simpleToast = defaultSimpleToast;
+        public boolean narrate = defaultNarrate;
 
         public enum Style {
             Toast,

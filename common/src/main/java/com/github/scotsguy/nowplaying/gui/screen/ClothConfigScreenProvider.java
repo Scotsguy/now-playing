@@ -57,6 +57,13 @@ public class ClothConfigScreenProvider {
                 .setSaveConsumer(val -> options.simpleToast = val)
                 .build());
 
+        modSettings.addEntry(eb.startBooleanToggle(
+                localized("option", "narrate"), options.narrate)
+                .setTooltip(localized("option", "narrate.tooltip"))
+                .setDefaultValue(Config.Options.defaultNarrate)
+                .setSaveConsumer(val -> options.narrate = val)
+                .build());
+
         return builder.build();
     }
 }

@@ -11,6 +11,8 @@
   "option.${mod_id}.silence_woosh.tooltip": "Silence the sound made by the music popup",
   "option.${mod_id}.simple_toast": "Simple toast",
   "option.${mod_id}.simple_toast.tooltip": "Only show the song, not the 'Now Playing' text",
+  "option.${mod_id}.narrate":  "Narrate pop-up",
+  "option.${mod_id}.narrate.tooltip":  "When the narrator is enabled, read out 'Now Playing' popups",
 
   "option.${mod_id}.style.hotbar": "Hotbar",
   "option.${mod_id}.style.toast": "Toast",
