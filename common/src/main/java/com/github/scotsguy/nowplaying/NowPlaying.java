@@ -1,13 +1,14 @@
 package com.github.scotsguy.nowplaying;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import com.github.scotsguy.nowplaying.config.Config;
+import com.github.scotsguy.nowplaying.util.ModLogger;
 
 public class NowPlaying {
+    public static final String MOD_ID = "nowplaying";
+    public static final String MOD_NAME = "NowPlaying";
+    public static final ModLogger LOG = new ModLogger(MOD_NAME);
+
     public static void init() {
-        AutoConfig.register(NowPlayingConfig.class, JanksonConfigSerializer::new);
+        Config.getAndSave();
     }
 }
