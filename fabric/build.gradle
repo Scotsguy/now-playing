@@ -1,116 +1,44 @@
 plugins {
-    alias(libs.plugins.shadow)
+    id("fabric-loom") version("${loom_version}")
 }
 
-architectury {
-    platformSetupLoomIde()
-    fabric()
-}
-
-configurations {
-    common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentFabric.extendsFrom common
+base {
+    archivesName = "${mod_id}-fabric-${minecraft_version}"
 }
 
 dependencies {
-    modImplementation libs.fabric.loader
-    modApi libs.fabric.api
+    compileOnly(project(":common"))
+    minecraft("com.mojang:minecraft:${minecraft_version}")
+    mappings(loom.officialMojangMappings())
 
-    modApi(libs.cloth.fabric) {
-        exclude module:"fabric-api"
+    compileOnly("io.github.llamalad7:mixinextras-fabric:${mixinextras_version}")
+    annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixinextras_version}")
+
+    modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+
+    modImplementation("maven.modrinth:modmenu:${modmenu_version}")
+
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${clothconfig_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
     }
-    include libs.cloth.fabric
-
-    modImplementation(libs.modmenu) {
-        exclude module:"fabric-api"
-    }
-
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
+loom {
+    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
+        accessWidenerPath = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    }
+    mixin {
+        defaultRefmapName = "${mod_id}.refmap.json"
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    source(project(":common").sourceSets.main.allSource)
+}
+tasks.named("sourcesJar", Jar) {
+    from(project(":common").sourceSets.main.allSource)
+}
 processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-archivesBaseName += "-fabric"
-
-shadowJar {
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-}
-
-remapJar {
-    input.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set(null)
-    destinationDirectory.set(new File(rootDir, "release"))
-}
-
-jar {
-    archiveClassifier.set("dev")
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
-}
-
-curseforge {
-    // Stored in ~/.gradle/gradle.properties
-    if (project.hasProperty('curseApiKey'))
-        apiKey = project.curseApiKey
-    else if (System.getenv("CURSE_API_KEY") != null)
-        apiKey = System.getenv("CURSE_API_KEY")
-    else
-        println 'No CurseForge API key found, \'curseforge\' tasks will not work'
-
-    project {
-        id = project.curseforge_id
-        releaseType = 'release'
-        addGameVersion libs.versions.minecraft.get()
-        addGameVersion 'Fabric'
-        addGameVersion 'Quilt'
-        setChangelog 'For the changelog, please see https://github.com/Scotsguy/now-playing/releases'
-        mainArtifact(remapJar) {
-            displayName = "v$project.version"
-            relations {
-                requiredDependency 'fabric-api'
-                embeddedLibrary 'cloth-config'
-            }
-        }
-    }
-
-    options {
-        forgeGradleIntegration = false
-        detectNewerJava = true
-    }
-}
-
-publishing {
-    publications {
-        mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
+    from project(":common").sourceSets.main.resources
 }

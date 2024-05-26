@@ -1,25 +1,24 @@
+plugins {
+    id("org.spongepowered.gradle.vanilla") version("${vanillagradle_version}")
+}
+
+base {
+    archivesName = "${mod_id}-common-${minecraft_version}"
+}
+
 dependencies {
-    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
-    // Do NOT use other classes from fabric loader
-    modImplementation libs.fabric.loader
+    compileOnly("org.spongepowered:mixin:${mixin_version}")
 
-    modImplementation libs.cloth.common
+    compileOnly("io.github.llamalad7:mixinextras-common:${mixinextras_version}")
+    annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinextras_version}")
+
+    // Using NeoForge version here to avoid having to remap
+    implementation("me.shedaniel.cloth:cloth-config-neoforge:${clothconfig_version}")
 }
 
-architectury {
-    common(rootProject.enabled_platforms.split(","))
-}
-
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
+minecraft {
+    version(minecraft_version)
+    if (file("src/main/resources/${mod_id}.accesswidener").exists()) {
+        accessWideners(file("src/main/resources/${mod_id}.accesswidener"))
     }
 }
