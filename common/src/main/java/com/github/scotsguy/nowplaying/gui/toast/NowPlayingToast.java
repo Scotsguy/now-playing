@@ -19,7 +19,7 @@ import static com.github.scotsguy.nowplaying.util.Localization.localized;
 
 
 public class NowPlayingToast implements Toast {
-    private static final ResourceLocation BACKGROUND_SPRITE = new ResourceLocation("toast/recipe");
+    private static final ResourceLocation BACKGROUND_SPRITE = ResourceLocation.withDefaultNamespace("toast/recipe");
 
     private final Component description;
     private final ItemStack itemStack;

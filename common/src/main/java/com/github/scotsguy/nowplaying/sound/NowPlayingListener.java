@@ -8,8 +8,6 @@ import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.client.sounds.WeighedSoundEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.RecordItem;
 import org.jetbrains.annotations.NotNull;
 
 public class NowPlayingListener implements SoundEventListener {
@@ -30,19 +28,6 @@ public class NowPlayingListener implements SoundEventListener {
             }
 
             if (config.options.narrate) {
-                minecraft.getNarrator().sayNow(message);
-            }
-        }
-        else if (sound.getSource() == SoundSource.RECORDS) {
-            if (config.options.jukeboxStyle != Config.Options.Style.Toast) return;
-
-            RecordItem disc = Sound.getDiscFromSound(sound);
-            if (disc == null) return;
-
-            minecraft.getToasts().addToast(new NowPlayingToast(disc.getDisplayName(), new ItemStack(disc)));
-
-            if (config.options.narrate) {
-                Component message = Component.translatable("record.nowPlaying", disc.getDisplayName());
                 minecraft.getNarrator().sayNow(message);
             }
         }

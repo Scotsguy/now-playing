@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineTextWidget;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
-import net.minecraft.client.gui.screens.OptionsSubScreen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 
@@ -33,7 +33,7 @@ public class ConfigScreenProvider {
         }
 
         @Override
-        public void init() {
+        protected void addOptions() {
             MultiLineTextWidget messageWidget = new MultiLineTextWidget(
                     width / 2 - 120, height / 2 - 40,
                     localized("message", "install_cloth"),

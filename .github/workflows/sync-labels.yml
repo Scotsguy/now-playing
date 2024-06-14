@@ -1,4 +1,5 @@
 # Synchronizes the repo's labels with labels.yml
+# Requires GITHUB_TOKEN to have write permissions; if not, replace it with a custom token
 name: Sync Labels
 
 on:

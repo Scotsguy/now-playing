@@ -1,4 +1,5 @@
 # Builds the project and publishes the artifacts to GitHub and Modrinth
+# Requires GITHUB_TOKEN to have write permissions; if not, replace it with a custom token
 name: Release
 
 on: [workflow_dispatch]
@@ -26,7 +27,7 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew build neoforge:githubRelease neoforge:modrinth fabric:githubRelease fabric:modrinth --stacktrace --parallel
+        run: ./gradlew build neoforge:githubRelease neoforge:modrinth fabric:githubRelease fabric:modrinth --stacktrace
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

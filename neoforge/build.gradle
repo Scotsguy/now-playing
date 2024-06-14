@@ -16,6 +16,11 @@ dependencies {
     implementation("me.shedaniel.cloth:cloth-config-neoforge:${clothconfig_version}")
 }
 
+// Temporary workaround for a NeoGradle bug
+tasks.named("test").configure {
+    enabled = false
+}
+
 if (file("src/main/resources/META-INF/accesstransformer.cfg").exists()) {
     minecraft.accessTransformers.file(file("src/main/resources/META-INF/accesstransformer.cfg"))
 }
