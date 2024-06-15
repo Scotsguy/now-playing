@@ -2,6 +2,7 @@ package com.github.scotsguy.nowplaying.sound;
 
 import com.github.scotsguy.nowplaying.NowPlaying;
 import com.github.scotsguy.nowplaying.config.Config;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.client.sounds.WeighedSoundEvents;
@@ -16,7 +17,8 @@ public class NowPlayingListener implements SoundEventListener {
             Component name = Sound.getSoundName(sound);
             NowPlaying.lastMusic = name;
 
-            if (!Config.get().options.onlyKeybind) {
+            if (!Config.get().options.onlyKeybind
+                    && Minecraft.getInstance().options.getSoundSourceVolume(SoundSource.MASTER) != 0f) {
                 NowPlaying.display(name);
             }
         }
