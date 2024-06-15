@@ -57,6 +57,24 @@ public class ClothConfigScreenProvider {
                 .setSaveConsumer(val -> options.simpleToast = val)
                 .build());
 
+        modSettings.addEntry(eb.startIntField(
+                localized("option", "toast_time"), options.toastTime)
+                .setTooltip(localized("option", "toast_time.tooltip"))
+                .setDefaultValue(Config.Options.defaultToastTime)
+                .setMin(1)
+                .setMax(60)
+                .setSaveConsumer(val -> options.toastTime = val)
+                .build());
+
+        modSettings.addEntry(eb.startIntField(
+                        localized("option", "hotbar_time"), options.hotbarTime)
+                .setTooltip(localized("option", "hotbar_time.tooltip"))
+                .setDefaultValue(Config.Options.defaultHotbarTime)
+                .setMin(1)
+                .setMax(60)
+                .setSaveConsumer(val -> options.hotbarTime = val)
+                .build());
+
         modSettings.addEntry(eb.startBooleanToggle(
                 localized("option", "narrate"), options.narrate)
                 .setTooltip(localized("option", "narrate.tooltip"))

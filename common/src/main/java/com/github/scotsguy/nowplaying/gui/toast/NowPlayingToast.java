@@ -23,6 +23,7 @@ public class NowPlayingToast implements Toast {
 
     private final Component description;
     private final ItemStack itemStack;
+    private final long displayTime;
     private boolean justUpdated;
     private long startTime;
 
@@ -36,6 +37,7 @@ public class NowPlayingToast implements Toast {
     public NowPlayingToast(Component description, ItemStack itemStack) {
         this.description = description;
         this.itemStack = itemStack;
+        this.displayTime = Config.get().options.toastTime * 1000L;
     }
 
     @Override
@@ -83,7 +85,7 @@ public class NowPlayingToast implements Toast {
         // Draw icon
         guiGraphics.renderFakeItem(itemStack, 9, (height / 2) - (16 / 2));
 
-        return startTime - this.startTime >= 5000L ? Visibility.HIDE : Visibility.SHOW;
+        return startTime - this.startTime >= this.displayTime ? Visibility.HIDE : Visibility.SHOW;
     }
 
     private void renderBackgroundRow(GuiGraphics guiGraphics, int i, int vOffset, int y, int vHeight) {

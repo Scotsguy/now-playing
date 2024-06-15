@@ -29,15 +29,24 @@ public class Config {
 
     public static class Options {
         public static final Style defaultMusicStyle = Style.Toast;
-        public static final Style defaultJukeboxStyle = Style.Hotbar;
-        public static final boolean defaultSilenceWoosh = true;
-        public static final boolean defaultSimpleToast = false;
-        public static final boolean defaultNarrate = true;
-
         public Style musicStyle = defaultMusicStyle;
+
+        public static final Style defaultJukeboxStyle = Style.Hotbar;
         public Style jukeboxStyle = defaultJukeboxStyle;
+
+        public static final boolean defaultSilenceWoosh = true;
         public boolean silenceWoosh = defaultSilenceWoosh;
+
+        public static final boolean defaultSimpleToast = false;
         public boolean simpleToast = defaultSimpleToast;
+
+        public static final int defaultToastTime = 5;
+        public int toastTime = defaultToastTime;
+
+        public static final int defaultHotbarTime = 3;
+        public int hotbarTime = defaultHotbarTime;
+
+        public static final boolean defaultNarrate = true;
         public boolean narrate = defaultNarrate;
 
         public enum Style {

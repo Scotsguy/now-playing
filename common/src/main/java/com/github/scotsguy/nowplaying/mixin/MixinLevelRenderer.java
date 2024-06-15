@@ -44,11 +44,14 @@ public class MixinLevelRenderer {
                     target = "Lnet/minecraft/client/gui/Gui;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
             )
     )
-    private void showToast(Gui instance, Component text, Operation<Void> original,
-                           @Local JukeboxSong song, @Local SoundEvent sound) {
+    private void setTimeOrShowToast(Gui instance, Component text, Operation<Void> original,
+                                    @Local JukeboxSong song, @Local SoundEvent sound) {
         Config config = Config.get();
         switch(config.options.jukeboxStyle) {
-            case Config.Options.Style.Hotbar -> original.call(instance, text);
+            case Config.Options.Style.Hotbar -> {
+                original.call(instance, text);
+                ((GuiAccessor)instance).setOverlayMessageTime(config.options.hotbarTime * 20);
+            }
             case Config.Options.Style.Toast -> {
                 // Attempt to identify the disc item, default to 'Cat' if lookup fails
                 Item disc = null;

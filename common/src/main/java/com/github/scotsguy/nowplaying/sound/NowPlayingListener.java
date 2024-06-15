@@ -2,6 +2,7 @@ package com.github.scotsguy.nowplaying.sound;
 
 import com.github.scotsguy.nowplaying.config.Config;
 import com.github.scotsguy.nowplaying.gui.toast.NowPlayingToast;
+import com.github.scotsguy.nowplaying.mixin.GuiAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEventListener;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class NowPlayingListener implements SoundEventListener {
     @Override
-    public void onPlaySound(SoundInstance sound, @NotNull WeighedSoundEvents soundSet, float f) {
+    public void onPlaySound(@NotNull SoundInstance sound, @NotNull WeighedSoundEvents soundSet, float f) {
         Config config = Config.get();
         Minecraft minecraft = Minecraft.getInstance();
         Component name = Sound.getSoundName(sound);
@@ -24,7 +25,8 @@ public class NowPlayingListener implements SoundEventListener {
                 minecraft.getToasts().addToast(new NowPlayingToast(name));
             }
             else if (config.options.musicStyle == Config.Options.Style.Hotbar) {
-                Minecraft.getInstance().gui.setOverlayMessage(message, true);
+                minecraft.gui.setOverlayMessage(message, true);
+                ((GuiAccessor)minecraft.gui).setOverlayMessageTime(config.options.hotbarTime * 20);
             }
 
             if (config.options.narrate) {
