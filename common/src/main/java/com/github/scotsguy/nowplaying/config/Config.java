@@ -42,6 +42,9 @@ public class Config {
         public static final boolean defaultSilenceWoosh = true;
         public boolean silenceWoosh = defaultSilenceWoosh;
 
+        public static final float defaultToastScale = 1.0F;
+        public float toastScale = defaultToastScale;
+
         public static final boolean defaultSimpleToast = false;
         public boolean simpleToast = defaultSimpleToast;
 

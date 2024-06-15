@@ -64,6 +64,15 @@ public class ClothConfigScreenProvider {
                 .setSaveConsumer(val -> options.silenceWoosh = val)
                 .build());
 
+        modSettings.addEntry(eb.startFloatField(
+                        localized("option", "toast_scale"), options.toastScale)
+                .setTooltip(localized("option", "toast_scale.tooltip"))
+                .setDefaultValue(Config.Options.defaultToastScale)
+                .setMin(0.25F)
+                .setMax(2F)
+                .setSaveConsumer(val -> options.toastScale = val)
+                .build());
+
         modSettings.addEntry(eb.startBooleanToggle(
                         localized("option", "simple_toast"), options.simpleToast)
                 .setTooltip(localized("option", "simple_toast.tooltip"))

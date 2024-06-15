@@ -36,7 +36,12 @@ public class NowPlayingToast implements Toast {
     }
 
     @Override
-    public Visibility render(@NotNull GuiGraphics guiGraphics, @NotNull ToastComponent toastComponent, long startTime) {
+    public @NotNull Visibility render(@NotNull GuiGraphics graphics, @NotNull ToastComponent toastComponent, long startTime) {
+        float scale = Config.get().options.toastScale;
+        graphics.pose().pushPose();
+        graphics.pose().translate(160 * (1 - scale), 0.0F, 0.0F);
+        graphics.pose().scale(scale, scale, 0.0F);
+
         Minecraft game = Minecraft.getInstance();
 
         int width = this.width();
@@ -46,54 +51,55 @@ public class NowPlayingToast implements Toast {
 
         if (width == 160 && textLines.size() <= 1) {
             // Draw the whole toast from the texture
-            guiGraphics.blitSprite(BACKGROUND_SPRITE, 0, 0, width, height);
+            graphics.blitSprite(BACKGROUND_SPRITE, 0, 0, width, height);
         } else {
             height = height + Math.max(0, textLines.size() - (Config.get().options.simpleToast ? 2 : 1)) * 12;
             int bottomHeight = Math.min(4, height - 28);
             // Draw the top border
-            this.renderBackgroundRow(guiGraphics, width, 0, 0, 28);
+            this.renderBackgroundRow(graphics, width, 0, 0, 28);
 
             // Draw plain background
             for (int n = 28; n < height - bottomHeight; n += 10) {
-                this.renderBackgroundRow(guiGraphics, width, 16 /* middle */, n, Math.min(16, height - n - bottomHeight));
+                this.renderBackgroundRow(graphics, width, 16 /* middle */, n, Math.min(16, height - n - bottomHeight));
             }
 
             // Draw the bottom border
-            this.renderBackgroundRow(guiGraphics, width, 32 - bottomHeight, height - bottomHeight, bottomHeight);
+            this.renderBackgroundRow(graphics, width, 32 - bottomHeight, height - bottomHeight, bottomHeight);
         }
         if (Config.get().options.simpleToast) {
             // Draw song title
             for (int i = 0; i < textLines.size(); ++i) {
-                guiGraphics.drawString(game.font, textLines.get(i), TEXT_LEFT_MARGIN, (textLines.size() == 1 ? 12 : 6 + i * 12), -16777216, false);
+                graphics.drawString(game.font, textLines.get(i), TEXT_LEFT_MARGIN, (textLines.size() == 1 ? 12 : 6 + i * 12), -16777216, false);
             }
         }
         else {
             // Draw "Now Playing"
-            guiGraphics.drawString(game.font, localized("message", "now_playing"), TEXT_LEFT_MARGIN, 7, -11534256, false);
+            graphics.drawString(game.font, localized("message", "now_playing"), TEXT_LEFT_MARGIN, 7, -11534256, false);
 
             // Draw song title
             for (int i = 0; i < textLines.size(); ++i) {
-                guiGraphics.drawString(game.font, textLines.get(i), TEXT_LEFT_MARGIN, (18 + i * 12), -16777216, false);
+                graphics.drawString(game.font, textLines.get(i), TEXT_LEFT_MARGIN, (18 + i * 12), -16777216, false);
             }
         }
 
         // Draw icon
-        guiGraphics.renderFakeItem(itemStack, 9, (height / 2) - (16 / 2));
+        graphics.renderFakeItem(itemStack, 9, (height / 2) - (16 / 2));
 
+        graphics.pose().popPose();
         return startTime - this.startTime >= this.displayTime ? Visibility.HIDE : Visibility.SHOW;
     }
 
-    private void renderBackgroundRow(GuiGraphics guiGraphics, int i, int vOffset, int y, int vHeight) {
+    private void renderBackgroundRow(GuiGraphics graphics, int i, int vOffset, int y, int vHeight) {
         int uWidth = vOffset == 0 ? 20 : 5;
         int n = Math.min(60, i - uWidth);
 
-        guiGraphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 0, vOffset, 0, y, uWidth, vHeight);
+        graphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 0, vOffset, 0, y, uWidth, vHeight);
 
         for (int o = uWidth; o < i - n; o += 64) {
-            guiGraphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 32, vOffset, o, y, Math.min(64, i - o - n), vHeight);
+            graphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 32, vOffset, o, y, Math.min(64, i - o - n), vHeight);
         }
 
-        guiGraphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 160 - n, vOffset, i - n, y, n, vHeight);
+        graphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 160 - n, vOffset, i - n, y, n, vHeight);
     }
 }
 
