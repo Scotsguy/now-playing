@@ -1,0 +1,6 @@
+- Add support for changing popup display duration
+- Add keybind to display last song
+- Add command to display last song
+- Allow using toast as fallback to hotbar display
+- Hide popups if volume is off
+- Add an option to change the toast scale
