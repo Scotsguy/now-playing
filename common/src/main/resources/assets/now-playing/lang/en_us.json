@@ -9,6 +9,8 @@
   "key.${mod_id}.display": "Show last song",
 
   "option.${mod_id}.music_style": "Music pop-up style",
+  "option.${mod_id}.music_only_keybind": "Only use key",
+  "option.${mod_id}.music_only_keybind.tooltip": "Only show music when the display key is pressed",
   "option.${mod_id}.jukebox_style": "Jukebox pop-up style",
   "option.${mod_id}.silence_woosh": "Silence woosh",
   "option.${mod_id}.silence_woosh.tooltip": "Silence the sound made by the music popup",

@@ -31,6 +31,9 @@ public class Config {
         public static final Style defaultMusicStyle = Style.Toast;
         public Style musicStyle = defaultMusicStyle;
 
+        public static final boolean defaultOnlyKeybind = false;
+        public boolean onlyKeybind = defaultOnlyKeybind;
+
         public static final Style defaultJukeboxStyle = Style.Hotbar;
         public Style jukeboxStyle = defaultJukeboxStyle;
 

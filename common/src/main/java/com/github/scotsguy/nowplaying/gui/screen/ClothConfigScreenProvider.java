@@ -35,6 +35,13 @@ public class ClothConfigScreenProvider {
                 .setSaveConsumer(val -> options.musicStyle = val)
                 .build());
 
+        modSettings.addEntry(eb.startBooleanToggle(
+                        localized("option", "music_only_keybind"), options.onlyKeybind)
+                .setTooltip(localized("option", "music_only_keybind.tooltip"))
+                .setDefaultValue(Config.Options.defaultOnlyKeybind)
+                .setSaveConsumer(val -> options.onlyKeybind = val)
+                .build());
+
         modSettings.addEntry(eb.startEnumSelector(
                         localized("option", "jukebox_style"),
                         Config.Options.Style.class, options.jukeboxStyle)
