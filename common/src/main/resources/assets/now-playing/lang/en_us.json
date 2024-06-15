@@ -5,6 +5,9 @@
   "message.${mod_id}.install_cloth": "Install Cloth Config API to access mod options.",
   "message.${mod_id}.go_modrinth": "View on Modrinth",
 
+  "${mod_id}.key_group": "Now Playing",
+  "key.${mod_id}.display": "Show last song",
+
   "option.${mod_id}.music_style": "Music pop-up style",
   "option.${mod_id}.jukebox_style": "Jukebox pop-up style",
   "option.${mod_id}.silence_woosh": "Silence woosh",
