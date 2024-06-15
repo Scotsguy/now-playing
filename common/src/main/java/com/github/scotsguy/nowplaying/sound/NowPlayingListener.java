@@ -17,7 +17,7 @@ public class NowPlayingListener implements SoundEventListener {
             NowPlaying.lastMusic = name;
 
             if (!Config.get().options.onlyKeybind) {
-                NowPlaying.display(name, Component.translatable("record.nowPlaying", name));
+                NowPlaying.display(name);
             }
         }
     }

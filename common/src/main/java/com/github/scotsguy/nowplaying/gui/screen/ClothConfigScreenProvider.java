@@ -27,14 +27,6 @@ public class ClothConfigScreenProvider {
         ConfigEntryBuilder eb = builder.entryBuilder();
         ConfigCategory modSettings = builder.getOrCreateCategory(localized("config", "options"));
 
-        modSettings.addEntry(eb.startEnumSelector(
-                localized("option", "music_style"),
-                        Config.Options.Style.class, options.musicStyle)
-                .setEnumNameProvider(Config.Options.Style::name)
-                .setDefaultValue(Config.Options.defaultMusicStyle)
-                .setSaveConsumer(val -> options.musicStyle = val)
-                .build());
-
         modSettings.addEntry(eb.startBooleanToggle(
                         localized("option", "music_only_keybind"), options.onlyKeybind)
                 .setTooltip(localized("option", "music_only_keybind.tooltip"))
@@ -43,11 +35,26 @@ public class ClothConfigScreenProvider {
                 .build());
 
         modSettings.addEntry(eb.startEnumSelector(
+                localized("option", "music_style"),
+                        Config.Options.Style.class, options.musicStyle)
+                .setEnumNameProvider(Config.Options.Style::name)
+                .setDefaultValue(Config.Options.defaultMusicStyle)
+                .setSaveConsumer(val -> options.musicStyle = val)
+                .build());
+
+        modSettings.addEntry(eb.startEnumSelector(
                         localized("option", "jukebox_style"),
                         Config.Options.Style.class, options.jukeboxStyle)
                 .setEnumNameProvider(Config.Options.Style::name)
                 .setDefaultValue(Config.Options.defaultJukeboxStyle)
                 .setSaveConsumer(val -> options.jukeboxStyle = val)
+                .build());
+
+        modSettings.addEntry(eb.startBooleanToggle(
+                        localized("option", "fallback_toast"), options.fallbackToast)
+                .setTooltip(localized("option", "fallback_toast.tooltip"))
+                .setDefaultValue(Config.Options.defaultFallbackToast)
+                .setSaveConsumer(val -> options.fallbackToast = val)
                 .build());
 
         modSettings.addEntry(eb.startBooleanToggle(

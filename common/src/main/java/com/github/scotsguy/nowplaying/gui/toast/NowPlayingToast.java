@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -29,10 +28,6 @@ public class NowPlayingToast implements Toast {
 
     private static final int TEXT_LEFT_MARGIN = 30;
     private static final int TEXT_RIGHT_MARGIN = 7;
-
-    public NowPlayingToast(Component description) {
-        this(description, new ItemStack(Items.MUSIC_DISC_CAT));
-    }
 
     public NowPlayingToast(Component description, ItemStack itemStack) {
         this.description = description;

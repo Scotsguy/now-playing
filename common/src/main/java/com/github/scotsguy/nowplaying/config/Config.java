@@ -22,20 +22,22 @@ public class Config {
     private static final String FILE_NAME = NowPlaying.MOD_ID + ".json";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-
     // Options
 
     public final Options options = new Options();
 
     public static class Options {
-        public static final Style defaultMusicStyle = Style.Toast;
-        public Style musicStyle = defaultMusicStyle;
-
         public static final boolean defaultOnlyKeybind = false;
         public boolean onlyKeybind = defaultOnlyKeybind;
 
+        public static final Style defaultMusicStyle = Style.Toast;
+        public Style musicStyle = defaultMusicStyle;
+
         public static final Style defaultJukeboxStyle = Style.Hotbar;
         public Style jukeboxStyle = defaultJukeboxStyle;
+
+        public static final boolean defaultFallbackToast = true;
+        public boolean fallbackToast = defaultFallbackToast;
 
         public static final boolean defaultSilenceWoosh = true;
         public boolean silenceWoosh = defaultSilenceWoosh;
@@ -92,7 +94,6 @@ public class Config {
         save();
         return instance;
     }
-
 
     // Load and save
 
