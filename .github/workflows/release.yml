@@ -1,8 +1,12 @@
 # Builds the project and publishes the artifacts to GitHub and Modrinth
 # Requires GITHUB_TOKEN to have write permissions; if not, replace it with a custom token
+# Requires a Modrinth PAT MODRINTH_TOKEN
 name: Release
 
 on: [workflow_dispatch]
+
+permissions:
+  contents: write
 
 jobs:
   release:
