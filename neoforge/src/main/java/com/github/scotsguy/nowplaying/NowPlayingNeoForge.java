@@ -14,7 +14,7 @@ import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-@Mod(NowPlaying.MOD_ID_NEOFORGE)
+@Mod(value = NowPlaying.MOD_ID_NEOFORGE, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = NowPlaying.MOD_ID_NEOFORGE, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class NowPlayingNeoForge {
     public NowPlayingNeoForge() {
