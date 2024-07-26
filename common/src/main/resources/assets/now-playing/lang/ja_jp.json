@@ -1,0 +1,37 @@
+{
+  "modmenu.descriptionTranslation.now-playing": "音楽が変更されるたびにポップアップを表示します。",
+  
+  "screen.now-playing.default": "再生中",
+  "screen.now-playing.options": "Now Playing 設定",
+
+  "message.now-playing.install_cloth": "Modの設定にアクセスするには、Cloth Config API Modをインストールしてください",
+  "message.now-playing.go_modrinth": "Modrinthで見る",
+
+  "now-playing.key_group": "Now Playing",
+  "key.now-playing.display": "最後の曲を表示",
+
+  "option.now-playing.music_only_keybind": "キーまたはコマンドのみ使用",
+  "option.now-playing.music_only_keybind.tooltip": "表示キーが押されたとき、または /nowplaying コマンドが使用されたときのみ音楽を表示します",
+  "option.now-playing.music_style": "音楽ポップアップスタイル",
+  "option.now-playing.jukebox_style": "ジュークボックスポップアップスタイル",
+  "option.now-playing.fallback_toast": "トーストへのフォールバック",
+  "option.now-playing.fallback_toast.tooltip": "「ホットバー」スタイルが選択されている場合、ホットバーの表示が利用できない場合はトーストを使用します",
+  "option.now-playing.silence_woosh": "トースト音を消音",
+  "option.now-playing.silence_woosh.tooltip": "「再生中」トーストの「シューッ」という音を消します",
+  "option.now-playing.toast_scale": "トーストスケール",
+  "option.now-playing.toast_scale.tooltip": "「再生中」トーストのサイズを変更する",
+  "option.now-playing.simple_toast": "シンプルなトースト",
+  "option.now-playing.simple_toast.tooltip": "曲名のみを表示します",
+  "option.now-playing.toast_time": "トーストの表示時間",
+  "option.now-playing.toast_time.tooltip": "「再生中」トーストを表示する時間（秒）",
+  "option.now-playing.hotbar_time": "ホットバーの表示時間",
+  "option.now-playing.hotbar_time.tooltip": "「再生中」のホットバーテキストを表示する時間（秒）",
+  "option.now-playing.narrate": "ポップアップのナレーションを有効化",
+  "option.now-playing.narrate.tooltip": "ナレーターが有効になっている場合は、「再生中」ポップアップの内容を読み上げます",
+
+  "option.now-playing.style.hotbar": "ホットバー",
+  "option.now-playing.style.toast": "トースト",
+  "option.now-playing.style.disabled": "無効",
+
+  "message.now-playing.now_playing": "再生中"
+}
