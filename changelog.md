@@ -1,0 +1,1 @@
+- Add Japanese translation (KAGUYA-1137)
