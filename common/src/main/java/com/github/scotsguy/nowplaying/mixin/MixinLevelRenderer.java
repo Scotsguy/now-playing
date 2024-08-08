@@ -1,6 +1,7 @@
 package com.github.scotsguy.nowplaying.mixin;
 
 import com.github.scotsguy.nowplaying.NowPlaying;
+import com.github.scotsguy.nowplaying.config.Config;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.JukeboxSong;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Optional;
@@ -38,16 +40,20 @@ public class MixinLevelRenderer {
     )
     private void display(Gui instance, Component text, Operation<Void> original,
                          @Local JukeboxSong song, @Local SoundEvent sound) {
-        // Attempt to identify the disc item
+        NowPlaying.display(song.description(), now_playing$getDisc(sound), Config.get().options.jukeboxStyle);
+    }
+
+    @Unique
+    private Item now_playing$getDisc(SoundEvent sound) {
+        Item defaultDisc = Items.MUSIC_DISC_CAT;
+        if (level == null) return defaultDisc;
+
         Item disc = null;
         Optional<Registry<Item>> itemRegistry = level.registryAccess().registry(Registries.ITEM);
         if (itemRegistry.isPresent()) disc = itemRegistry.get().get(ResourceLocation.parse(
                 sound.getLocation().toString().replaceAll("\\.", "_")));
 
-        if (disc == null || disc.equals(Items.AIR)) {
-            NowPlaying.display(song.description());
-        } else {
-            NowPlaying.display(song.description(), disc);
-        }
+        if (disc == null || disc.equals(Items.AIR)) disc = defaultDisc;
+        return disc;
     }
 }

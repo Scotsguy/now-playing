@@ -14,7 +14,7 @@ public class Commands<S> extends CommandDispatcher<S> {
     public void register(Minecraft mc, CommandDispatcher<S> dispatcher, CommandBuildContext buildContext) {
         dispatcher.register((LiteralArgumentBuilder<S>)literal("nowplaying")
                         .executes(ctx -> {
-                            NowPlaying.display();
+                            NowPlaying.displayLastMusic();
                             return Command.SINGLE_SUCCESS;
                         })
         );

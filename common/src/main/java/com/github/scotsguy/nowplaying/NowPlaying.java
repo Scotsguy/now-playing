@@ -8,6 +8,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,39 +33,42 @@ public class NowPlaying {
 
     public static void onEndTick(Minecraft mc) {
         while (DISPLAY_KEY.consumeClick()) {
-            display();
+            displayLastMusic();
         }
     }
 
-    public static void display() {
-        if (lastMusic != null) display(lastMusic);
+    public static void displayLastMusic() {
+        if (lastMusic != null) displayMusic(lastMusic);
     }
 
-    public static void display(Component name) {
-        display(name, Items.MUSIC_DISC_CAT);
+    public static void displayMusic(Component name) {
+        display(name, Items.MUSIC_DISC_CAT, Config.get().options.musicStyle);
     }
 
-    public static void display(Component name, Item disc) {
+    public static void display(Component name, Item disc, Config.Options.Style style) {
         Component message = Component.translatable("record.nowPlaying", name);
 
         Minecraft mc = Minecraft.getInstance();
-        Config config = Config.get();
+        Config.Options options = Config.get().options;
 
-        switch(config.options.musicStyle) {
-            case Toast -> mc.getToasts().addToast(new NowPlayingToast(name, new ItemStack(disc)));
+        switch(style) {
+            case Toast -> {
+                mc.getToasts().addToast(new NowPlayingToast(name, new ItemStack(disc)));
+                if (options.narrate) mc.getNarrator().sayNow(message);
+            }
             case Hotbar -> {
-                // Use toast if hotbar display would not be visible, and fallback is enabled
-                if (mc.screen != null && !(mc.screen instanceof ChatScreen) && config.options.fallbackToast) {
+                if (!NowPlaying.isHotbarVisible(mc.screen) && options.fallbackToast) {
                     mc.getToasts().addToast(new NowPlayingToast(name, new ItemStack(disc)));
                 } else {
                     mc.gui.setOverlayMessage(message, true);
-                    ((GuiAccessor)mc.gui).setOverlayMessageTime(config.options.hotbarTime * 20);
+                    ((GuiAccessor)mc.gui).setOverlayMessageTime(options.hotbarTime * 20);
                 }
+                if (options.narrate) mc.getNarrator().sayNow(message);
             }
         }
+    }
 
-        if (config.options.narrate) {
-            mc.getNarrator().sayNow(message);
-        }
+    public static boolean isHotbarVisible(Screen screen) {
+        return (screen == null || screen instanceof ChatScreen);
     }
 }
