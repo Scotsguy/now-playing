@@ -1,2 +1,1 @@
-- Fix a bug causing jukebox song to display incorrectly
-- Add a workaround for disc sprite appearing shadowed
+- Add Traditional Chinese translation (yichifauzi)
