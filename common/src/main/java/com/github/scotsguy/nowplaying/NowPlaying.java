@@ -60,15 +60,17 @@ public class NowPlaying {
 
         switch(style) {
             case Toast -> {
-                mc.getToasts().addToast(new NowPlayingToast(name, new ItemStack(disc)));
+                mc.getToasts().addToast(new NowPlayingToast(name, new ItemStack(disc),
+                        options.toastTime * 1000L, options.toastScale));
                 if (options.narrate) mc.getNarrator().sayNow(message);
             }
             case Hotbar -> {
-                if (!NowPlaying.isHotbarVisible(mc.screen) && options.fallbackToast) {
-                    mc.getToasts().addToast(new NowPlayingToast(name, new ItemStack(disc)));
-                } else {
+                if (isHotbarVisible(mc.screen)) {
                     mc.gui.setOverlayMessage(message, true);
                     ((GuiAccessor)mc.gui).setOverlayMessageTime(options.hotbarTime * 20);
+                } else if (options.fallbackToast) {
+                    mc.getToasts().addToast(new NowPlayingToast(name, new ItemStack(disc),
+                            options.toastTime * 1000L, options.toastScale));
                 }
                 if (options.narrate) mc.getNarrator().sayNow(message);
             }

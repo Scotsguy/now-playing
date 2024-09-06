@@ -10,8 +10,7 @@
   "client": [
     "MixinLevelRenderer",
     "MixinMinecraft",
-    "MixinToastInstance",
-    "ToastVisibilityAccessor"
+    "MixinToastInstance"
   ],
   "server": [
   ],
