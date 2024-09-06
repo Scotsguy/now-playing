@@ -1,1 +1,2 @@
 - Add Traditional Chinese translation (yichifauzi)
+- Fix disc sprite appearing shadowed when scaling toast

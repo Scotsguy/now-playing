@@ -38,11 +38,10 @@ public class NowPlayingToast implements Toast {
     @Override
     public @NotNull Visibility render(@NotNull GuiGraphics graphics, @NotNull ToastComponent toastComponent, long startTime) {
         float scale = Config.get().options.toastScale;
-        // TODO figure out why graphics pose() causes disc sprite to appear shadowed
         if (scale != 1.0F) {
             graphics.pose().pushPose();
             graphics.pose().translate(160 * (1 - scale), 0.0F, 0.0F);
-            graphics.pose().scale(scale, scale, 0.0F);
+            graphics.pose().scale(scale, scale, 1.0F);
         }
 
         Minecraft game = Minecraft.getInstance();
