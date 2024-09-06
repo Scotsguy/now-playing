@@ -3,6 +3,7 @@ package com.github.scotsguy.nowplaying;
 import com.github.scotsguy.nowplaying.config.Config;
 import com.github.scotsguy.nowplaying.gui.toast.NowPlayingToast;
 import com.github.scotsguy.nowplaying.mixin.GuiAccessor;
+import com.github.scotsguy.nowplaying.sound.Sound;
 import com.github.scotsguy.nowplaying.util.ModLogger;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
@@ -13,7 +14,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import static com.github.scotsguy.nowplaying.util.Localization.localized;
 import static com.github.scotsguy.nowplaying.util.Localization.translationKey;
@@ -49,7 +49,7 @@ public class NowPlaying {
     }
 
     public static void displayMusic(Component name) {
-        display(name, Items.MUSIC_DISC_CAT, Config.get().options.musicStyle);
+        display(name, Sound.getMusicDisc(name.getString()), Config.get().options.musicStyle);
     }
 
     public static void display(Component name, Item disc, Config.Options.Style style) {

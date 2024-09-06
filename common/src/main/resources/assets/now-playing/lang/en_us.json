@@ -20,6 +20,8 @@
   "option.now-playing.toast_scale.tooltip": "Scale the size of the 'Now Playing' toast",
   "option.now-playing.simple_toast": "Simple toast",
   "option.now-playing.simple_toast.tooltip": "Only show the song, not the 'Now Playing' text",
+  "option.now-playing.only_cat": "Only Cat",
+  "option.now-playing.only_cat.tooltip": "Always show the 'Cat' disc for background music toasts",
   "option.now-playing.toast_time": "Toast display time",
   "option.now-playing.toast_time.tooltip": "The time, in seconds, to show the 'Now Playing' toast",
   "option.now-playing.hotbar_time": "Hotbar display time",
