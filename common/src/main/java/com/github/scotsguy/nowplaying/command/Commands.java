@@ -11,12 +11,12 @@ import static net.minecraft.commands.Commands.literal;
 
 @SuppressWarnings("unchecked")
 public class Commands<S> extends CommandDispatcher<S> {
-    public void register(Minecraft mc, CommandDispatcher<S> dispatcher, CommandBuildContext buildContext) {
+    public void register(Minecraft mc, CommandDispatcher<S> dispatcher, CommandBuildContext buildCtx) {
         dispatcher.register((LiteralArgumentBuilder<S>)literal("nowplaying")
-                        .executes(ctx -> {
-                            NowPlaying.displayLastMusic();
-                            return Command.SINGLE_SUCCESS;
-                        })
+                .executes(ctx -> {
+                    NowPlaying.displayLastMusic();
+                    return Command.SINGLE_SUCCESS;
+                })
         );
     }
 }

@@ -32,6 +32,7 @@
   "option.now-playing.style.disabled": "Disabled",
 
   "message.now-playing.now_playing": "Now Playing",
+  "message.now-playing.not_found": "No recent music",
 
   "music.now-playing.minecraft": "C418 - Minecraft",
   "music.now-playing.clark": "C418 - Clark",

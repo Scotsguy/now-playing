@@ -5,6 +5,7 @@ import com.github.scotsguy.nowplaying.gui.toast.NowPlayingToast;
 import com.github.scotsguy.nowplaying.mixin.GuiAccessor;
 import com.github.scotsguy.nowplaying.util.ModLogger;
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import static com.github.scotsguy.nowplaying.util.Localization.localized;
 import static com.github.scotsguy.nowplaying.util.Localization.translationKey;
 
 public class NowPlaying {
@@ -38,7 +40,12 @@ public class NowPlaying {
     }
 
     public static void displayLastMusic() {
-        if (lastMusic != null) displayMusic(lastMusic);
+        if (lastMusic != null) {
+            displayMusic(lastMusic);
+        } else {
+            Minecraft.getInstance().gui.setOverlayMessage(
+                    localized("message", "not_found").withStyle(ChatFormatting.RED), true);
+        }
     }
 
     public static void displayMusic(Component name) {
