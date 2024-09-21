@@ -460,7 +460,7 @@ ij_xml_block_comment_at_first_column = true
 ij_xml_keep_indents_on_empty_lines = false
 ij_xml_line_comment_at_first_column = true
 
-[{*.yml,*.yaml}]
+[{*.yml,*.yaml,*.toml}]
 indent_size = 2
 ij_yaml_keep_indents_on_empty_lines = false
 ij_yaml_keep_line_breaks = true
@@ -472,7 +472,7 @@ ij_json_keep_indents_on_empty_lines = false
 ij_json_keep_line_breaks = true
 ij_json_space_after_colon = true
 ij_json_space_after_comma = true
-ij_json_space_before_colon = true
+ij_json_space_before_colon = false
 ij_json_space_before_comma = false
 ij_json_spaces_within_braces = false
 ij_json_spaces_within_brackets = false
