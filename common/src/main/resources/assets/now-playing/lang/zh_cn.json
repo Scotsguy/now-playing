@@ -1,0 +1,38 @@
+{
+  "screen.now-playing.default": "正在播放",
+  "screen.now-playing.options": "正在播放选项",
+
+  "message.now-playing.install_cloth": "安装 Cloth Config API 以访问mod选项。",
+  "message.now-playing.go_modrinth": "在 Modrinth 上查看",
+
+  "now-playing.key_group": "Now Playing",
+  "key.now-playing.display": "显示正在播放的音乐",
+
+  "option.now-playing.music_only_keybind": "仅使用按键或命令",
+  "option.now-playing.music_only_keybind.tooltip": "仅在按下显示按键或使用/nowplaying命令时显示音乐",
+  "option.now-playing.music_style": "音乐弹出式风格",
+  "option.now-playing.jukebox_style": "唱片机弹出式风格",
+  "option.now-playing.fallback_toast": "回退到弹窗",
+  "option.now-playing.fallback_toast.tooltip": "选择“快捷栏”样式时，如果快捷栏显示不可用，请使用弹窗",
+  "option.now-playing.silence_woosh": "无声的弹窗",
+  "option.now-playing.silence_woosh.tooltip": "关闭“正在播放”弹窗的声音",
+  "option.now-playing.toast_scale": "弹窗大小",
+  "option.now-playing.toast_scale.tooltip": "调整“正在播放”弹窗的大小",
+  "option.now-playing.simple_toast": "简单的弹窗",
+  "option.now-playing.simple_toast.tooltip": "在弹窗上只显示歌曲名称，没有 '正在播放' 文本",
+  "option.now-playing.only_cat": "只有 Cat",
+  "option.now-playing.only_cat.tooltip": "总是展示“Cat”光盘作为背景音乐弹窗",
+  "option.now-playing.toast_time": "弹窗显示时间",
+  "option.now-playing.toast_time.tooltip": "显示“正在播放”弹窗的时间（以秒为单位）",
+  "option.now-playing.hotbar_time": "快捷栏显示时间",
+  "option.now-playing.hotbar_time.tooltip": "显示“正在播放“快捷栏文字的时间（以秒为单位）",
+  "option.now-playing.narrate": "复述弹窗内容",
+  "option.now-playing.narrate.tooltip": "当复述功能开启时, 读出 '正在播放' 弹窗内容",
+
+  "option.now-playing.style.hotbar": "快捷栏",
+  "option.now-playing.style.toast": "弹窗",
+  "option.now-playing.style.disabled": "禁用",
+
+  "message.now-playing.now_playing": "正在播放",
+  "message.now-playing.not_found": "没有最近的音乐",
+}
