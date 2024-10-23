@@ -1,11 +1,9 @@
 package com.github.scotsguy.nowplaying.gui.screen;
 
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineTextWidget;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
-import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 
@@ -27,13 +25,16 @@ public class ConfigScreenProvider {
         }
     }
 
-    static class BackupScreen extends OptionsSubScreen {
+    static class BackupScreen extends Screen {
+        private final Screen parent;
+
         public BackupScreen(Screen parent) {
-            super(parent, Minecraft.getInstance().options, localized("screen", "title.default"));
+            super(localized("screen", "default"));
+            this.parent = parent;
         }
 
         @Override
-        protected void addOptions() {
+        protected void init() {
             MultiLineTextWidget messageWidget = new MultiLineTextWidget(
                     width / 2 - 120, height / 2 - 40,
                     localized("message", "install_cloth"),
@@ -46,7 +47,7 @@ public class ConfigScreenProvider {
                             (button) -> minecraft.setScreen(new ConfirmLinkScreen(
                                     (open) -> {
                                         if (open) Util.getPlatform().openUri("https://modrinth.com/mod/9s6osm5g");
-                                        minecraft.setScreen(lastScreen);
+                                        minecraft.setScreen(parent);
                                     }, "https://modrinth.com/mod/9s6osm5g", true)))
                     .pos(width / 2 - 120, height / 2)
                     .size(115, 20)

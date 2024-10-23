@@ -11,14 +11,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(targets = "net.minecraft.client.gui.components.toasts.ToastComponent$ToastInstance")
-public class MixinToastInstance<T extends Toast> {
-    @Final
+@Mixin(targets = "net.minecraft.client.gui.components.toasts.ToastManager$ToastInstance")
+public class MixinToastInstance {
     @Shadow
-    private T toast;
+    @Final
+    private Toast toast;
 
     @WrapOperation(
-            method = "render",
+            method = "update",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;playSound(Lnet/minecraft/client/sounds/SoundManager;)V"

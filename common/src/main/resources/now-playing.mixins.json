@@ -8,7 +8,7 @@
     "GuiAccessor"
   ],
   "client": [
-    "MixinLevelRenderer",
+    "MixinLevelEventHandler",
     "MixinMinecraft",
     "MixinToastInstance"
   ],

@@ -1,1 +1,1 @@
-- Add Simplified Chinese translation (user111192)
+- Update to mc1.21.2

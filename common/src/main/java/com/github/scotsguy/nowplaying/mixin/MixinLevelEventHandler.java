@@ -6,8 +6,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.LevelEventHandler;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -16,7 +16,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.JukeboxSong;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -24,12 +25,12 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Optional;
 
-@Mixin(LevelRenderer.class)
-public class MixinLevelRenderer {
+@Mixin(LevelEventHandler.class)
+public class MixinLevelEventHandler {
 
+    @Final
     @Shadow
-    @Nullable
-    private ClientLevel level;
+    private Level level;
 
     @WrapOperation(
             method = "playJukeboxSong",
@@ -49,9 +50,13 @@ public class MixinLevelRenderer {
         if (level == null) return defaultDisc;
 
         Item disc = null;
-        Optional<Registry<Item>> itemRegistry = level.registryAccess().registry(Registries.ITEM);
-        if (itemRegistry.isPresent()) disc = itemRegistry.get().get(ResourceLocation.parse(
-                sound.getLocation().toString().replaceAll("\\.", "_")));
+        Optional<Holder.Reference<Registry<Item>>> itemRegistry =
+                level.registryAccess().get(Registries.ITEM);
+        if (itemRegistry.isPresent()) {
+            Optional<Holder.Reference<Item>> discRef = itemRegistry.get().value().get(
+                    ResourceLocation.parse(sound.location().toString().replaceAll("\\.", "_")));
+            if (discRef.isPresent()) disc = discRef.get().value();
+        }
 
         if (disc == null || disc.equals(Items.AIR)) disc = defaultDisc;
         return disc;
