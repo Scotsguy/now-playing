@@ -42,7 +42,7 @@ public class ConfigScreenProvider {
         try {
             return ClothScreenProvider.getConfigScreen(parent);
         } catch (NoClassDefFoundError ignored) {
-            return new BackupScreen(parent, "installCloth", "https://modrinth.com/mod/9s6osm5g");
+            return new BackupScreen(parent, "install_cloth", "https://modrinth.com/mod/9s6osm5g");
         }
     }
 
@@ -68,7 +68,7 @@ public class ConfigScreenProvider {
             messageWidget.setCentered(true);
             addRenderableWidget(messageWidget);
 
-            Button openLinkButton = Button.builder(localized("message", "viewModrinth"),
+            Button openLinkButton = Button.builder(localized("message", "go_modrinth"),
                             (button) -> minecraft.setScreen(new ConfirmLinkScreen(
                                     (open) -> {
                                         if (open) Util.getPlatform().openUri(modUrl);
