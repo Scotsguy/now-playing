@@ -24,9 +24,11 @@ package com.github.scotsguy.nowplaying.gui.toast;
 
 import com.github.scotsguy.nowplaying.config.Config;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
-import net.minecraft.client.gui.components.toasts.ToastComponent;
+import net.minecraft.client.gui.components.toasts.ToastManager;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -44,6 +46,8 @@ public class NowPlayingToast implements Toast {
     private final ItemStack itemStack;
     private final long displayTime;
     private final float scale;
+    private Toast.Visibility wantedVisibility;
+    private long startTime;
 
     private static final int TEXT_LEFT_MARGIN = 30;
     private static final int TEXT_RIGHT_MARGIN = 7;
@@ -56,7 +60,18 @@ public class NowPlayingToast implements Toast {
     }
 
     @Override
-    public @NotNull Visibility render(@NotNull GuiGraphics graphics, @NotNull ToastComponent toast, long startTime) {
+    public @NotNull Visibility getWantedVisibility() {
+        return wantedVisibility;
+    }
+
+    @Override
+    public void update(@NotNull ToastManager toastManager, long l) {
+        this.wantedVisibility = startTime >= this.displayTime ? Visibility.HIDE : Visibility.SHOW;
+    }
+
+    @Override
+    public void render(@NotNull GuiGraphics graphics, @NotNull Font font, long startTime) {
+        this.startTime = startTime;
         if (scale != 1.0F) {
             graphics.pose().pushPose();
             graphics.pose().translate(160 * (1 - scale), 0.0F, 0.0F);
@@ -70,7 +85,7 @@ public class NowPlayingToast implements Toast {
 
         if (width == 160 && textLines.size() <= 1) {
             // Text fits, draw the whole toast from the texture
-            graphics.blitSprite(BACKGROUND_SPRITE, 0, 0, width, height);
+            graphics.blitSprite(RenderType::guiTextured, BACKGROUND_SPRITE, 0, 0, width, height);
         } else {
             // Stretch toast by drawing the sprite multiple times
             height = height + Math.max(0, textLines.size() - (Config.options().simpleToast ? 2 : 1)) * 12;
@@ -107,19 +122,18 @@ public class NowPlayingToast implements Toast {
         graphics.renderFakeItem(itemStack, 9, (height / 2) - (16 / 2));
 
         if (scale != 1.0F) graphics.pose().popPose();
-        return startTime >= this.displayTime ? Visibility.HIDE : Visibility.SHOW;
     }
 
     private void renderBackgroundRow(GuiGraphics graphics, int i, int vOffset, int y, int vHeight) {
         int uWidth = vOffset == 0 ? 20 : 5;
         int n = Math.min(60, i - uWidth);
 
-        graphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 0, vOffset, 0, y, uWidth, vHeight);
-
+        graphics.blitSprite(RenderType::guiTextured, BACKGROUND_SPRITE, 160, 32, 0, vOffset, 0, y, uWidth, vHeight);
+        
         for (int o = uWidth; o < i - n; o += 64) {
-            graphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 32, vOffset, o, y, Math.min(64, i - o - n), vHeight);
+            graphics.blitSprite(RenderType::guiTextured, BACKGROUND_SPRITE, 160, 32, 32, vOffset, o, y, Math.min(64, i - o - n), vHeight);
         }
 
-        graphics.blitSprite(BACKGROUND_SPRITE, 160, 32, 160 - n, vOffset, i - n, y, n, vHeight);
+        graphics.blitSprite(RenderType::guiTextured, BACKGROUND_SPRITE, 160, 32, 160 - n, vOffset, i - n, y, n, vHeight);
     }
 }

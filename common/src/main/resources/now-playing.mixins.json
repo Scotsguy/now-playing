@@ -7,7 +7,7 @@
   "mixins": [
   ],
   "client": [
-    "MixinLevelRenderer",
+    "MixinLevelEventHandler",
     "MixinMinecraft",
     "MixinToastInstance",
     "GuiAccessor"
