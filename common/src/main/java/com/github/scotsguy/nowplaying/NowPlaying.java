@@ -103,7 +103,7 @@ public class NowPlaying {
 
         switch(style) {
             case Toast -> {
-                mc.getToasts().addToast(new NowPlayingToast(name, spriteSupplier.get(),
+                mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                         options().toastTime * 1000L, options().toastScale, options().darkToast));
                 if (options().narrate) mc.getNarrator().sayNow(message);
             }
@@ -112,7 +112,7 @@ public class NowPlaying {
                     mc.gui.setOverlayMessage(message, true);
                     ((GuiAccessor)mc.gui).setOverlayMessageTime(options().hotbarTime * 20);
                 } else if (options().fallbackToast) {
-                    mc.getToasts().addToast(new NowPlayingToast(name, spriteSupplier.get(),
+                    mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                             options().toastTime * 1000L, options().toastScale, options().darkToast));
                 }
                 if (options().narrate) mc.getNarrator().sayNow(message);
