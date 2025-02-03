@@ -1,6 +1,6 @@
 {
-  "modmenu.descriptionTranslation.now-playing": "Shows a popup whenever the active music track music changes.",
-  "fml.menu.mods.info.description.now_playing": "Shows a popup whenever the active music track music changes.",
+  "modmenu.descriptionTranslation.now-playing": "Показывает всплывающее окно каждый раз, когда меняется активная музыка.",
+  "fml.menu.mods.info.description.now_playing": "Показывает всплывающее окно каждый раз, когда меняется активная музыка.",
   
   "screen.now-playing.default": "Сейчас играет",
   "screen.now-playing.options": "Параметры воспроизведения",
@@ -8,9 +8,9 @@
   "message.now-playing.installCloth": "Установите Cloth Config API для доступа к параметрам мода.",
   "message.now-playing.viewModrinth": "Посмотреть на Modrinth",
 
-  "key.now-playing.group": "Now Playing",
+  "key.now-playing.group": "Сейчас играет",
   "key.now-playing.group.display": "Показать последнюю песню",
-  "key.now-playing.group.next": "Play next track",
+  "key.now-playing.group.next": "Воспроизвести следующий трек",
 
   "option.now-playing.onlyKeybind": "Использовать только клавиши или команды",
   "option.now-playing.onlyKeybind.tooltip": "Показывать музыку только когда нажата клавиша отображения или используется команда /nowplaying",
@@ -24,8 +24,8 @@
   "option.now-playing.toastScale.tooltip": "Изменить размер всплывающего окна 'Сейчас играет'",
   "option.now-playing.simpleToast": "Простое всплывающее окно",
   "option.now-playing.simpleToast.tooltip": "Во всплывающем окне отображается только название песни без текста 'Сейчас играет'",
-  "option.now-playing.darkToast": "Dark toast",
-  "option.now-playing.darkToast.tooltip": "Use a dark background for the 'Now Playing' toast",
+  "option.now-playing.darkToast": "Тёмный фон",
+  "option.now-playing.darkToast.tooltip": "Использовать тёмный фон для всплывающего окна 'Сейчас играет'",
   "option.now-playing.toastTime": "Время отображения всплывающего окна",
   "option.now-playing.toastTime.tooltip": "Время (в секундах) для отображения всплывающего окна 'Сейчас играет'",
   "option.now-playing.hotbarTime": "Время отображения панели быстрого доступа",
