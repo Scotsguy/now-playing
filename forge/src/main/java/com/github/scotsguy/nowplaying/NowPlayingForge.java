@@ -28,25 +28,26 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
-@Mod(value = NowPlaying.MOD_ID_NEOFORGE, dist = Dist.CLIENT)
-@EventBusSubscriber(modid = NowPlaying.MOD_ID_NEOFORGE, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class NowPlayingNeoForge {
-    public NowPlayingNeoForge() {
+@Mod(NowPlaying.MOD_ID_FORGE)
+@Mod.EventBusSubscriber(modid = NowPlaying.MOD_ID_FORGE, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class NowPlayingForge {
+    public NowPlayingForge() {
         // Config screen
-        ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class,
-                () -> (mc, parent) -> ConfigScreenProvider.getConfigScreen(parent));
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory(
+                        (minecraft, parent) -> ConfigScreenProvider.getConfigScreen(parent))
+        );
 
         // Main initialization
         NowPlaying.init();
@@ -70,18 +71,21 @@ public class NowPlayingNeoForge {
         });
     }
 
-    @EventBusSubscriber(modid = NowPlaying.MOD_ID_NEOFORGE, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = NowPlaying.MOD_ID_FORGE, value = Dist.CLIENT)
     static class ClientEventHandler {
         // Commands
         @SubscribeEvent
         static void registerClientCommands(RegisterClientCommandsEvent event) {
-            new Commands<CommandSourceStack>().register(Minecraft.getInstance(), event.getDispatcher(), event.getBuildContext());
+            new Commands<CommandSourceStack>().register(
+                    Minecraft.getInstance(), event.getDispatcher(), event.getBuildContext());
         }
 
         // Tick events
         @SubscribeEvent
-        public static void clientTickEvent(ClientTickEvent.Post event) {
-            NowPlaying.onEndTick(Minecraft.getInstance());
+        public static void clientTickEvent(TickEvent.ClientTickEvent event) {
+            if (event.phase.equals(TickEvent.Phase.END)) {
+                NowPlaying.onEndTick(Minecraft.getInstance());
+            }
         }
     }
 }

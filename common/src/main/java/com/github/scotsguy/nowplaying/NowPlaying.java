@@ -47,7 +47,7 @@ import static com.github.scotsguy.nowplaying.util.Localization.translationKey;
 
 public class NowPlaying {
     public static final String MOD_ID = "now-playing";
-    public static final String MOD_ID_NEOFORGE = "now_playing";
+    public static final String MOD_ID_FORGE = "now_playing";
     public static final String MOD_NAME = "Now Playing";
     public static final ModLogger LOG = new ModLogger(MOD_NAME);
     public static final KeyMapping DISPLAY_KEY = new KeyMapping(

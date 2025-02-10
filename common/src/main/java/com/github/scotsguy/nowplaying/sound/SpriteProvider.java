@@ -37,9 +37,9 @@ import java.util.List;
 
 public class SpriteProvider {
     private static final ResourceLocation SPRITES_FILE = 
-            ResourceLocation.fromNamespaceAndPath(NowPlaying.MOD_ID, "sprites.json");
+            new ResourceLocation(NowPlaying.MOD_ID, "sprites.json");
     public static final ResourceLocation DISC_SPRITE_DEFAULT =
-            ResourceLocation.parse("minecraft:textures/item/music_disc_cat.png");
+            new ResourceLocation("minecraft:textures/item/music_disc_cat.png");
     
     private static final HashMap<String, ResourceLocation> CACHE = new HashMap<>();
     private static boolean hasAttemptedLoad;
@@ -113,6 +113,6 @@ public class SpriteProvider {
     
     public static ResourceLocation getDiscSprite(ResourceLocation location) {
         String discId = location.getPath().replaceAll("\\.", "_");
-        return ResourceLocation.parse("textures/item/" + discId + ".png");
+        return new ResourceLocation("textures/item/" + discId + ".png");
     }
 }
