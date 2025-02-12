@@ -17,6 +17,11 @@
   color: 'BFD4F2'
   description: 'Closed: Not actionable or inadequate information'
   aliases: []
+  
+- name: E/scope
+  color: 'BFD4F2'
+  description: 'Closed: Out of scope'
+  aliases: []
 
 - name: E/wontfix
   color: 'BFD4F2'
@@ -36,20 +41,15 @@
   aliases: []
 
 - name: P/medium
-  color: '36210B'
+  color: '9B5003'
   description: 'Priority: Medium, time-sensitive but not urgent'
   aliases: []
 
 
 
 - name: S/accepted
-  color: '0E8A16'
-  description: 'Status: Request accepted'
-  aliases: []
-
-- name: S/available
-  color: '006B75'
-  description: 'Status: Available for community contribution'
+  color: '172B72'
+  description: 'Status: Accepted but not assigned'
   aliases: []
 
 - name: S/blocked
@@ -57,40 +57,40 @@
   description: 'Status: Blocked by another event'
   aliases: []
 
-- name: S/fixed
+- name: S/finished
   color: '0E8A16'
-  description: 'Status: Fixed'
+  description: 'Status: Complete, awaiting release'
+  aliases: [fixed,complete]
+  
+- name: S/in-progress
+  color: '36210B'
+  description: 'Status: Being worked on'
   aliases: []
 
 - name: S/info-needed
-  color: 'FBCA04'
+  color: '4A4800'
   description: 'Status: Awaiting further information'
   aliases: []
 
-- name: S/in-progress
-  color: '0052CC'
-  description: 'Status: Assigned and in progress'
-  aliases: []
-
 - name: S/needs-triage
-  color: '36210B'
+  color: 'D4C31A'
   description: 'Status: Needs triage'
   aliases: []
+  
 
-
-
+  
 - name: T/addition
-  color: '006B75'
+  color: '139399'
   description: 'Type: New feature'
   aliases: []
 
 - name: T/bug
-  color: 'D93F0B'
+  color: 'A83400'
   description: 'Type: Bug'
   aliases: []
 
 - name: T/compat
-  color: '36210B'
+  color: '490839'
   description: 'Type: Compatibility'
   aliases: []
 
@@ -112,4 +112,9 @@
 - name: T/security
   color: 'B60205'
   description: 'Type: Security issue'
+  aliases: []
+  
+- name: T/translation
+  color: '8C02DA'
+  description: 'Type: Translation'
   aliases: []
