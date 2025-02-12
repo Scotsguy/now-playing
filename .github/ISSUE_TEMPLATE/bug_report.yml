@@ -1,4 +1,4 @@
-name: Bug Report
+name: Mod bug report
 description: "For reporting bugs and other defects"
 labels:
   - S/needs-triage
@@ -6,93 +6,121 @@ body:
   - type: markdown
     attributes:
       value: >-
-        **This issue tracker is not intended for support requests!** Unless you are certain that 
-        you have found a defect, and you are able to point to where the problem is, you should not 
-        open an issue. For general support or if you're unsure, please 
-        [ask on Discord](https://discord.terminalmc.dev).
-        <br><br>
-        Additionally, please make check the following:
+        ### ⚠️ Bug Report
         
-        - **Have you used the [search tool](https://github.com/Scotsguy/now-playing/issues) to 
-        check whether your issue has already been reported?** If it has been, consider adding more 
-        information to the existing issue instead.
+        **Thank you for taking the time to make a report!** This form is designed to help you
+        provide the information necessary for us to understand and fix the issue. Before you start,
+        please complete the following checks:
         
-        - **Have you determined the minimum set of instructions to reproduce the issue?** If your 
-        problem only occurs with other mods installed, then you should narrow down exactly which 
-        mods are causing the issue. Please do not provide your entire list of mods and expect that 
-        we will be able to figure out the problem.
-  - type: input
-    id: mod-version
-    attributes:
-      label: Mod Version
-      description: >-
-        Specify the version(s) of the mod in which you have identified this issue.
         
-        **Example:** `v1.2.0-Fabric-1.20.6`
-    validations:
-      required: true
+        1. Are you using the latest version of the mod? If there is a more recent version of the mod
+        available for your version of Minecraft, please check whether the issue still occurs on that
+        version.
+        
+        
+        2. Has the issue already been reported? If it has been, please do not open a new issue, but
+        if you have additional information please comment on the existing report.
+        
+        
+        3. Have you determined the minimum set of instructions to reproduce the issue? If the issue
+        only occurs in specific situations or with other mods installed, please attempt to narrow
+        down exactly what conditions or mods are required to reproduce it.
+
+  - type: checkboxes
+    id: preliminary-checks
+    attributes: 
+      label: Checklist
+      options:
+        - label: This issue exists on the latest release for my Minecraft version.
+          required: true
+        - label: This issue has not already been reported.
+          required: true
+        - label: I have determined the minimal reproduction requirements. 
+          required: true
+
   - type: input
     id: mod-loader
     attributes:
       label: Mod Loader
       description: >-
-        Specify the mod loader(s) in which you have identified this issue.
+        Which mod loader are you using?
 
-        **Example:** `Fabric`
+        **Examples:** `Fabric`, `NeoForge`
     validations:
       required: true
+
   - type: input
     id: mc-version
     attributes:
       label: Minecraft Version
       description: >-
-        Specify the Minecraft version(s) in which you have identified this issue.
+        Which version of Minecraft are you using?
 
-        **Example:** `1.20.6`
+        **Examples:** `1.21.4`, `1.20.1`
     validations:
       required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod Version
+      description: >-
+        Which version of this mod are you using?
+        
+        **Example:** `2.2.0+1.21.4`
+    validations:
+      required: true
+
+  - type: input
+    id: log-link
+    attributes:
+      label: Log File
+      description: >-
+        Please upload your log file to [mclo.gs](https://mclo.gs) and paste the link here. Even if
+        there are no crashes, logs help identify version details and potential error messages.
+
+
+        **Hint:** Log files are located in the `logs` folder of your Minecraft instance, typically 
+        `.minecraft/logs`. You will usually want the `latest.log` file, since that file belongs to 
+        the most recent session of the game. Alternatively, some launchers such as Prism support 
+        uploading logs to mclo.gs directly.
+      placeholder: https://mclo.gs/your-log-link
+    validations:
+      required: true
+
   - type: textarea
     id: description
     attributes:
-      label: Bug Description
+      label: Issue Description
       description: >-
-        Describe in detail the issue you are experiencing. The description should explain what 
-        behavior you were expecting, and why you believe the issue to be a bug. If the issue you 
-        are reporting only occurs with specific mods installed, then provide the name and version 
-        of each mod.
-
-        **Hint:** If you have any screenshots, videos, or other information that you feel is 
-        necessary to explain the issue, you can attach them here.
+        Please describe in detail the issue you are experiencing. If you have any screenshots, 
+        videos, or other resources that help illustrate the problem, you can attach them here.
+      placeholder: Describe the issue...
     validations:
       required: true
-  - type: textarea
-    id: description-reproduction-steps
-    attributes:
-      label: Reproduction Steps
-      description: >-
-        Describe the procedure required to reproduce this bug. Make sure your instructions are as 
-        clear and concise as possible, because other people will need to be able to follow your 
-        guide in order to re-create the issue.
         
-        **Hint:**  A common way to fill this section out is to write a step-by-step guide.
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: >-
+        Please list the steps that we should follow to encounter the issue. If you are unsure, or
+        unable to consistently reproduce it, please provide a detailed description of what you
+        were doing when the issue occurred.
+  
+        1. Do X
+        
+        2. Do Y
+        
+        3. Issue occurs
+      placeholder: List the steps to reproduce the issue...
     validations:
       required: true
-  - type: textarea
-    id: log-file
+
+  - type: input
+    id: expected-behavior
     attributes:
-      label: Log File (optional)
+      label: Expected Behavior (optional)
       description: >-
-        **Hint:** You can usually find the log files within the folder `.minecraft/logs`. Generally
-        you will want the `latest.log` file, since that file belongs to the last played session of 
-        the game.
-      placeholder: >-
-        Drag-and-drop the log file here.
-  - type: textarea
-    id: crash-report-file
-    attributes:
-      label: Crash Report (optional)
-      description: >-
-        **Hint:** You can usually find crash reports (with their date and time) in the folder 
-        `.minecraft/crash-reports`.
-      placeholder: >-
-        Drag-and-drop the crash report file here.
+        Describe briefly what you believe should happen if the issue was fixed. If the answer is 
+        obvious (such as if the game is crashing), you can skip this.
