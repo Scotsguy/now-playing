@@ -22,7 +22,7 @@
 
 package com.github.scotsguy.nowplaying.mixin;
 
-import com.github.scotsguy.nowplaying.sound.NowPlayingListener;
+import com.github.scotsguy.nowplaying.util.NowPlayingListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.sounds.SoundManager;
 import org.spongepowered.asm.mixin.Final;

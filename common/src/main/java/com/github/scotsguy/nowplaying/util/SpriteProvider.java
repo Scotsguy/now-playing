@@ -20,7 +20,7 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.scotsguy.nowplaying.sound;
+package com.github.scotsguy.nowplaying.util;
 
 import com.github.scotsguy.nowplaying.NowPlaying;
 import com.google.gson.JsonObject;
@@ -85,7 +85,7 @@ public class SpriteProvider {
         }
     }
 
-    public static ResourceLocation getMusicSprite(ResourceLocation location) {
+    public static ResourceLocation getMusicSprite(ResourceLocation location, String title) {
         String locStr = location.toString();
         ResourceLocation sprite = getCustomSprite(locStr);
         
@@ -105,9 +105,23 @@ public class SpriteProvider {
         
         if (sprite == null) {
 //            NowPlaying.LOG.warn("Unable to find any sprite for '{}'", locStr);
-            return DISC_SPRITE_DEFAULT;
+            return getDefaultSprite(title);
         } else {
             return sprite;
+        }
+    }
+
+    public static ResourceLocation getDefaultSprite(String title) {
+        if (title.contains("C418")) {
+            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_blocks.png");
+        } else if (title.contains("Lena Raine")) {
+            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_otherside.png");
+        } else if (title.contains("Aaron Cherof")) {
+            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_relic.png");
+        } else if (title.contains("Kumi Tanioka")) {
+            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_mall.png");
+        } else {
+            return DISC_SPRITE_DEFAULT;
         }
     }
     

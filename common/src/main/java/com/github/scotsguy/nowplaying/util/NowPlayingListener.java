@@ -20,7 +20,7 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.scotsguy.nowplaying.sound;
+package com.github.scotsguy.nowplaying.util;
 
 import com.github.scotsguy.nowplaying.NowPlaying;
 import net.minecraft.client.Minecraft;

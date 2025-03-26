@@ -28,7 +28,7 @@ import com.github.scotsguy.nowplaying.mixin.accessor.GuiAccessor;
 import com.github.scotsguy.nowplaying.mixin.accessor.MinecraftAccessor;
 import com.github.scotsguy.nowplaying.util.Localization;
 import com.github.scotsguy.nowplaying.util.ModLogger;
-import com.github.scotsguy.nowplaying.sound.SpriteProvider;
+import com.github.scotsguy.nowplaying.util.SpriteProvider;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
@@ -87,8 +87,9 @@ public class NowPlaying {
     }
     
     public static void displayMusic(ResourceLocation location) {
-        display(getTranslatedTitle(location.toString()), 
-                () -> SpriteProvider.getMusicSprite(location), options().musicStyle);
+        Component title = getTranslatedTitle(location.toString());
+        display(title, () -> SpriteProvider.getMusicSprite(location, title.getString()),
+                options().musicStyle);
     }
 
     public static void displayDisc(Component text, ResourceLocation location) {

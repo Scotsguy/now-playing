@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.14
+
+- Fixed partial paths in sprites.json being overwritten by defaults
+
 ## 1.5.13
 
 - Updated Russian translation (rfin0)
