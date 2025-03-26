@@ -9,7 +9,6 @@
   "client": [
     "MixinLevelEventHandler",
     "MixinMinecraft",
-    "MixinToastInstance",
     "accessor.GuiAccessor",
     "accessor.MinecraftAccessor",
     "accessor.ToastManagerAccessor"
