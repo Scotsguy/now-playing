@@ -26,28 +26,26 @@ import com.github.scotsguy.nowplaying.config.Config;
 import com.github.scotsguy.nowplaying.gui.toast.NowPlayingToast;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastManager;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(targets = "net.minecraft.client.gui.components.toasts.ToastManager$ToastInstance")
+@Mixin(ToastManager.class)
 public class MixinToastInstance {
-    @Shadow
-    private @Final Toast toast;
-
     @WrapOperation(
-            method = "update",
+            method = "method_61992",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;playSound(Lnet/minecraft/client/sounds/SoundManager;)V"
+                    target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)V"
             )
     )
-    void silenceWooshSound(Toast.Visibility instance, SoundManager soundManager, Operation<Void> original) {
+    void silenceWooshSound(SoundManager instance, SoundInstance sound, Operation<Void> original, @Local(argsOnly = true) Toast toast) {
         if (!(toast instanceof NowPlayingToast && Config.options().silenceWoosh)) {
-            original.call(instance, soundManager);
+            original.call(instance, sound);
         }
     }
 }

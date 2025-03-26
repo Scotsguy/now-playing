@@ -26,7 +26,7 @@ import com.github.scotsguy.nowplaying.command.Commands;
 import com.github.scotsguy.nowplaying.gui.screen.ConfigScreenProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,10 +35,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import org.jetbrains.annotations.NotNull;
 
 @Mod(value = NowPlaying.MOD_ID_NEOFORGE, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = NowPlaying.MOD_ID_NEOFORGE, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -61,13 +60,10 @@ public class NowPlayingNeoForge {
 
     // Resource reload event
     @SubscribeEvent
-    public static void registerResourceReloadEvent(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(new ResourceManagerReloadListener() {
-            @Override
-            public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
-                NowPlaying.onResourceReload();
-            }
-        });
+    public static void registerResourceReloadEvent(AddClientReloadListenersEvent event) {
+        event.addListener(ResourceLocation.fromNamespaceAndPath(NowPlaying.MOD_ID, "resources"),
+                (ResourceManagerReloadListener) resourceManager ->
+                        NowPlaying.onResourceReload());
     }
 
     @EventBusSubscriber(modid = NowPlaying.MOD_ID_NEOFORGE, value = Dist.CLIENT)
