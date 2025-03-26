@@ -37,9 +37,9 @@ import java.util.List;
 
 public class SpriteProvider {
     private static final ResourceLocation SPRITES_FILE = 
-            ResourceLocation.fromNamespaceAndPath(NowPlaying.MOD_ID, "sprites.json");
+            new ResourceLocation(NowPlaying.MOD_ID, "sprites.json");
     public static final ResourceLocation DISC_SPRITE_DEFAULT =
-            ResourceLocation.parse("minecraft:textures/item/music_disc_cat.png");
+            new ResourceLocation("minecraft:textures/item/music_disc_cat.png");
     
     private static final HashMap<String, ResourceLocation> CACHE = new HashMap<>();
     private static boolean hasAttemptedLoad;
@@ -113,13 +113,13 @@ public class SpriteProvider {
 
     public static ResourceLocation getDefaultSprite(String title) {
         if (title.contains("C418")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_blocks.png");
+            return new ResourceLocation("minecraft:textures/item/music_disc_blocks.png");
         } else if (title.contains("Lena Raine")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_otherside.png");
+            return new ResourceLocation("minecraft:textures/item/music_disc_otherside.png");
         } else if (title.contains("Aaron Cherof")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_relic.png");
+            return new ResourceLocation("minecraft:textures/item/music_disc_relic.png");
         } else if (title.contains("Kumi Tanioka")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_mall.png");
+            return new ResourceLocation("minecraft:textures/item/music_disc_mall.png");
         } else {
             return DISC_SPRITE_DEFAULT;
         }
@@ -127,6 +127,6 @@ public class SpriteProvider {
     
     public static ResourceLocation getDiscSprite(ResourceLocation location) {
         String discId = location.getPath().replaceAll("\\.", "_");
-        return ResourceLocation.parse("textures/item/" + discId + ".png");
+        return new ResourceLocation("textures/item/" + discId + ".png");
     }
 }

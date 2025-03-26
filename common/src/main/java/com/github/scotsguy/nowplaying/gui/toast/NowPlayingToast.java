@@ -37,10 +37,8 @@ import java.util.List;
 import static com.github.scotsguy.nowplaying.util.Localization.localized;
 
 public class NowPlayingToast implements Toast {
-    private static final ResourceLocation BACKGROUND_SPRITE_LIGHT = ResourceLocation.withDefaultNamespace("toast/recipe");
     private static final int NOW_PLAYING_COLOR_LIGHT = 0xFF800080;
     private static final int TITLE_COLOR_LIGHT = 0xFF000000;
-    private static final ResourceLocation BACKGROUND_SPRITE_DARK = ResourceLocation.withDefaultNamespace("toast/advancement");
     private static final int NOW_PLAYING_COLOR_DARK = 0xFF993299;
     private static final int TITLE_COLOR_DARK = 0xFFD1D1D1;
     
@@ -48,7 +46,7 @@ public class NowPlayingToast implements Toast {
     private final ResourceLocation discSprite;
     private final long displayTime;
     private final float scale;
-    private final ResourceLocation sprite;
+    private final int spriteY;
     private final int nowPlayingColor;
     private final int titleColor;
 
@@ -61,11 +59,11 @@ public class NowPlayingToast implements Toast {
         this.displayTime = displayTime;
         this.scale = scale;
         if (darkMode) {
-            sprite = BACKGROUND_SPRITE_DARK;
+            spriteY = 0;
             nowPlayingColor = NOW_PLAYING_COLOR_DARK;
             titleColor = TITLE_COLOR_DARK;
         } else {
-            sprite = BACKGROUND_SPRITE_LIGHT;
+            spriteY = 32;
             nowPlayingColor = NOW_PLAYING_COLOR_LIGHT;
             titleColor = TITLE_COLOR_LIGHT;
         }
@@ -86,7 +84,7 @@ public class NowPlayingToast implements Toast {
 
         if (width == 160 && textLines.size() <= 1) {
             // Text fits, draw the whole toast from the texture
-            graphics.blitSprite(sprite, 0, 0, width, height);
+            graphics.blit(TEXTURE, 0, 0, 0, spriteY, width, height);
         } else {
             // Stretch toast by drawing the sprite multiple times
             height = height + Math.max(0, textLines.size() - (Config.options().simpleToast ? 2 : 1)) * 12;
@@ -129,13 +127,12 @@ public class NowPlayingToast implements Toast {
     private void renderBackgroundRow(GuiGraphics graphics, int i, int vOffset, int y, int vHeight) {
         int uWidth = vOffset == 0 ? 20 : 5;
         int n = Math.min(60, i - uWidth);
-
-        graphics.blitSprite(sprite, 160, 32, 0, vOffset, 0, y, uWidth, vHeight);
+        graphics.blit(TEXTURE, 0, y, 0, spriteY + vOffset, uWidth, vHeight);
 
         for (int o = uWidth; o < i - n; o += 64) {
-            graphics.blitSprite(sprite, 160, 32, 32, vOffset, o, y, Math.min(64, i - o - n), vHeight);
+            graphics.blit(TEXTURE, o, y, 32, spriteY + vOffset, Math.min(64, i - o - n), vHeight);
         }
 
-        graphics.blitSprite(sprite, 160, 32, 160 - n, vOffset, i - n, y, n, vHeight);
+        graphics.blit(TEXTURE, i - n, y, 160 - n, spriteY + vOffset, n, vHeight);
     }
 }

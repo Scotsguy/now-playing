@@ -41,8 +41,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 public class NowPlayingFabric implements ClientModInitializer {
-    public static final ResourceLocation ID =
-            ResourceLocation.fromNamespaceAndPath(NowPlaying.MOD_ID, "reload_listener");
+    public static final ResourceLocation ID = 
+            new ResourceLocation(NowPlaying.MOD_ID, "reload_listener");
     
     @Override
     public void onInitializeClient() {
