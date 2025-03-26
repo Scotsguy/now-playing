@@ -20,31 +20,32 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.scotsguy.nowplaying.util;
+package com.github.scotsguy.nowplaying.mixin;
 
 import com.github.scotsguy.nowplaying.NowPlaying;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.client.sounds.SoundEventListener;
-import net.minecraft.client.sounds.WeighedSoundEvents;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import org.jetbrains.annotations.NotNull;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.RecordItem;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
 
-import static com.github.scotsguy.nowplaying.config.Config.options;
-
-public class NowPlayingListener implements SoundEventListener {
-    @Override
-    public void onPlaySound(@NotNull SoundInstance soundInstance, 
-                            @NotNull WeighedSoundEvents soundSet) {
-        if (soundInstance.getSource() == SoundSource.MUSIC) {
-            ResourceLocation location = soundInstance.getSound().getLocation();
-            NowPlaying.lastMusic = location;
-
-            if (!options().onlyKeybind
-                    && Minecraft.getInstance().options.getSoundSourceVolume(SoundSource.MASTER) != 0f) {
-                NowPlaying.displayMusic(location);
-            }
-        }
+@Mixin(LevelRenderer.class)
+public class MixinLevelRenderer {
+    @WrapOperation(
+            method = "playStreamingMusic",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/Gui;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
+            )
+    )
+    private void display(Gui instance, Component text, Operation<Void> original,
+                         @Local RecordItem recordItem,
+                         @Local(argsOnly = true) SoundEvent sound) {
+        NowPlaying.displayDisc(recordItem.getDescription(), sound.getLocation());
     }
 }

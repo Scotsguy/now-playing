@@ -30,21 +30,22 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.item.JukeboxSong;
+import net.minecraft.world.item.RecordItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LevelRenderer.class)
 public class MixinLevelRenderer {
     @WrapOperation(
-            method = "playJukeboxSong",
+            method = "playStreamingMusic(Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/RecordItem;)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/Gui;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
             )
     )
     private void display(Gui instance, Component text, Operation<Void> original,
-                         @Local JukeboxSong song, @Local SoundEvent sound) {
-        NowPlaying.displayDisc(song.description(), sound.getLocation());
+                         @Local(ordinal = 0, argsOnly = true) RecordItem recordItem,
+                         @Local(argsOnly = true) SoundEvent sound) {
+        NowPlaying.displayDisc(recordItem.getDescription(), sound.getLocation());
     }
 }
