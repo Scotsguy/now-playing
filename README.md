@@ -120,11 +120,11 @@ shown below.
 
 ```json
 {
-    "now-playing.minecraft:music/game/a_familiar_room": "Aaron Cherof - A Familiar Room",
-    "now-playing.minecraft:music/game/an_ordinary_day": "Kumi Tanioka - An Ordinary Day",
-    "now-playing.minecraft:music/game/ancestry": "Lena Raine - Ancestry",
-    "now-playing.minecraft:music/game/clark": "C418 - Clark",
-    "now-playing.minecraft:music/game/creative/aria_math": "C418 - Aria Math"
+    "now-playing.minecraft:music/game/a_familiar_room":     "Aaron Cherof - A Familiar Room",
+    "now-playing.minecraft:music/game/an_ordinary_day":     "Kumi Tanioka - An Ordinary Day",
+    "now-playing.minecraft:music/game/ancestry":            "Lena Raine - Ancestry",
+    "now-playing.minecraft:music/game/clark":               "C418 - Clark",
+    "now-playing.minecraft:music/game/creative/aria_math":  "C418 - Aria Math"
 }
 ```
 
