@@ -37,6 +37,19 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ToastManager.class)
 public class MixinToastInstance {
     @WrapOperation(
+            method = "method_61991",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;playSound(Lnet/minecraft/client/sounds/SoundManager;)V"
+            )
+    )
+    void silenceWooshSound(Toast.Visibility instance, SoundManager handler, Operation<Void> original, @Local(argsOnly = true) ToastManager.ToastInstance<?> toastInstance) {
+        if (!(toastInstance.getToast() instanceof NowPlayingToast && Config.options().silenceWoosh)) {
+            original.call(instance, handler);
+        }
+    }
+    
+    @WrapOperation(
             method = "method_61992",
             at = @At(
                     value = "INVOKE",

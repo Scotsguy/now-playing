@@ -1,2 +1,3 @@
 accessWidener v2 named
 # https://fabricmc.net/wiki/tutorial:accesswideners
+accessible class net/minecraft/client/gui/components/toasts/ToastManager$ToastInstance
