@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.15
+
+- Fixed 'Silent Toast' option not working on 1.21.5
+
 ## 1.5.14
 
 - Fixed partial paths in sprites.json being overwritten by defaults
