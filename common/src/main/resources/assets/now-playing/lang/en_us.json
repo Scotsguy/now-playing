@@ -1,7 +1,7 @@
 {
   "modmenu.descriptionTranslation.now-playing": "Shows a popup whenever the active music track music changes.",
   "fml.menu.mods.info.description.now_playing": "Shows a popup whenever the active music track music changes.",
-  
+
   "screen.now-playing.default": "Now Playing",
   "screen.now-playing.options": "Now Playing Options",
 
@@ -43,6 +43,8 @@
   "now-playing.minecraft:music/game/a_familiar_room": "Aaron Cherof - A Familiar Room",
   "now-playing.minecraft:music/game/an_ordinary_day": "Kumi Tanioka - An Ordinary Day",
   "now-playing.minecraft:music/game/ancestry": "Lena Raine - Ancestry",
+  "now-playing.minecraft:music/game/below_and_above": "Amos Roddy - Below and Above",
+  "now-playing.minecraft:music/game/broken_clocks": "Amos Roddy - Broken Clocks",
   "now-playing.minecraft:music/game/bromeliad": "Aaron Cherof - Bromeliad",
   "now-playing.minecraft:music/game/clark": "C418 - Clark",
   "now-playing.minecraft:music/game/comforting_memories": "Kumi Tanioka - Comforting Memories",
@@ -63,12 +65,14 @@
   "now-playing.minecraft:music/game/end/the_end": "C418 - The End",
   "now-playing.minecraft:music/game/endless": "Lena Raine - Endless",
   "now-playing.minecraft:music/game/featherfall": "Aaron Cherof - Featherfall",
+  "now-playing.minecraft:music/game/fireflies": "Amos Roddy - Fireflies",
   "now-playing.minecraft:music/game/floating_dream": "Kumi Tanioka - Floating Dream",
   "now-playing.minecraft:music/game/haggstrom": "C418 - Haggstrom",
   "now-playing.minecraft:music/game/infinite_amethyst": "Lena Raine - Infinite Amethyst",
   "now-playing.minecraft:music/game/key": "C418 - Key",
   "now-playing.minecraft:music/game/komorebi": "Kumi Tanioka - komorebi",
   "now-playing.minecraft:music/game/left_to_bloom": "Lena Raine - Left to Bloom",
+  "now-playing.minecraft:music/game/lilypad": "Amos Roddy - Lilypad",
   "now-playing.minecraft:music/game/living_mice": "C418 - Living Mice",
   "now-playing.minecraft:music/game/mice_on_venus": "C418 - Mice on Venus",
   "now-playing.minecraft:music/game/minecraft": "C418 - Minecraft",
@@ -80,6 +84,7 @@
   "now-playing.minecraft:music/game/nether/soulsand_valley/so_below": "Lena Raine - So Below",
   "now-playing.minecraft:music/game/nether/warmth": "C418 - Warmth",
   "now-playing.minecraft:music/game/one_more_day": "Lena Raine - One More Day",
+  "now-playing.minecraft:music/game/os_piano": "Amos Roddy - O's Piano",
   "now-playing.minecraft:music/game/oxygene": "C418 - Oxygène",
   "now-playing.minecraft:music/game/pokopoko": "Kumi Tanioka - pokopoko",
   "now-playing.minecraft:music/game/puzzlebox": "Aaron Cherof - Puzzlebox",

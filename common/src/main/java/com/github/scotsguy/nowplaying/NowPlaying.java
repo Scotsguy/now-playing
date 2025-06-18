@@ -105,7 +105,7 @@ public class NowPlaying {
             case Toast -> {
                 mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                         options().toastTime * 1000L, options().toastScale, options().darkToast));
-                if (options().narrate) mc.getNarrator().sayNow(message);
+                if (options().narrate) mc.getNarrator().saySystemNow(message);
             }
             case Hotbar -> {
                 if (isHotbarVisible(mc.screen)) {
@@ -115,7 +115,7 @@ public class NowPlaying {
                     mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                             options().toastTime * 1000L, options().toastScale, options().darkToast));
                 }
-                if (options().narrate) mc.getNarrator().sayNow(message);
+                if (options().narrate) mc.getNarrator().saySystemNow(message);
             }
         }
     }
