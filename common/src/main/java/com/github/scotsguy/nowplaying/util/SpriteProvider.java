@@ -120,6 +120,8 @@ public class SpriteProvider {
             return ResourceLocation.withDefaultNamespace("textures/item/music_disc_relic.png");
         } else if (title.contains("Kumi Tanioka")) {
             return ResourceLocation.withDefaultNamespace("textures/item/music_disc_mall.png");
+        } else if (title.contains("Amos Roddy")) {
+            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_tears.png");
         } else {
             return DISC_SPRITE_DEFAULT;
         }

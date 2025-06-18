@@ -30,6 +30,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.SoundEngine;
 import net.minecraft.client.sounds.SoundManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -53,12 +54,13 @@ public class MixinToastInstance {
             method = "method_61992",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)V"
+                    target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)Lnet/minecraft/client/sounds/SoundEngine$PlayResult;"
             )
     )
-    void silenceWooshSound(SoundManager instance, SoundInstance sound, Operation<Void> original, @Local(argsOnly = true) Toast toast) {
+    SoundEngine.PlayResult silenceWooshSound(SoundManager instance, SoundInstance sound, Operation<SoundEngine.PlayResult> original, @Local(argsOnly = true) Toast toast) {
         if (!(toast instanceof NowPlayingToast && Config.options().silenceWoosh)) {
-            original.call(instance, sound);
+            return original.call(instance, sound);
         }
+        return SoundEngine.PlayResult.NOT_STARTED;
     }
 }

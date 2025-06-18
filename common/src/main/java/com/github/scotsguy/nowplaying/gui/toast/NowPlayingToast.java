@@ -28,7 +28,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastManager;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -89,9 +89,9 @@ public class NowPlayingToast implements Toast {
     public void render(@NotNull GuiGraphics graphics, @NotNull Font font, long startTime) {
         this.startTime = startTime;
         if (scale != 1.0F) {
-            graphics.pose().pushPose();
-            graphics.pose().translate(160 * (1 - scale), 0.0F, 0.0F);
-            graphics.pose().scale(scale, scale, 1.0F);
+            graphics.pose().pushMatrix();
+            graphics.pose().translate(160 * (1 - scale), 0.0F);
+            graphics.pose().scale(scale, scale);
         }
 
         Minecraft mc = Minecraft.getInstance();
@@ -101,7 +101,7 @@ public class NowPlayingToast implements Toast {
 
         if (width == 160 && textLines.size() <= 1) {
             // Text fits, draw the whole toast from the texture
-            graphics.blitSprite(RenderType::guiTextured, sprite, 0, 0, width, height);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, 0, 0, width, height);
         } else {
             // Stretch toast by drawing the sprite multiple times
             height = height + Math.max(0, textLines.size() - (Config.options().simpleToast ? 2 : 1)) * 12;
@@ -135,21 +135,21 @@ public class NowPlayingToast implements Toast {
         }
 
         // Draw icon
-        graphics.blit(RenderType::guiTextured, discSprite, 9, (height / 2) - (16 / 2), 0, 0, 16, 16, 16, 16);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, discSprite, 9, (height / 2) - (16 / 2), 0, 0, 16, 16, 16, 16);
 
-        if (scale != 1.0F) graphics.pose().popPose();
+        if (scale != 1.0F) graphics.pose().popMatrix();
     }
 
     private void renderBackgroundRow(GuiGraphics graphics, int i, int vOffset, int y, int vHeight) {
         int uWidth = vOffset == 0 ? 20 : 5;
         int n = Math.min(60, i - uWidth);
 
-        graphics.blitSprite(RenderType::guiTextured, sprite, 160, 32, 0, vOffset, 0, y, uWidth, vHeight);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, 160, 32, 0, vOffset, 0, y, uWidth, vHeight);
 
         for (int o = uWidth; o < i - n; o += 64) {
-            graphics.blitSprite(RenderType::guiTextured, sprite, 160, 32, 32, vOffset, o, y, Math.min(64, i - o - n), vHeight);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, 160, 32, 32, vOffset, o, y, Math.min(64, i - o - n), vHeight);
         }
 
-        graphics.blitSprite(RenderType::guiTextured, sprite, 160, 32, 160 - n, vOffset, i - n, y, n, vHeight);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, 160, 32, 160 - n, vOffset, i - n, y, n, vHeight);
     }
 }
