@@ -7,12 +7,12 @@
   "mixins": [
   ],
   "client": [
-    "MixinLevelRenderer",
+    "MixinLevelEventHandler",
     "MixinMinecraft",
     "MixinToastInstance",
     "accessor.GuiAccessor",
     "accessor.MinecraftAccessor",
-    "accessor.ToastComponentAccessor"
+    "accessor.ToastManagerAccessor"
   ],
   "server": [
   ],

@@ -26,7 +26,7 @@ import com.github.scotsguy.nowplaying.config.Config;
 import com.github.scotsguy.nowplaying.gui.toast.NowPlayingToast;
 import com.github.scotsguy.nowplaying.mixin.accessor.GuiAccessor;
 import com.github.scotsguy.nowplaying.mixin.accessor.MinecraftAccessor;
-import com.github.scotsguy.nowplaying.mixin.accessor.ToastComponentAccessor;
+import com.github.scotsguy.nowplaying.mixin.accessor.ToastManagerAccessor;
 import com.github.scotsguy.nowplaying.util.Localization;
 import com.github.scotsguy.nowplaying.util.ModLogger;
 import com.github.scotsguy.nowplaying.util.SpriteProvider;
@@ -104,9 +104,9 @@ public class NowPlaying {
 
         switch(style) {
             case Toast -> {
-                ((ToastComponentAccessor)mc.getToasts()).nowplaying$getQueued()
+                ((ToastManagerAccessor)mc.getToastManager()).nowplaying$getQueued()
                         .removeIf((toast) -> toast instanceof NowPlayingToast);
-                mc.getToasts().addToast(new NowPlayingToast(name, spriteSupplier.get(),
+                mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                         options().toastTime * 1000L, options().toastScale, options().darkToast));
                 if (options().narrate) mc.getNarrator().sayNow(message);
             }
@@ -115,9 +115,9 @@ public class NowPlaying {
                     mc.gui.setOverlayMessage(message, true);
                     ((GuiAccessor)mc.gui).nowplaying$setOverlayMessageTime(options().hotbarTime * 20);
                 } else if (options().fallbackToast) {
-                    ((ToastComponentAccessor)mc.getToasts()).nowplaying$getQueued()
+                    ((ToastManagerAccessor)mc.getToastManager()).nowplaying$getQueued()
                             .removeIf((toast) -> toast instanceof NowPlayingToast);
-                    mc.getToasts().addToast(new NowPlayingToast(name, spriteSupplier.get(),
+                    mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                             options().toastTime * 1000L, options().toastScale, options().darkToast));
                 }
                 if (options().narrate) mc.getNarrator().sayNow(message);

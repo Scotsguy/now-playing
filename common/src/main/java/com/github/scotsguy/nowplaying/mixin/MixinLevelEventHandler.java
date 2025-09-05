@@ -20,17 +20,31 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.scotsguy.nowplaying.mixin.accessor;
+package com.github.scotsguy.nowplaying.mixin;
 
-import net.minecraft.client.gui.components.toasts.Toast;
-import net.minecraft.client.gui.components.toasts.ToastComponent;
+import com.github.scotsguy.nowplaying.NowPlaying;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.LevelEventHandler;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.JukeboxSong;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.Deque;
-
-@Mixin(ToastComponent.class)
-public interface ToastComponentAccessor {
-    @Accessor("queued")
-    Deque<Toast> nowplaying$getQueued();
+@Mixin(LevelEventHandler.class)
+public class MixinLevelEventHandler {
+    @WrapOperation(
+            method = "playJukeboxSong",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/Gui;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
+            )
+    )
+    private void display(Gui instance, Component text, Operation<Void> original,
+                         @Local JukeboxSong song, @Local SoundEvent sound) {
+        NowPlaying.displayDisc(song.description(), sound.location());
+    }
 }
