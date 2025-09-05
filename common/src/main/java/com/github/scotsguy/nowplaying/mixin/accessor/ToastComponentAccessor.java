@@ -22,12 +22,15 @@
 
 package com.github.scotsguy.nowplaying.mixin.accessor;
 
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(Gui.class)
-public interface GuiAccessor {
-    @Accessor("overlayMessageTime")
-    void nowplaying$setOverlayMessageTime(int overlayMessageTime);
+import java.util.Deque;
+
+@Mixin(ToastComponent.class)
+public interface ToastComponentAccessor {
+    @Accessor("queued")
+    Deque<Toast> nowplaying$getQueued();
 }

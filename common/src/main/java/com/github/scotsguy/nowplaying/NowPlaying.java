@@ -26,6 +26,7 @@ import com.github.scotsguy.nowplaying.config.Config;
 import com.github.scotsguy.nowplaying.gui.toast.NowPlayingToast;
 import com.github.scotsguy.nowplaying.mixin.accessor.GuiAccessor;
 import com.github.scotsguy.nowplaying.mixin.accessor.MinecraftAccessor;
+import com.github.scotsguy.nowplaying.mixin.accessor.ToastComponentAccessor;
 import com.github.scotsguy.nowplaying.util.Localization;
 import com.github.scotsguy.nowplaying.util.ModLogger;
 import com.github.scotsguy.nowplaying.util.SpriteProvider;
@@ -68,11 +69,11 @@ public class NowPlaying {
             displayLastMusic();
         }
         while (NEXT_KEY.consumeClick()) {
-            ((MinecraftAccessor)mc).getMusicManager().stopPlaying();
-            ((MinecraftAccessor)mc).getMusicManager().startPlaying(mc.getSituationalMusic());
+            ((MinecraftAccessor)mc).nowplaying$getMusicManager().stopPlaying();
+            ((MinecraftAccessor)mc).nowplaying$getMusicManager().startPlaying(mc.getSituationalMusic());
         }
     }
-    
+
     public static void onResourceReload() {
         SpriteProvider.onResourceReload();
     }
@@ -85,7 +86,7 @@ public class NowPlaying {
                     localized("message", "notFound").withStyle(ChatFormatting.RED), true);
         }
     }
-    
+
     public static void displayMusic(ResourceLocation location) {
         Component title = getTranslatedTitle(location.toString());
         display(title, () -> SpriteProvider.getMusicSprite(location, title.getString()),
@@ -96,13 +97,15 @@ public class NowPlaying {
         display(text, () -> SpriteProvider.getDiscSprite(location), options().jukeboxStyle);
     }
 
-    private static void display(Component name, Supplier<ResourceLocation> spriteSupplier, 
+    private static void display(Component name, Supplier<ResourceLocation> spriteSupplier,
                                Config.Options.Style style) {
         Minecraft mc = Minecraft.getInstance();
         Component message = Component.translatable("record.nowPlaying", name);
 
         switch(style) {
             case Toast -> {
+                ((ToastComponentAccessor)mc.getToasts()).nowplaying$getQueued()
+                        .removeIf((toast) -> toast instanceof NowPlayingToast);
                 mc.getToasts().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                         options().toastTime * 1000L, options().toastScale, options().darkToast));
                 if (options().narrate) mc.getNarrator().sayNow(message);
@@ -110,8 +113,10 @@ public class NowPlaying {
             case Hotbar -> {
                 if (isHotbarVisible(mc.screen)) {
                     mc.gui.setOverlayMessage(message, true);
-                    ((GuiAccessor)mc.gui).setOverlayMessageTime(options().hotbarTime * 20);
+                    ((GuiAccessor)mc.gui).nowplaying$setOverlayMessageTime(options().hotbarTime * 20);
                 } else if (options().fallbackToast) {
+                    ((ToastComponentAccessor)mc.getToasts()).nowplaying$getQueued()
+                            .removeIf((toast) -> toast instanceof NowPlayingToast);
                     mc.getToasts().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                             options().toastTime * 1000L, options().toastScale, options().darkToast));
                 }
@@ -123,7 +128,7 @@ public class NowPlaying {
     public static boolean isHotbarVisible(Screen screen) {
         return (screen == null || screen instanceof ChatScreen);
     }
-    
+
     private static Component getTranslatedTitle(String location) {
         String key = Localization.translationKey(location);
         if (!I18n.exists(key)) {

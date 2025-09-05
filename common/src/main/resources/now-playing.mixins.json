@@ -11,7 +11,8 @@
     "MixinMinecraft",
     "MixinToastInstance",
     "accessor.GuiAccessor",
-    "accessor.MinecraftAccessor"
+    "accessor.MinecraftAccessor",
+    "accessor.ToastComponentAccessor"
   ],
   "server": [
   ],
