@@ -8,7 +8,7 @@
   "message.now-playing.installCloth": "Instala Cloth Config API para acceder a las opciones del mod.",
   "message.now-playing.viewModrinth": "Visualizar en Modrinth",
 
-  "key.now-playing.group": "Now Playing",
+  "key.category.now-playing.group": "Now Playing",
   "key.now-playing.group.display": "Mostrar última canción",
   "key.now-playing.group.next": "Play next track",
 

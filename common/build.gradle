@@ -1,6 +1,6 @@
 plugins {
     id("multiloader-common")
-    id("net.neoforged.moddev")
+    id("fabric-loom")
 }
 
 // Vanilla depends on ASM 9.3, MDG makes that a 'strict' version constraint,
@@ -20,22 +20,35 @@ dependencies {
     compileOnly "org.ow2.asm:asm-commons:${asm_version}"
     compileOnly "org.ow2.asm:asm-tree:${asm_version}"
     compileOnly "org.ow2.asm:asm-util:${asm_version}"
-    
+
+    // Minecraft
+    minecraft("com.mojang:minecraft:${minecraft_version}")
+
+    // Mappings
+    mappings(loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${parchment_minecraft_version}:${parchment_version}@zip")
+    })
+
     compileOnly("org.spongepowered:mixin:${mixin_version}")
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinextras_version}"))
-    
+
     // Cloth Config API
-    api("me.shedaniel.cloth:cloth-config-neoforge:${clothconfig_version}")
+    modApi("me.shedaniel.cloth:cloth-config-neoforge:${clothconfig_version}")
 }
 
-neoForge {
-    neoFormVersion = neoform_version
-    // Automatically enable AccessTransformers if the file exists
-    def at = file("src/main/resources/META-INF/accesstransformer.cfg")
-    if (at.exists()) accessTransformers.from(at.absolutePath)
-    parchment {
-        minecraftVersion = parchment_minecraft_version
-        mappingsVersion = parchment_version
+loom {
+    // Apply common AccessWidener if it exists
+    def aw = file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) accessWidenerPath.set(aw)
+    if (aw.exists()) {
+        validateAccessWidener { accessWidener = aw }
+        afterEvaluate {
+            validateAccessWidener.run()
+        }
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
     }
 }
 

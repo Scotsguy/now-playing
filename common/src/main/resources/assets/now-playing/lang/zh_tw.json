@@ -1,14 +1,14 @@
 {
   "modmenu.descriptionTranslation.now-playing": "Shows a popup whenever the active music track music changes.",
   "fml.menu.mods.info.description.now_playing": "Shows a popup whenever the active music track music changes.",
-  
+
   "screen.now-playing.default": "正在播放",
   "screen.now-playing.options": "正在播放選項",
-  
+
   "message.now-playing.installCloth": "安裝 Cloth Config API 以存取模組選項。",
   "message.now-playing.viewModrinth": "在 Modrinth 上檢視",
-  
-  "key.now-playing.group": "正在播放",
+
+  "key.category.now-playing.group": "正在播放",
   "key.now-playing.group.display": "顯示最後一首歌曲",
   "key.now-playing.group.next": "Play next track",
 
@@ -32,11 +32,11 @@
   "option.now-playing.hotbarTime.tooltip": "顯示「正在播放」快捷欄文字的時間（以秒為單位）",
   "option.now-playing.narrate": "朗讀彈出視窗",
   "option.now-playing.narrate.tooltip": "啟用旁白時，朗讀「正在播放」彈出視窗",
-  
+
   "option.now-playing.style.hotbar": "快捷欄",
   "option.now-playing.style.toast": "彈窗",
   "option.now-playing.style.disabled": "停用",
-  
+
   "message.now-playing.nowPlaying": "正在播放",
   "message.now-playing.notFound": "No recent music"
 }

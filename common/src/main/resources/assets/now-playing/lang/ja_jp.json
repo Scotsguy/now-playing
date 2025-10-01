@@ -1,14 +1,14 @@
 {
   "modmenu.descriptionTranslation.now-playing": "音楽が変更されるたびにポップアップを表示します。",
   "fml.menu.mods.info.description.now_playing": "音楽が変更されるたびにポップアップを表示します。",
-  
+
   "screen.now-playing.default": "再生中",
   "screen.now-playing.options": "Now Playing 設定",
 
   "message.now-playing.installCloth": "Modの設定にアクセスするには、Cloth Config API Modをインストールしてください",
   "message.now-playing.viewModrinth": "Modrinthで見る",
 
-  "key.now-playing.group": "Now Playing",
+  "key.category.now-playing.group": "Now Playing",
   "key.now-playing.group.display": "最後の曲を表示",
   "key.now-playing.group.next": "Play next track",
 

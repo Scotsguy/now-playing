@@ -1,14 +1,14 @@
 {
   "modmenu.descriptionTranslation.now-playing": "Shows a popup whenever the active music track music changes.",
   "fml.menu.mods.info.description.now_playing": "Shows a popup whenever the active music track music changes.",
-  
+
   "screen.now-playing.default": "正在播放",
   "screen.now-playing.options": "正在播放选项",
 
   "message.now-playing.installCloth": "安装 Cloth Config API 以访问mod选项。",
   "message.now-playing.viewModrinth": "在 Modrinth 上查看",
 
-  "key.now-playing.group": "Now Playing",
+  "key.category.now-playing.group": "Now Playing",
   "key.now-playing.group.display": "显示正在播放的音乐",
   "key.now-playing.group.next": "Play next track",
 

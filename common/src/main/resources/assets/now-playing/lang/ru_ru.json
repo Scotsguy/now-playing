@@ -1,14 +1,14 @@
 {
   "modmenu.descriptionTranslation.now-playing": "Показывает всплывающее окно каждый раз, когда меняется активная музыка.",
   "fml.menu.mods.info.description.now_playing": "Показывает всплывающее окно каждый раз, когда меняется активная музыка.",
-  
+
   "screen.now-playing.default": "Сейчас играет",
   "screen.now-playing.options": "Параметры воспроизведения",
 
   "message.now-playing.installCloth": "Установите Cloth Config API для доступа к параметрам мода.",
   "message.now-playing.viewModrinth": "Посмотреть на Modrinth",
 
-  "key.now-playing.group": "Сейчас играет",
+  "key.category.now-playing.group": "Сейчас играет",
   "key.now-playing.group.display": "Показать последнюю песню",
   "key.now-playing.group.next": "Воспроизвести следующий трек",
 

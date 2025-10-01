@@ -51,12 +51,15 @@ public class NowPlaying {
     public static final String MOD_ID_NEOFORGE = "now_playing";
     public static final String MOD_NAME = "Now Playing";
     public static final ModLogger LOG = new ModLogger(MOD_NAME);
+    public static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "group")
+    );
     public static final KeyMapping DISPLAY_KEY = new KeyMapping(
             translationKey("key", "group.display"), InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), translationKey("key", "group"));
+            InputConstants.UNKNOWN.getValue(), KEY_CATEGORY);
     public static final KeyMapping NEXT_KEY = new KeyMapping(
             translationKey("key", "group.next"), InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), translationKey("key", "group"));
+            InputConstants.UNKNOWN.getValue(), KEY_CATEGORY);
 
     public static ResourceLocation lastMusic;
 
