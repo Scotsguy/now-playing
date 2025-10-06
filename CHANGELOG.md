@@ -1,6 +1,6 @@
 # Changelog
 
-# 1.5.17
+## 1.5.17
 
 - Updated Simplified Chinese translation (Xinyang-Gao)
 
