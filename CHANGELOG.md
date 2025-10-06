@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.5.17
+
+- Updated Simplified Chinese translation (Xinyang-Gao)
+
 ## 1.5.16
 
 - Fixed toast queueing when using the Dynamic FPS mod
