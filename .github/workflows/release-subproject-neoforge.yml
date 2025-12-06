@@ -1,10 +1,5 @@
-# Builds the project and publishes the artifacts to GitHub, Modrinth and CurseForge.
-# Modrinth publishing requires a Modrinth PAT `MODRINTH_TOKEN`
-#   Will skip without error if not present.
-# CurseForge publishing requires a CurseForge API token `CURSEFORGE_TOKEN`
-#   Will skip without error if not present.
-# Preference using the root gradle.properties file to configure releases.
-name: Release
+# A NeoForge-only version of the normal release workflow.
+name: Release-Subproject-NeoForge
 
 on:
   workflow_dispatch:
@@ -39,7 +34,7 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew build neoforge:publishGithub neoforge:publishCurseforge neoforge:publishModrinth fabric:publishGithub fabric:publishCurseforge fabric:publishModrinth --stacktrace
+        run: ./gradlew build neoforge:publishGithub neoforge:publishCurseforge neoforge:publishModrinth --stacktrace
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

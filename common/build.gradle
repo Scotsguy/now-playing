@@ -1,26 +1,12 @@
+import util.PropUtil
+
 plugins {
     id("multiloader-common")
     id("fabric-loom")
 }
 
-// Vanilla depends on ASM 9.3, MDG makes that a 'strict' version constraint,
-// but Mixin and MixinExtras needs newer ASM so we override that here.
-configurations.configureEach {
-    resolutionStrategy.eachDependency { details ->
-        if (details.requested.group == "org.ow2.asm") {
-            details.useVersion(asm_version)
-            details.because("Mixin requires new ASM")
-        }
-    }
-}
-
+// Configure common dependencies
 dependencies {
-    compileOnly "org.ow2.asm:asm:${asm_version}"
-    compileOnly "org.ow2.asm:asm-analysis:${asm_version}"
-    compileOnly "org.ow2.asm:asm-commons:${asm_version}"
-    compileOnly "org.ow2.asm:asm-tree:${asm_version}"
-    compileOnly "org.ow2.asm:asm-util:${asm_version}"
-
     // Minecraft
     minecraft("com.mojang:minecraft:${minecraft_version}")
 
@@ -30,13 +16,38 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${parchment_minecraft_version}:${parchment_version}@zip")
     })
 
+    // Mixin
     compileOnly("org.spongepowered:mixin:${mixin_version}")
+
+    // MixinExtras
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinextras_version}"))
 
-    // Cloth Config API
-    modApi("me.shedaniel.cloth:cloth-config-neoforge:${clothconfig_version}")
+    // Apply property-defined dependencies
+    final selector = (String type, dep) -> {
+        switch (type) {
+            case "anp": //noinspection DependencyNotationArgument
+                return annotationProcessor(dep)
+                break
+            case "api": //noinspection DependencyNotationArgument
+                return modApi(dep)
+                break
+            case "con": //noinspection DependencyNotationArgument
+                return modCompileOnly(dep)
+                break
+            case "imp": //noinspection DependencyNotationArgument
+                return modImplementation(dep)
+                break
+            case "-":
+                return dep
+                break
+            default:
+                throw new IllegalArgumentException("Unrecognized dependency type: ${type}")
+        }
+    }
+    new PropUtil(project).applyDependencies(project.name, selector)
 }
 
+// Configure Loom
 loom {
     // Apply common AccessWidener if it exists
     def aw = file("src/main/resources/${mod_id}.accesswidener")
@@ -47,11 +58,9 @@ loom {
             validateAccessWidener.run()
         }
     }
-    mixin {
-        defaultRefmapName.set("${mod_id}.refmap.json")
-    }
 }
 
+// Set up access to common files
 configurations {
     commonJava {
         canBeResolved = false
@@ -62,7 +71,6 @@ configurations {
         canBeConsumed = true
     }
 }
-
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
     commonResources sourceSets.main.resources.sourceDirectories.singleFile

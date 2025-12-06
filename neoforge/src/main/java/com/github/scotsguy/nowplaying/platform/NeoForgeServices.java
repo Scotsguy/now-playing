@@ -20,14 +20,38 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.scotsguy.nowplaying.gui.screen;
+package com.github.scotsguy.nowplaying.platform;
 
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import com.terraformersmc.modmenu.api.ModMenuApi;
+import com.github.scotsguy.nowplaying.platform.services.PlatformServices;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLPaths;
 
-public class ModMenuIntegration implements ModMenuApi {
+import java.nio.file.Path;
+
+public class NeoForgeServices implements PlatformServices {
+
     @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return ConfigScreenProvider::getConfigScreen;
+    public boolean isDevEnv() {
+        return !FMLLoader.getCurrent().isProduction();
+    }
+
+    @Override
+    public boolean isModLoaded(String modId) {
+        return FMLLoader.getCurrent().getLoadingModList().getModFileById(modId) != null;
+    }
+
+    @Override
+    public String getPlatformName() {
+        return "NeoForge";
+    }
+
+    @Override
+    public Path getGameDir() {
+        return FMLPaths.GAMEDIR.get();
+    }
+
+    @Override
+    public Path getConfigDir() {
+        return FMLPaths.CONFIGDIR.get();
     }
 }

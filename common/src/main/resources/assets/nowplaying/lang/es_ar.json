@@ -1,0 +1,42 @@
+{
+  "modmenu.descriptionTranslation.nowplaying": "Shows a popup whenever the active music track music changes.",
+  "fml.menu.mods.info.description.nowplaying": "Shows a popup whenever the active music track music changes.",
+
+  "screen.nowplaying.default": "Reproduciendo",
+  "screen.nowplaying.options": "Opciones de Now Playing",
+
+  "message.nowplaying.installCloth": "Instala Cloth Config API para acceder a las opciones del mod.",
+  "message.nowplaying.viewModrinth": "Visualizar en Modrinth",
+
+  "key.category.nowplaying.group": "Now Playing",
+  "key.nowplaying.group.display": "Mostrar última canción",
+  "key.nowplaying.group.next": "Play next track",
+
+  "option.nowplaying.onlyKeybind": "Usar solo tecla o comando",
+  "option.nowplaying.onlyKeybind.tooltip": "Mostrar música solo cuando se presione la tecla o se use el comando /nowplaying",
+  "option.nowplaying.musicStyle": "Estilo de pop-up de música",
+  "option.nowplaying.jukeboxStyle": "Estilo de pop-up de jukebox",
+  "option.nowplaying.fallbackToast": "Usar toast como respaldo",
+  "option.nowplaying.fallbackToast.tooltip": "Cuando se selecciona el estilo 'Hotbar', usar toast si la barra de acceso rápido no está disponible",
+  "option.nowplaying.silenceWoosh": "Toast silencioso",
+  "option.nowplaying.silenceWoosh.tooltip": "Silenciar el sonido woosh del toast 'Reproduciendo'",
+  "option.nowplaying.toastScale": "Escala del toast",
+  "option.nowplaying.toastScale.tooltip": "Escalar el tamaño del toast 'Reproduciendo'",
+  "option.nowplaying.simpleToast": "Toast simple",
+  "option.nowplaying.simpleToast.tooltip": "Mostrar solo la canción, sin el texto 'Reproduciendo'",
+  "option.nowplaying.darkToast": "Dark toast",
+  "option.nowplaying.darkToast.tooltip": "Use a dark background for the 'Now Playing' toast",
+  "option.nowplaying.toastTime": "Tiempo de visualización del toast",
+  "option.nowplaying.toastTime.tooltip": "El tiempo, en segundos, para mostrar el toast 'Reproduciendo'",
+  "option.nowplaying.hotbarTime": "Tiempo de visualización en la barra de acceso rápido",
+  "option.nowplaying.hotbarTime.tooltip": "El tiempo, en segundos, para mostrar el texto 'Reproduciendo' en la barra de acceso rápido",
+  "option.nowplaying.narrate": "Narrar pop-up",
+  "option.nowplaying.narrate.tooltip": "Cuando el narrador esté activado, leer los pop-ups 'Reproduciendo'",
+
+  "option.nowplaying.style.hotbar": "Barra de acceso rápido",
+  "option.nowplaying.style.toast": "Toast",
+  "option.nowplaying.style.disabled": "Deshabilitado",
+
+  "message.nowplaying.nowPlaying": "Reproduciendo",
+  "message.nowplaying.notFound": "No hay música reciente"
+}

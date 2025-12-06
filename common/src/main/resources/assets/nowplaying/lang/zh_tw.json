@@ -1,0 +1,42 @@
+{
+  "modmenu.descriptionTranslation.nowplaying": "Shows a popup whenever the active music track music changes.",
+  "fml.menu.mods.info.description.nowplaying": "Shows a popup whenever the active music track music changes.",
+
+  "screen.nowplaying.default": "正在播放",
+  "screen.nowplaying.options": "正在播放選項",
+
+  "message.nowplaying.installCloth": "安裝 Cloth Config API 以存取模組選項。",
+  "message.nowplaying.viewModrinth": "在 Modrinth 上檢視",
+
+  "key.category.nowplaying.group": "正在播放",
+  "key.nowplaying.group.display": "顯示最後一首歌曲",
+  "key.nowplaying.group.next": "Play next track",
+
+  "option.nowplaying.onlyKeybind": "僅使用按鍵或指令",
+  "option.nowplaying.onlyKeybind.tooltip": "僅在按下顯示鍵或使用 /nowplaying 指令時顯示音樂",
+  "option.nowplaying.musicStyle": "音樂彈出樣式",
+  "option.nowplaying.jukeboxStyle": "唱片機彈出樣式",
+  "option.nowplaying.fallbackToast": "備用彈窗",
+  "option.nowplaying.fallbackToast.tooltip": "當選擇「快捷欄」樣式時，如果快捷欄顯示不可用，則使用彈窗",
+  "option.nowplaying.silenceWoosh": "靜音彈窗",
+  "option.nowplaying.silenceWoosh.tooltip": "將「正在播放」彈窗發出的嗖嗖聲靜音",
+  "option.nowplaying.toastScale": "彈窗大小",
+  "option.nowplaying.toastScale.tooltip": "調整「正在播放」彈窗的大小",
+  "option.nowplaying.simpleToast": "簡易彈窗",
+  "option.nowplaying.simpleToast.tooltip": "僅顯示歌曲，不顯示「正在播放」文字",
+  "option.nowplaying.darkToast": "Dark toast",
+  "option.nowplaying.darkToast.tooltip": "Use a dark background for the 'Now Playing' toast",
+  "option.nowplaying.toastTime": "彈窗顯示時間",
+  "option.nowplaying.toastTime.tooltip": "顯示「正在播放」彈窗的時間（以秒為單位）",
+  "option.nowplaying.hotbarTime": "快捷欄顯示時間",
+  "option.nowplaying.hotbarTime.tooltip": "顯示「正在播放」快捷欄文字的時間（以秒為單位）",
+  "option.nowplaying.narrate": "朗讀彈出視窗",
+  "option.nowplaying.narrate.tooltip": "啟用旁白時，朗讀「正在播放」彈出視窗",
+
+  "option.nowplaying.style.hotbar": "快捷欄",
+  "option.nowplaying.style.toast": "彈窗",
+  "option.nowplaying.style.disabled": "停用",
+
+  "message.nowplaying.nowPlaying": "正在播放",
+  "message.nowplaying.notFound": "No recent music"
+}

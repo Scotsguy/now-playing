@@ -39,8 +39,8 @@ import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-@Mod(value = NowPlaying.MOD_ID_NEOFORGE, dist = Dist.CLIENT)
-@EventBusSubscriber(modid = NowPlaying.MOD_ID_NEOFORGE, value = Dist.CLIENT)
+@Mod(value = NowPlaying.MOD_ID, dist = Dist.CLIENT)
+@EventBusSubscriber(modid = NowPlaying.MOD_ID, value = Dist.CLIENT)
 public class NowPlayingNeoForge {
     public NowPlayingNeoForge() {
         // Config screen
@@ -66,7 +66,7 @@ public class NowPlayingNeoForge {
                         NowPlaying.onResourceReload());
     }
 
-    @EventBusSubscriber(modid = NowPlaying.MOD_ID_NEOFORGE, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = NowPlaying.MOD_ID, value = Dist.CLIENT)
     static class ClientEventHandler {
         // Commands
         @SubscribeEvent
