@@ -27,7 +27,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundEventListener;
 import net.minecraft.client.sounds.WeighedSoundEvents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +38,7 @@ public class NowPlayingListener implements SoundEventListener {
     public void onPlaySound(@NotNull SoundInstance soundInstance, 
                             @NotNull WeighedSoundEvents soundSet, float f) {
         if (soundInstance.getSource() == SoundSource.MUSIC) {
-            ResourceLocation location = soundInstance.getSound().getLocation();
+            Identifier location = soundInstance.getSound().getLocation();
             NowPlaying.lastMusic = location;
 
             if (!options().onlyKeybind

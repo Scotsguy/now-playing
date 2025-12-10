@@ -26,7 +26,7 @@ import com.github.scotsguy.nowplaying.NowPlaying;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.Nullable;
@@ -36,12 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SpriteProvider {
-    private static final ResourceLocation SPRITES_FILE = 
-            ResourceLocation.fromNamespaceAndPath(NowPlaying.MOD_ID, "sprites.json");
-    public static final ResourceLocation DISC_SPRITE_DEFAULT =
-            ResourceLocation.parse("minecraft:textures/item/music_disc_cat.png");
+    private static final Identifier SPRITES_FILE = 
+            Identifier.fromNamespaceAndPath(NowPlaying.MOD_ID, "sprites.json");
+    public static final Identifier DISC_SPRITE_DEFAULT =
+            Identifier.parse("minecraft:textures/item/music_disc_cat.png");
     
-    private static final HashMap<String, ResourceLocation> CACHE = new HashMap<>();
+    private static final HashMap<String, Identifier> CACHE = new HashMap<>();
     private static boolean hasAttemptedLoad;
     
     public static void onResourceReload() {
@@ -49,7 +49,7 @@ public class SpriteProvider {
         hasAttemptedLoad = false;
     }
     
-    private static @Nullable ResourceLocation getCustomSprite(String song) {
+    private static @Nullable Identifier getCustomSprite(String song) {
         if (CACHE.isEmpty() && !hasAttemptedLoad) {
             loadCache();
         }
@@ -68,7 +68,7 @@ public class SpriteProvider {
                     for (var entry : obj.entrySet()) {
                         String spriteStr = entry.getValue().getAsString();
 //                        NowPlaying.LOG.info("Added {} -> {}", entry.getKey(), spriteStr);
-                        ResourceLocation sprite = ResourceLocation.tryParse(spriteStr + ".png");
+                        Identifier sprite = Identifier.tryParse(spriteStr + ".png");
                         if (sprite == null) {
                             NowPlaying.LOG.error("Unable to parse sprite location '{}'", spriteStr);
                         } else {
@@ -85,9 +85,9 @@ public class SpriteProvider {
         }
     }
 
-    public static ResourceLocation getMusicSprite(ResourceLocation location, String title) {
+    public static Identifier getMusicSprite(Identifier location, String title) {
         String locStr = location.toString();
-        ResourceLocation sprite = getCustomSprite(locStr);
+        Identifier sprite = getCustomSprite(locStr);
         
         if (sprite == null) {
 //            NowPlaying.LOG.warn("getCustomSprite failed for '{}'", locStr);
@@ -111,24 +111,24 @@ public class SpriteProvider {
         }
     }
 
-    public static ResourceLocation getDefaultSprite(String title) {
+    public static Identifier getDefaultSprite(String title) {
         if (title.contains("C418")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_blocks.png");
+            return Identifier.withDefaultNamespace("textures/item/music_disc_blocks.png");
         } else if (title.contains("Lena Raine")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_otherside.png");
+            return Identifier.withDefaultNamespace("textures/item/music_disc_otherside.png");
         } else if (title.contains("Aaron Cherof")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_relic.png");
+            return Identifier.withDefaultNamespace("textures/item/music_disc_relic.png");
         } else if (title.contains("Kumi Tanioka")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_mall.png");
+            return Identifier.withDefaultNamespace("textures/item/music_disc_mall.png");
         } else if (title.contains("Amos Roddy")) {
-            return ResourceLocation.withDefaultNamespace("textures/item/music_disc_tears.png");
+            return Identifier.withDefaultNamespace("textures/item/music_disc_tears.png");
         } else {
             return DISC_SPRITE_DEFAULT;
         }
     }
     
-    public static ResourceLocation getDiscSprite(ResourceLocation location) {
+    public static Identifier getDiscSprite(Identifier location) {
         String discId = location.getPath().replaceAll("\\.", "_");
-        return ResourceLocation.parse("textures/item/" + discId + ".png");
+        return Identifier.parse("textures/item/" + discId + ".png");
     }
 }

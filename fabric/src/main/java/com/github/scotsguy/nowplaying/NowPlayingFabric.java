@@ -30,7 +30,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 
 import java.util.concurrent.CompletableFuture;
@@ -52,7 +52,7 @@ public class NowPlayingFabric implements ClientModInitializer {
 
         // Resource reload event
         ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloader(
-                ResourceLocation.fromNamespaceAndPath(
+                Identifier.fromNamespaceAndPath(
                         NowPlaying.MOD_ID,
                         "custom_resource_reloader"
                 ),

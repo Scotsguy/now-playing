@@ -38,7 +38,7 @@ import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Supplier;
 
@@ -51,7 +51,7 @@ public class NowPlaying {
     public static final String MOD_NAME = "Now Playing";
     public static final ModLogger LOG = new ModLogger(MOD_NAME);
     public static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(
-            ResourceLocation.fromNamespaceAndPath(MOD_ID, "group")
+            Identifier.fromNamespaceAndPath(MOD_ID, "group")
     );
     public static final KeyMapping DISPLAY_KEY = new KeyMapping(
             translationKey("key", "group.display"), InputConstants.Type.KEYSYM,
@@ -60,7 +60,7 @@ public class NowPlaying {
             translationKey("key", "group.next"), InputConstants.Type.KEYSYM,
             InputConstants.UNKNOWN.getValue(), KEY_CATEGORY);
 
-    public static ResourceLocation lastMusic;
+    public static Identifier lastMusic;
 
     public static void init() {
         Config.getAndSave();
@@ -89,17 +89,17 @@ public class NowPlaying {
         }
     }
 
-    public static void displayMusic(ResourceLocation location) {
+    public static void displayMusic(Identifier location) {
         Component title = getTranslatedTitle(location.toString());
         display(title, () -> SpriteProvider.getMusicSprite(location, title.getString()),
                 options().musicStyle);
     }
 
-    public static void displayDisc(Component text, ResourceLocation location) {
+    public static void displayDisc(Component text, Identifier location) {
         display(text, () -> SpriteProvider.getDiscSprite(location), options().jukeboxStyle);
     }
 
-    private static void display(Component name, Supplier<ResourceLocation> spriteSupplier,
+    private static void display(Component name, Supplier<Identifier> spriteSupplier,
                                Config.Options.Style style) {
         Minecraft mc = Minecraft.getInstance();
         Component message = Component.translatable("record.nowPlaying", name);

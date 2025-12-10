@@ -26,7 +26,7 @@ import com.github.scotsguy.nowplaying.command.Commands;
 import com.github.scotsguy.nowplaying.gui.screen.ConfigScreenProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -61,7 +61,7 @@ public class NowPlayingNeoForge {
     // Resource reload event
     @SubscribeEvent
     public static void registerResourceReloadEvent(AddClientReloadListenersEvent event) {
-        event.addListener(ResourceLocation.fromNamespaceAndPath(NowPlaying.MOD_ID, "resources"),
+        event.addListener(Identifier.fromNamespaceAndPath(NowPlaying.MOD_ID, "resources"),
                 (ResourceManagerReloadListener) resourceManager ->
                         NowPlaying.onResourceReload());
     }

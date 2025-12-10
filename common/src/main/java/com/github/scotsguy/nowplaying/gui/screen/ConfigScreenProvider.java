@@ -22,13 +22,13 @@
 
 package com.github.scotsguy.nowplaying.gui.screen;
 
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineTextWidget;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.util.Util;
 
 import static com.github.scotsguy.nowplaying.util.Localization.localized;
 

@@ -30,7 +30,7 @@ import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,18 +39,18 @@ import java.util.List;
 import static com.github.scotsguy.nowplaying.util.Localization.localized;
 
 public class NowPlayingToast implements Toast {
-    private static final ResourceLocation BACKGROUND_SPRITE_LIGHT = ResourceLocation.withDefaultNamespace("toast/recipe");
+    private static final Identifier BACKGROUND_SPRITE_LIGHT = Identifier.withDefaultNamespace("toast/recipe");
     private static final int NOW_PLAYING_COLOR_LIGHT = 0xFF800080;
     private static final int TITLE_COLOR_LIGHT = 0xFF000000;
-    private static final ResourceLocation BACKGROUND_SPRITE_DARK = ResourceLocation.withDefaultNamespace("toast/advancement");
+    private static final Identifier BACKGROUND_SPRITE_DARK = Identifier.withDefaultNamespace("toast/advancement");
     private static final int NOW_PLAYING_COLOR_DARK = 0xFF993299;
     private static final int TITLE_COLOR_DARK = 0xFFD1D1D1;
     
     private final Component description;
-    private final ResourceLocation discSprite;
+    private final Identifier discSprite;
     private final long displayTime;
     private final float scale;
-    private final ResourceLocation sprite;
+    private final Identifier sprite;
     private final int nowPlayingColor;
     private final int titleColor;
     private Toast.Visibility wantedVisibility;
@@ -59,7 +59,7 @@ public class NowPlayingToast implements Toast {
     private static final int TEXT_LEFT_MARGIN = 30;
     private static final int TEXT_RIGHT_MARGIN = 7;
 
-    public NowPlayingToast(Component description, ResourceLocation discSprite, long displayTime, float scale, boolean darkMode) {
+    public NowPlayingToast(Component description, Identifier discSprite, long displayTime, float scale, boolean darkMode) {
         this.description = description;
         this.discSprite = discSprite;
         this.displayTime = displayTime;
