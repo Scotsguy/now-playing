@@ -7,6 +7,7 @@
 
   "message.nowplaying.installCloth": "Modの設定にアクセスするには、Cloth Config API Modをインストールしてください",
   "message.nowplaying.viewModrinth": "Modrinthで見る",
+  "message.nowplaying.configScreenDisabled": "Config screen is not available on this version.",
 
   "key.category.nowplaying.group": "Now Playing",
   "key.nowplaying.group.display": "最後の曲を表示",

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 AppleTheGolden
+ * Copyright (c) 2022-2026 AppleTheGolden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
@@ -40,8 +40,8 @@ public class NowPlayingFabric implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         // Keybindings
-        KeyBindingHelper.registerKeyBinding(NowPlaying.DISPLAY_KEY);
-        KeyBindingHelper.registerKeyBinding(NowPlaying.NEXT_KEY);
+        KeyMappingHelper.registerKeyMapping(NowPlaying.DISPLAY_KEY);
+        KeyMappingHelper.registerKeyMapping(NowPlaying.NEXT_KEY);
 
         // Commands
         ClientCommandRegistrationCallback.EVENT.register(((dispatcher, buildContext) ->
@@ -51,7 +51,7 @@ public class NowPlayingFabric implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(NowPlaying::onEndTick);
 
         // Resource reload event
-        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloader(
+        ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(
                 Identifier.fromNamespaceAndPath(
                         NowPlaying.MOD_ID,
                         "custom_resource_reloader"

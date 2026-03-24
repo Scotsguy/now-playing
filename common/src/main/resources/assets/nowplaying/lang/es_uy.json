@@ -7,6 +7,7 @@
 
   "message.nowplaying.installCloth": "Instala Cloth Config API para acceder a las opciones del mod.",
   "message.nowplaying.viewModrinth": "Visualizar en Modrinth",
+  "message.nowplaying.configScreenDisabled": "Config screen is not available on this version.",
 
   "key.category.nowplaying.group": "Now Playing",
   "key.nowplaying.group.display": "Mostrar última canción",

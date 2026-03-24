@@ -20,38 +20,58 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.scotsguy.nowplaying.platform;
+package com.github.scotsguy.nowplaying.util;
 
-import com.github.scotsguy.nowplaying.platform.services.PlatformServices;
-import net.neoforged.fml.loading.FMLLoader;
-import net.neoforged.fml.loading.FMLPaths;
+import org.objectweb.asm.tree.ClassNode;
+import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
+import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import java.nio.file.Path;
+import java.util.List;
+import java.util.Set;
 
-public class NeoForgeServices implements PlatformServices {
+public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
-    public boolean isDevEnv() {
-        return !FMLLoader.getCurrent().isProduction();
+    public void onLoad(String mixinPackage) {
     }
 
     @Override
-    public boolean isModLoaded(String modId) {
-        return FMLLoader.getCurrent().getLoadingModList().getModFileById(modId) != null;
+    public String getRefMapperConfig() {
+        return null;
     }
 
     @Override
-    public String getPlatformName() {
-        return "NeoForge";
+    public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+//        if (mixinClassName.contains("mixin.somesubpackage")) {
+//            return PlatformServices.getInstance().isModLoaded("somemodid");
+//        }
+        return true;
     }
 
     @Override
-    public Path getGameDir() {
-        return FMLPaths.GAMEDIR.get();
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
     }
 
     @Override
-    public Path getConfigDir() {
-        return FMLPaths.CONFIGDIR.get();
+    public List<String> getMixins() {
+        return List.of();
+    }
+
+    @Override
+    public void preApply(
+            String targetClassName,
+            ClassNode targetClass,
+            String mixinClassName,
+            IMixinInfo mixinInfo
+    ) {
+    }
+
+    @Override
+    public void postApply(
+            String targetClassName,
+            ClassNode targetClass,
+            String mixinClassName,
+            IMixinInfo mixinInfo
+    ) {
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 AppleTheGolden
+ * Copyright (c) 2022-2026 AppleTheGolden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LevelEventHandler.class)
-public class MixinLevelEventHandler {
+public abstract class MixinLevelEventHandler {
+
     @WrapOperation(
             method = "playJukeboxSong",
             at = @At(
@@ -43,8 +44,10 @@ public class MixinLevelEventHandler {
                     target = "Lnet/minecraft/client/gui/Gui;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
             )
     )
-    private void display(Gui instance, Component text, Operation<Void> original,
-                         @Local JukeboxSong song, @Local SoundEvent sound) {
+    private void display(
+            Gui instance, Component text, Operation<Void> original,
+            @Local(name = "song") JukeboxSong song, @Local(name = "sound") SoundEvent sound
+    ) {
         NowPlaying.displayDisc(song.description(), sound.location());
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 AppleTheGolden
+ * Copyright (c) 2022-2026 AppleTheGolden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,28 +36,40 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ToastManager.class)
-public class MixinToastInstance {
+public abstract class MixinToastInstance {
+
     @WrapOperation(
-            method = "method_61991",
+            method = "lambda$update$0",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/components/toasts/Toast$Visibility;playSound(Lnet/minecraft/client/sounds/SoundManager;)V"
             )
     )
-    void silenceWooshSound(Toast.Visibility instance, SoundManager handler, Operation<Void> original, @Local(argsOnly = true) ToastManager.ToastInstance<?> toastInstance) {
-        if (!(toastInstance.getToast() instanceof NowPlayingToast && Config.options().silenceWoosh)) {
+    void silenceWooshSound(
+            Toast.Visibility instance,
+            SoundManager handler,
+            Operation<Void> original,
+            @Local(argsOnly = true) ToastManager.ToastInstance<?> toastInstance
+    ) {
+        if (!(toastInstance.getToast() instanceof NowPlayingToast
+                && Config.options().silenceWoosh)) {
             original.call(instance, handler);
         }
     }
-    
+
     @WrapOperation(
-            method = "method_61992",
+            method = "lambda$update$1",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/sounds/SoundManager;play(Lnet/minecraft/client/resources/sounds/SoundInstance;)Lnet/minecraft/client/sounds/SoundEngine$PlayResult;"
             )
     )
-    SoundEngine.PlayResult silenceWooshSound(SoundManager instance, SoundInstance sound, Operation<SoundEngine.PlayResult> original, @Local(argsOnly = true) Toast toast) {
+    SoundEngine.PlayResult silenceWooshSound(
+            SoundManager instance,
+            SoundInstance sound,
+            Operation<SoundEngine.PlayResult> original,
+            @Local(argsOnly = true) Toast toast
+    ) {
         if (!(toast instanceof NowPlayingToast && Config.options().silenceWoosh)) {
             return original.call(instance, sound);
         }

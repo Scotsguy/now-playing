@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 AppleTheGolden
+ * Copyright (c) 2022-2026 AppleTheGolden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import java.util.function.Supplier;
 
 public class Services {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("Now Playing (Service)");
+    private static final Logger LOGGER = LoggerFactory.getLogger("Framework (Service)");
 
     public static <T> T load(Class<T> clazz) {
         final T loadedService = ServiceLoader.load(clazz, clazz.getClassLoader())

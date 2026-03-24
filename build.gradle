@@ -3,13 +3,10 @@ import util.EnvUtil
 import util.PropUtil
 import util.StaticUtil
 
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 import java.time.LocalDate
-import java.util.regex.Pattern
 
 plugins {
-    id("fabric-loom") version("${loom_version}") apply(false)
+    id("net.fabricmc.fabric-loom") version("${loom_version}") apply(false)
     id("net.neoforged.moddev") version("${moddev_version}") apply(false)
     id("net.neoforged.licenser") version("${licenser_version}") apply(false)
     id("me.modmuss50.mod-publish-plugin") version("${mpp_version}")
@@ -66,7 +63,7 @@ subprojects {
         afterEvaluate { sp ->
             publishMods {
                 // Common configuration
-                file = sp.name == "fabric" ? remapJar.archiveFile : jar.archiveFile
+                file = jar.archiveFile
                 version = mod_version
                 type = ReleaseType.of(mod_version_type)
                 displayName = "v${mod_version}-${StaticUtil.capsLoader(sp.name)}"
@@ -129,7 +126,14 @@ subprojects {
                     accessToken = env.safe("CURSEFORGE_TOKEN")
                     projectId = prop.safe("mod_curseforge_id")
                     projectSlug = prop.safe("mod_curseforge_slug")
-                    minecraftVersions.addAll(prop.safeList("mc_versions_${sp.name}"))
+                    minecraftVersions.addAll(prop.safeList("mc_versions_${sp.name}").collect { ver ->
+                        final hyphenIdx = ver.indexOf("-")
+                        if (hyphenIdx != -1) {
+                            return ver.substring(0, hyphenIdx) + "-snapshot"
+                        } else {
+                            return ver
+                        }
+                    })
                     changelog = cLog
                     prop.safeList("${sp.name}_deps").each { dep ->
                         try {
@@ -212,5 +216,13 @@ publishMods {
             return prop.has("mod_github_repo")
                     && (it["dryRun"].get() || env.has("GITHUB_TOKEN"))
         }
+    }
+}
+
+file(".").eachFile {
+    if (it.isFile() && it.name.endsWith(".gradle")
+            && it.name != "build.gradle"
+            && it.name != "settings.gradle") {
+        apply(from: it.name)
     }
 }

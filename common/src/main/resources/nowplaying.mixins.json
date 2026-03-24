@@ -4,11 +4,16 @@
   "package": "com.github.scotsguy.nowplaying.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_${java_version}",
+  "plugin": "com.github.scotsguy.nowplaying.util.MixinConfigPlugin",
+  "mixinextras": {
+    "minVersion": "${mixinextras_version_min}"
+  },
   "mixins": [
   ],
   "client": [
     "MixinLevelEventHandler",
     "MixinMinecraft",
+    "MixinToastInstance",
     "accessor.GuiAccessor",
     "accessor.MinecraftAccessor",
     "accessor.ToastManagerAccessor"

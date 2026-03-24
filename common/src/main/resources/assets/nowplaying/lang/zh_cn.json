@@ -7,6 +7,7 @@
 
   "message.nowplaying.installCloth": "安装 Cloth Config API 以访问mod选项。",
   "message.nowplaying.viewModrinth": "在 Modrinth 上查看",
+  "message.nowplaying.configScreenDisabled": "Config screen is not available on this version.",
 
   "key.category.nowplaying.group": "Now Playing",
   "key.nowplaying.group.display": "显示正在播放的音乐",

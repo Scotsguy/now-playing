@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 AppleTheGolden
+ * Copyright (c) 2022-2026 AppleTheGolden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,10 +33,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
-public class MixinMinecraft {
-    @Shadow @Final private SoundManager soundManager;
+public abstract class MixinMinecraft {
 
-    @Inject(method = "<init>", at = @At("TAIL"))
+    @Shadow
+    @Final
+    private SoundManager soundManager;
+
+    @Inject(
+            method = "<init>",
+            at = @At("TAIL")
+    )
     void registerSoundInstanceListener(CallbackInfo ci) {
         soundManager.addListener(new NowPlayingListener());
     }

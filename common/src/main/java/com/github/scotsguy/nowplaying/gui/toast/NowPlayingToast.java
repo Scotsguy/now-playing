@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 AppleTheGolden
+ * Copyright (c) 2022-2026 AppleTheGolden
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ package com.github.scotsguy.nowplaying.gui.toast;
 import com.github.scotsguy.nowplaying.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -45,7 +45,7 @@ public class NowPlayingToast implements Toast {
     private static final Identifier BACKGROUND_SPRITE_DARK = Identifier.withDefaultNamespace("toast/advancement");
     private static final int NOW_PLAYING_COLOR_DARK = 0xFF993299;
     private static final int TITLE_COLOR_DARK = 0xFFD1D1D1;
-    
+
     private final Component description;
     private final Identifier discSprite;
     private final long displayTime;
@@ -86,7 +86,7 @@ public class NowPlayingToast implements Toast {
     }
 
     @Override
-    public void render(@NotNull GuiGraphics graphics, @NotNull Font font, long startTime) {
+    public void extractRenderState(@NotNull GuiGraphicsExtractor graphics, @NotNull Font font, long startTime) {
         this.startTime = startTime;
         if (scale != 1.0F) {
             graphics.pose().pushMatrix();
@@ -122,15 +122,15 @@ public class NowPlayingToast implements Toast {
         if (Config.options().simpleToast) {
             // Draw song title only
             for (int i = 0; i < textLines.size(); ++i) {
-                graphics.drawString(mc.font, textLines.get(i), TEXT_LEFT_MARGIN, (textLines.size() == 1 ? 12 : 6 + i * 12), titleColor, false);
+                graphics.text(mc.font, textLines.get(i), TEXT_LEFT_MARGIN, (textLines.size() == 1 ? 12 : 6 + i * 12), titleColor, false);
             }
         } else {
             // Draw "Now Playing"
-            graphics.drawString(mc.font, localized("message", "nowPlaying"), TEXT_LEFT_MARGIN, 7, nowPlayingColor, false);
+            graphics.text(mc.font, localized("message", "nowPlaying"), TEXT_LEFT_MARGIN, 7, nowPlayingColor, false);
 
             // Draw song title
             for (int i = 0; i < textLines.size(); ++i) {
-                graphics.drawString(mc.font, textLines.get(i), TEXT_LEFT_MARGIN, (18 + i * 12), titleColor, false);
+                graphics.text(mc.font, textLines.get(i), TEXT_LEFT_MARGIN, (18 + i * 12), titleColor, false);
             }
         }
 
@@ -140,7 +140,7 @@ public class NowPlayingToast implements Toast {
         if (scale != 1.0F) graphics.pose().popMatrix();
     }
 
-    private void renderBackgroundRow(GuiGraphics graphics, int i, int vOffset, int y, int vHeight) {
+    private void renderBackgroundRow(GuiGraphicsExtractor graphics, int i, int vOffset, int y, int vHeight) {
         int uWidth = vOffset == 0 ? 20 : 5;
         int n = Math.min(60, i - uWidth);
 
