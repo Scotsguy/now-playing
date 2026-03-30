@@ -35,6 +35,7 @@ import net.minecraft.server.packs.PackType;
 
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings("unused")
 public class NowPlayingFabric implements ClientModInitializer {
 
     @Override

@@ -28,9 +28,10 @@ import org.slf4j.LoggerFactory;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public class Services {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("Framework (Service)");
+    private static final Logger LOGGER = LoggerFactory.getLogger("NowPlaying (Service)");
 
     public static <T> T load(Class<T> clazz) {
         final T loadedService = ServiceLoader.load(clazz, clazz.getClassLoader())

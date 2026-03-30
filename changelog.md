@@ -2,8 +2,7 @@
 
 ## 2.0.0
 
-- Updated to mc26.1-rc-3
-- Temporarily disabled config screen
+- Updated to mc26.1
 - Mod versioning scheme is now `major.mc.minor`:
   - `major` is incremented on 'significant' feature changes, or breaking API changes (if
     applicable).

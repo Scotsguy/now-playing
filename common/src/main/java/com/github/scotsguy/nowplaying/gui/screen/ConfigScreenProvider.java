@@ -40,8 +40,8 @@ public class ConfigScreenProvider {
 
     public static Screen getConfigScreen(Screen parent) {
         try {
-//            return ClothScreenProvider.getConfigScreen(parent);
-            return new DisabledScreen(parent);
+            return ClothScreenProvider.getConfigScreen(parent);
+//            return new DisabledScreen(parent);
         } catch (NoClassDefFoundError ignored) {
             return new BackupScreen(parent, "installCloth", "https://modrinth.com/project/9s6osm5g");
         }
@@ -100,6 +100,7 @@ public class ConfigScreenProvider {
         }
     }
 
+    @SuppressWarnings("unused")
     private static class DisabledScreen extends Screen {
 
         private final Screen parent;
