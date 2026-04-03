@@ -1,0 +1,3 @@
+classTweaker v1 official
+# https://wiki.fabricmc.net/tutorial:accesswidening
+accessible class net/minecraft/client/gui/components/toasts/ToastManager$ToastInstance

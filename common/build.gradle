@@ -1,25 +1,86 @@
+import util.PropUtil
+
+plugins {
+    id("multiloader-common")
+    id("net.fabricmc.fabric-loom")
+}
+
+// Configure common dependencies
 dependencies {
-    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
-    // Do NOT use other classes from fabric loader
-    modImplementation libs.fabric.loader
+    // Minecraft
+    minecraft("com.mojang:minecraft:${minecraft_version}")
 
-    modImplementation libs.cloth.common
-}
+    // ASM
+    compileOnly("org.ow2.asm:asm:${asm_version}")
+    compileOnly("org.ow2.asm:asm-analysis:${asm_version}")
+    compileOnly("org.ow2.asm:asm-commons:${asm_version}")
+    compileOnly("org.ow2.asm:asm-tree:${asm_version}")
+    compileOnly("org.ow2.asm:asm-util:${asm_version}")
 
-architectury {
-    common(rootProject.enabled_platforms.split(","))
-}
+    // Mixin
+    compileOnly("net.fabricmc:sponge-mixin:${mixin_version}")
 
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
+    // MixinExtras
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinextras_version}"))
+
+    // Apply property-defined dependencies
+    final selector = (String type, dep) -> {
+        switch (type) {
+            case "anp": //noinspection DependencyNotationArgument
+                return annotationProcessor(dep)
+                break
+            case "api": //noinspection DependencyNotationArgument
+                return api(dep)
+                break
+            case "con": //noinspection DependencyNotationArgument
+                return compileOnly(dep)
+                break
+            case "imp": //noinspection DependencyNotationArgument
+                return implementation(dep)
+                break
+            case "-":
+                return dep
+                break
+            default:
+                throw new IllegalArgumentException("Unrecognized dependency type: ${type}")
         }
     }
+    new PropUtil(project).applyDependencies(project.name, selector)
+}
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
+// Configure Loom
+loom {
+    // Apply common classTweaker if it exists
+    def aw = file("src/main/resources/${mod_id}.classtweaker")
+    if (aw.exists()) accessWidenerPath.set(aw)
+    if (aw.exists()) {
+        validateAccessWidener { accessWidener = aw }
+        afterEvaluate {
+            validateAccessWidener.run()
+        }
     }
+}
+
+// Set up access to common files
+configurations {
+    commonJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    configureEach {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == "org.ow2.asm") {
+                details.useVersion(asm_version)
+                details.because("Mixin config plugin requires new ASM")
+            }
+        }
+    }
+}
+artifacts {
+    commonJava sourceSets.main.java.sourceDirectories.singleFile
+    commonResources sourceSets.main.resources.sourceDirectories.singleFile
 }

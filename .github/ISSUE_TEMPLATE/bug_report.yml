@@ -1,0 +1,126 @@
+name: Mod bug report
+description: "For reporting bugs and other defects"
+labels:
+  - S/needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        ### ⚠️ Bug Report
+        
+        **Thank you for taking the time to make a report!** This form is designed to help you
+        provide the information necessary for us to understand and fix the issue. Before you start,
+        please complete the following checks:
+        
+        
+        1. Are you using the latest version of the mod? If there is a more recent version of the mod
+        available for your version of Minecraft, please check whether the issue still occurs on that
+        version.
+        
+        
+        2. Has the issue already been reported? If it has been, please do not open a new issue, but
+        if you have additional information please comment on the existing report.
+        
+        
+        3. Have you determined the minimum set of instructions to reproduce the issue? If the issue
+        only occurs in specific situations or with other mods installed, please attempt to narrow
+        down exactly what conditions or mods are required to reproduce it.
+
+  - type: checkboxes
+    id: preliminary-checks
+    attributes: 
+      label: Checklist
+      options:
+        - label: This issue exists on the latest release for my Minecraft version.
+          required: true
+        - label: This issue has not already been reported.
+          required: true
+        - label: I have determined the minimal reproduction requirements. 
+          required: true
+
+  - type: input
+    id: mod-loader
+    attributes:
+      label: Mod Loader
+      description: >-
+        Which mod loader are you using?
+
+        **Examples:** `Fabric`, `NeoForge`
+    validations:
+      required: true
+
+  - type: input
+    id: mc-version
+    attributes:
+      label: Minecraft Version
+      description: >-
+        Which version of Minecraft are you using?
+
+        **Examples:** `1.21.4`, `1.20.1`
+    validations:
+      required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod Version
+      description: >-
+        Which version of this mod are you using?
+        
+        **Example:** `2.2.0+1.21.4`
+    validations:
+      required: true
+
+  - type: input
+    id: log-link
+    attributes:
+      label: Log File
+      description: >-
+        Please upload your log file to [mclo.gs](https://mclo.gs) and paste the link here. Even if
+        there are no crashes, logs help identify version details and potential error messages.
+
+
+        **Hint:** Log files are located in the `logs` folder of your Minecraft instance, typically 
+        `.minecraft/logs`. You will usually want the `latest.log` file, since that file belongs to 
+        the most recent session of the game. Alternatively, some launchers such as Prism support 
+        uploading logs to mclo.gs directly.
+      placeholder: https://mclo.gs/your-log-link
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: >-
+        Please describe in detail the issue you are experiencing. If you have any screenshots, 
+        videos, or other resources that help illustrate the problem, you can attach them here.
+      placeholder: Describe the issue...
+    validations:
+      required: true
+        
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: >-
+        Please list the steps that we should follow to encounter the issue. If you are unsure, or
+        unable to consistently reproduce it, please provide a detailed description of what you
+        were doing when the issue occurred.
+  
+        1. Do X
+        
+        2. Do Y
+        
+        3. Issue occurs
+      placeholder: List the steps to reproduce the issue...
+    validations:
+      required: true
+
+  - type: input
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior (optional)
+      description: >-
+        Describe briefly what you believe should happen if the issue was fixed. If the answer is 
+        obvious (such as if the game is crashing), you can skip this.

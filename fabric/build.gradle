@@ -1,116 +1,81 @@
+import util.PropUtil
+
 plugins {
-    alias(libs.plugins.shadow)
+    id("multiloader-loader")
+    id("net.fabricmc.fabric-loom")
 }
 
-architectury {
-    platformSetupLoomIde()
-    fabric()
-}
-
-configurations {
-    common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentFabric.extendsFrom common
-}
-
+// Configure Fabric dependencies
 dependencies {
-    modImplementation libs.fabric.loader
-    modApi libs.fabric.api
+    // Minecraft
+    minecraft("com.mojang:minecraft:${minecraft_version}")
 
-    modApi(libs.cloth.fabric) {
-        exclude module:"fabric-api"
-    }
-    include libs.cloth.fabric
-
-    modImplementation(libs.modmenu) {
-        exclude module:"fabric-api"
+    // MixinExtras
+    if (mixinextras_jij_fabric == "true") {
+        include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixinextras_version}")))
     }
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
-}
+    // Fabric Loader
+    implementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
 
-processResources {
-    inputs.property "version", project.version
+    // Fabric API
+    implementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-archivesBaseName += "-fabric"
-
-shadowJar {
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-}
-
-remapJar {
-    input.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set(null)
-    destinationDirectory.set(new File(rootDir, "release"))
-}
-
-jar {
-    archiveClassifier.set("dev")
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
-}
-
-curseforge {
-    // Stored in ~/.gradle/gradle.properties
-    if (project.hasProperty('curseApiKey'))
-        apiKey = project.curseApiKey
-    else if (System.getenv("CURSE_API_KEY") != null)
-        apiKey = System.getenv("CURSE_API_KEY")
-    else
-        println 'No CurseForge API key found, \'curseforge\' tasks will not work'
-
-    project {
-        id = project.curseforge_id
-        releaseType = 'release'
-        addGameVersion libs.versions.minecraft.get()
-        addGameVersion 'Fabric'
-        addGameVersion 'Quilt'
-        setChangelog 'For the changelog, please see https://github.com/Scotsguy/now-playing/releases'
-        mainArtifact(remapJar) {
-            displayName = "v$project.version"
-            relations {
-                requiredDependency 'fabric-api'
-                embeddedLibrary 'cloth-config'
-            }
+    // Apply property-defined dependencies
+    final selector = (String type, dep) -> {
+        switch (type) {
+            case "anp": //noinspection DependencyNotationArgument
+                return annotationProcessor(dep)
+                break
+            case "api": //noinspection DependencyNotationArgument
+                return api(dep)
+                break
+            case "con": //noinspection DependencyNotationArgument
+                return compileOnly(dep)
+                break
+            case "imp": //noinspection DependencyNotationArgument
+                return implementation(dep)
+                break
+            case "inc": //noinspection DependencyNotationArgument
+                return include(dep)
+                break
+            case "-":
+                return dep
+                break
+            default:
+                throw new IllegalArgumentException("Unrecognized dependency type: ${type}")
         }
     }
-
-    options {
-        forgeGradleIntegration = false
-        detectNewerJava = true
-    }
+    new PropUtil(project).applyDependencies(project.name, selector)
 }
 
-publishing {
-    publications {
-        mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
-            from components.java
+// Configure Loom
+loom {
+    // Apply common classTweaker if it exists
+    def aw = project(":common").file("src/main/resources/${mod_id}.classtweaker")
+    if (aw.exists()) accessWidenerPath.set(aw)
+    if (aw.exists()) {
+        validateAccessWidener { accessWidener = aw }
+        afterEvaluate {
+            validateAccessWidener.run()
         }
     }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    // Configure runs
+    runs {
+        client {
+            client()
+            setConfigName("Fabric Client")
+            ideConfigGenerated(true)
+            runDir("runs/client")
+        }
+        server {
+            server()
+            setConfigName("Fabric Server")
+            ideConfigGenerated(true)
+            runDir("runs/server")
+        }
     }
 }

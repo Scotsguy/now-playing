@@ -1,0 +1,75 @@
+name: Mod feature request
+description: "For requesting new features or improvements"
+labels:
+  - S/needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        ### 🛠️ Feature Request
+        
+        **Thank you for taking the time to suggest a new feature!** This form is designed to help 
+        you provide the information necessary for us to understand and implement the feature. Before
+        you start, please complete the following checks:
+        
+        
+        1. Are you requesting either a new feature or an improvement of existing functionality? For
+        general support, or to request an update or backport, please use
+        [Discord](https://discord.terminalmc.dev).
+        
+        
+        2. Have you checked whether the feature already exists on the latest version? If you want to
+        request that an existing feature be backported, please use 
+        [Discord](https://discord.terminalmc.dev).
+
+
+        3. Has the feature already been requested? If it has been, please comment on the existing
+        request instead.
+
+  - type: checkboxes
+    id: preliminary-checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I am requesting a new feature or a functional improvement.
+          required: true
+        - label: This feature does not exist on the latest version.
+          required: true
+        - label: This feature has not already been requested.
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: >-
+        Please describe in detail what you would like added or changed, with reasoning. If you have
+        considered alternative options, include them as well.
+        
+        
+        **Hint:** Requests that lack detail or do not include a clear reason are less likely to be 
+        considered.
+      placeholder: Describe the feature...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: >-
+        Please explain how this change would improve the experience of using the mod, with reference
+        to specific scenarios or examples as applicable.
+      placeholder: Describe your use-case...
+    validations:
+      required: true
+
+  - type: input
+    id: mc-version
+    attributes:
+      label: Minecraft Version (optional)
+      description: >-
+        Feature updates are generally only released for the latest Minecraft version. If you need
+        the new feature on an older version, list the version(s) here.
+
+        **Examples:** `1.21.4`, `1.20.1`

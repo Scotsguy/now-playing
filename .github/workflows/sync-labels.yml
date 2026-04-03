@@ -1,0 +1,22 @@
+# Synchronizes the repo's labels with a centralized `labels.yml` file.
+# Requires `GITHUB_TOKEN` to have write permissions; if not, replace it with a custom token.
+name: Sync Labels
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup NodeJS
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: curl https://raw.githubusercontent.com/TerminalMC/.github/HEAD/.github/labels.yml -o ./labels.yml
+      - run: npx github-label-sync -a '${{ secrets.GITHUB_TOKEN }}' -l 'labels.yml' ${{ github.repository }}

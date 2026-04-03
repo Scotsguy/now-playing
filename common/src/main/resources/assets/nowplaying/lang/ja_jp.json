@@ -1,0 +1,43 @@
+{
+  "modmenu.descriptionTranslation.nowplaying": "音楽が変更されるたびにポップアップを表示します。",
+  "fml.menu.mods.info.description.nowplaying": "音楽が変更されるたびにポップアップを表示します。",
+
+  "screen.nowplaying.default": "再生中",
+  "screen.nowplaying.options": "Now Playing 設定",
+
+  "message.nowplaying.installCloth": "Modの設定にアクセスするには、Cloth Config API Modをインストールしてください",
+  "message.nowplaying.viewModrinth": "Modrinthで見る",
+  "message.nowplaying.configScreenDisabled": "Config screen is not available on this version.",
+
+  "key.category.nowplaying.group": "Now Playing",
+  "key.nowplaying.group.display": "最後の曲を表示",
+  "key.nowplaying.group.next": "Play next track",
+
+  "option.nowplaying.onlyKeybind": "キーまたはコマンドのみ使用",
+  "option.nowplaying.onlyKeybind.tooltip": "表示キーが押されたとき、または /nowplaying コマンドが使用されたときのみ音楽を表示します",
+  "option.nowplaying.musicStyle": "音楽ポップアップスタイル",
+  "option.nowplaying.jukeboxStyle": "ジュークボックスポップアップスタイル",
+  "option.nowplaying.fallbackToast": "トーストへのフォールバック",
+  "option.nowplaying.fallbackToast.tooltip": "「ホットバー」スタイルが選択されている場合、ホットバーの表示が利用できない場合はトーストを使用します",
+  "option.nowplaying.silenceWoosh": "トースト音を消音",
+  "option.nowplaying.silenceWoosh.tooltip": "「再生中」トーストの「シューッ」という音を消します",
+  "option.nowplaying.toastScale": "トーストスケール",
+  "option.nowplaying.toastScale.tooltip": "「再生中」トーストのサイズを変更する",
+  "option.nowplaying.simpleToast": "シンプルなトースト",
+  "option.nowplaying.simpleToast.tooltip": "曲名のみを表示します",
+  "option.nowplaying.darkToast": "Dark toast",
+  "option.nowplaying.darkToast.tooltip": "Use a dark background for the 'Now Playing' toast",
+  "option.nowplaying.toastTime": "トーストの表示時間",
+  "option.nowplaying.toastTime.tooltip": "「再生中」トーストを表示する時間（秒）",
+  "option.nowplaying.hotbarTime": "ホットバーの表示時間",
+  "option.nowplaying.hotbarTime.tooltip": "「再生中」のホットバーテキストを表示する時間（秒）",
+  "option.nowplaying.narrate": "ポップアップのナレーションを有効化",
+  "option.nowplaying.narrate.tooltip": "ナレーターが有効になっている場合は、「再生中」ポップアップの内容を読み上げます",
+
+  "option.nowplaying.style.hotbar": "ホットバー",
+  "option.nowplaying.style.toast": "トースト",
+  "option.nowplaying.style.disabled": "無効",
+
+  "message.nowplaying.nowPlaying": "再生中",
+  "message.nowplaying.notFound": "No recent music"
+}

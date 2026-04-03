@@ -1,27 +1,35 @@
+// Configure Gradle plugin repos
 pluginManagement {
     repositories {
-        maven {
-            name = 'Fabric'
-            url = 'https://maven.fabricmc.net/'
-        }
-        maven {
-            name = 'Cotton'
-            url = 'https://server.bbkr.space/artifactory/libs-release/'
-        }
-        maven {
-            name = 'Architectury'
-            url = "https://maven.architectury.dev/"
-        }
-        maven {
-            name = 'Forge'
-            url = "https://maven.minecraftforge.net/"
-        }
         gradlePluginPortal()
+        mavenCentral()
+        exclusiveContent {
+            forRepository {
+                //noinspection ForeignDelegate
+                maven {
+                    name = "Fabric"
+                    url = uri("https://maven.fabricmc.net")
+                }
+            }
+            filter {
+                includeGroupAndSubgroups("net.fabricmc")
+            }
+        }
+        maven {
+            name = "NeoForge"
+            url = uri("https://maven.neoforged.net/releases")
+        }
     }
 }
 
-include("common")
-include("fabric")
-include("forge")
+// Configure root plugins
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version("${foojay_version}")
+}
 
-rootProject.name = "now-playing"
+// Configure project
+rootProject.name = "${mod_name}"
+include("common")
+build_subprojects.split(",").each {
+    include(it)
+}

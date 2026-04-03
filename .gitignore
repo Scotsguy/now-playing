@@ -1,10 +1,26 @@
-.gradle
-.idea
-.vscode
-out
-build
-run
-.architectury-transformer
-*.iml
-release
+# Gradle
+.gradle/
+
+# Artifacts
 bin/
+build/
+run/
+runs/
+out/
+classes/
+.eclipse/
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VSCode
+.settings/
+.vscode/
+.classpath
+.project
+
+# Other
+.env

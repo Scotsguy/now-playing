@@ -1,34 +1,84 @@
 {
   "schemaVersion": 1,
-  "id": "now-playing",
-  "version": "${version}",
-  "name": "Now Playing",
-  "description": "Shows a 'now playing' popup whenever a song starts to play.",
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description_fabric}",
+  "icon": "${mod_icon}",
   "authors": [
-    "AppleTheGolden"
+    $mod_authors_list
   ],
+  "contributors": [
+    $mod_contributors_list
+  ],
+  "license": "${mod_license}",
   "contact": {
-    "sources": "https://github.com/Scotsguy/now-playing"
+    "homepage": "${homepage_url}",
+    "sources": "${sources_url}",
+    "issues": "${issues_url}"
   },
-  "license": "MIT",
-  "icon": "assets/now_playing/icon.png",
+
   "environment": "client",
+
+  "provides": [],
+
   "entrypoints": {
+    "main": [
+      $fabric_entrypoints_main
+    ],
     "client": [
-      "com.github.scotsguy.nowplaying.fabric.NowPlayingFabric"
+      $fabric_entrypoints_client
+    ],
+    "server": [
+      $fabric_entrypoints_server
     ],
     "modmenu": [
-      "com.github.scotsguy.nowplaying.fabric.ModMenuIntegration"
+      $fabric_entrypoints_modmenu
     ]
   },
+
   "mixins": [
-    "now-playing.mixins.common.json",
-    "now-playing.mixins.fabric.json"
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
   ],
+
+  "accessWidener": "${mod_id}.classtweaker",
+
   "depends": {
-    "fabricloader": ">=0.9.0",
-    "minecraft": "1.20.x",
-    "fabric": "*",
-    "cloth-config2": ">=11.0"
+    ${fabric_depends}
+    "java": [$java_versions_fabric_list],
+    "minecraft": [$minecraft_versions_fabric_list],
+    "fabricloader": [$fabric_loader_versions_list],
+    "fabric-api": [$fabric_api_versions_list]
+  },
+
+  "recommends": {
+    ${fabric_recommends}
+  },
+
+  "suggests": {
+    ${fabric_suggests}
+  },
+
+  "conflicts": {
+    ${fabric_conflicts}
+  },
+
+  "breaks": {
+    ${fabric_breaks}
+  },
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Contact": "${contact_url}"
+      }
+    },
+    "formatSpec": {
+      "links": {
+        "formatSpec": "https://fabricmc.net/wiki/documentation:fabric_mod_json_spec",
+        "formatExample": "https://github.com/FabricMC/fabric-example-mod/blob/HEAD/src/main/resources/fabric.mod.json"
+      }
+    }
   }
 }

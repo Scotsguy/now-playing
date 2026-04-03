@@ -1,58 +1,228 @@
-plugins {
-    alias(libs.plugins.architectury)
-    alias(libs.plugins.loom) apply false
-    alias(libs.plugins.vineflower) apply false
-    alias(libs.plugins.cursegradle) apply false
-}
+import me.modmuss50.mpp.ReleaseType
+import util.EnvUtil
+import util.PropUtil
+import util.StaticUtil
 
-architectury {
-    minecraft = libs.versions.minecraft.get()
+import java.time.LocalDate
+
+plugins {
+    id("net.fabricmc.fabric-loom") version("${loom_version}") apply(false)
+    id("net.neoforged.moddev") version("${moddev_version}") apply(false)
+    id("net.neoforged.licenser") version("${licenser_version}") apply(false)
+    id("me.modmuss50.mod-publish-plugin") version("${mpp_version}")
+    id("org.ajoberstar.grgit.service") version("${grgitservice_version}")
 }
 
 subprojects {
-    apply plugin: "dev.architectury.loom"
-    apply plugin: 'io.github.juuxel.loom-vineflower'
+    final env = new EnvUtil(providers)
+    final prop = new PropUtil(project)
+    final cLog = StaticUtil.versionChangelog(rootProject.file("changelog.md"), mod_version)
 
-    dependencies {
-        minecraft libs.minecraft
-        if (libs.versions.useParchment.get() == "1") {
-            mappings loom.layered() {
-                officialMojangMappings()
-                parchment("org.parchmentmc.data:parchment-${libs.versions.minecraft.get()}:${libs.versions.parchment.get()}@zip")
+    // Append Minecraft version extension
+    mod_version = "${mod_version}+${minecraft_version}"
+    // Append dependency version extension, if configured
+    if (prop.has("dep_ext_${name}")) {
+        final data = prop.get("dep_ext_${name}").split(":")
+        final dep_abbrev = data[0]
+        // Strip meta from dependency version
+        final dep_ver = prop.get(data[1]).split("\\+")[0]
+        mod_version = "${mod_version}+${dep_abbrev}${dep_ver}"
+    }
+    version = mod_version
+    group = mod_group
+
+    // Configure license headers
+    apply(plugin: "net.neoforged.licenser")
+    final licenseDir = "src/main/resources/assets/${mod_id}/license/"
+    license {
+        include("**/*.java") // Java files only
+        // Apply main license header
+        header = rootProject.project("common").file("${licenseDir}HEADER.txt")
+        properties {
+            project_name = mod_name
+            owner_name = mod_owner
+            year = LocalDate.now().getYear().toString()
+        }
+        // Apply attribution license headers, if configured
+        if (att_license_mods != "") {
+            att_license_mods.split(",").each { String modId ->
+                //noinspection GroovyAssignabilityCheck
+                matching({ include(prop.list("att_license_files_${modId}")) }) {
+                    header = rootProject.project("common").file("${licenseDir}${modId}/HEADER.txt")
+                    it
+                }
             }
-        } else {
-            mappings loom.officialMojangMappings()
         }
     }
 
-    loom {
-        silentMojangMappingsLicense()
+    // Configure multi-site publishing
+    if (name != "common") {
+        apply(plugin: "me.modmuss50.mod-publish-plugin")
+        apply(plugin: "org.ajoberstar.grgit.service")
+
+        afterEvaluate { sp ->
+            publishMods {
+                // Common configuration
+                file = jar.archiveFile
+                version = mod_version
+                type = ReleaseType.of(mod_version_type)
+                displayName = "v${mod_version}-${StaticUtil.capsLoader(sp.name)}"
+                modLoaders.addAll(prop.safeList("mod_loaders_${sp.name}"))
+                maxRetries = 5
+                dryRun = !env.has("GITHUB_TOKEN")
+                        && !env.has("MODRINTH_TOKEN")
+                        && !env.has("CURSEFORGE_TOKEN")
+                // GitHub configuration
+                github {
+                    parent project(":").tasks.named("publishGithub")
+                    accessToken = env.safe("GITHUB_TOKEN")
+                    if (build_sources_jar == "true") additionalFiles.from(sourcesJar.archiveFile)
+                    if (build_javadoc_jar == "true") additionalFiles.from(javadocJar.archiveFile)
+                    return void
+                }
+                // Modrinth configuration
+                modrinth {
+                    accessToken = env.safe("MODRINTH_TOKEN")
+                    projectId = prop.safe("mod_modrinth_id")
+                    minecraftVersions.addAll(prop.safeList("mc_versions_${sp.name}"))
+                    changelog = cLog
+                    prop.safeList("${sp.name}_deps").each { dep ->
+                        try {
+                            final depData = prop.list("d_${sp.name}_${dep}")
+                            if (depData.length > 2 && depData[2] != "-") {
+                                final mrDepData = depData[2].split(":")
+                                final type = mrDepData[0]
+                                if (type == "req") {
+                                    requires { id = mrDepData[1] }
+                                } else if (type == "opt") {
+                                    optional { id = mrDepData[1] }
+                                } else if (type == "inc") {
+                                    incompatible { id = mrDepData[1] }
+                                } else if (type == "emb") {
+                                    embeds { id = mrDepData[1] }
+                                } else {
+                                    throw new IllegalArgumentException(
+                                            "Unrecognized dependency type: ${mrDepData[0]}"
+                                    )
+                                }
+                            }
+                        } catch (Exception ex) {
+                            logger.error("Error processing Modrinth dependency '${dep}' for "
+                                    + "subproject '${sp.name}'. Check dependency property format.")
+                            throw ex
+                        }
+                    }
+                    // Sync Modrinth description with README
+                    if (prop.has("mod_github_repo")) {
+                        projectDescription = rootProject.file("README.md").text.replaceAll(
+                                "src=\"\\./",
+                                "src=\"https://raw.githubusercontent.com/${prop.get("mod_github_repo")}/HEAD/"
+                        )
+                        return
+                    }
+                }
+                // CurseForge configuration
+                curseforge {
+                    accessToken = env.safe("CURSEFORGE_TOKEN")
+                    projectId = prop.safe("mod_curseforge_id")
+                    projectSlug = prop.safe("mod_curseforge_slug")
+                    minecraftVersions.addAll(prop.safeList("mc_versions_${sp.name}").collect { ver ->
+                        final hyphenIdx = ver.indexOf("-")
+                        if (hyphenIdx != -1) {
+                            return ver.substring(0, hyphenIdx) + "-snapshot"
+                        } else {
+                            return ver
+                        }
+                    })
+                    changelog = cLog
+                    prop.safeList("${sp.name}_deps").each { dep ->
+                        try {
+                            final depData = prop.list("d_${sp.name}_${dep}")
+                            if (depData.length > 3 && depData[3] != "-") {
+                                final cfDepData = depData[3].split(":")
+                                final type = cfDepData[0]
+                                if (type == "req") {
+                                    requires(cfDepData[1])
+                                } else if (type == "opt") {
+                                    optional(cfDepData[1])
+                                } else if (type == "inc") {
+                                    incompatible(cfDepData[1])
+                                } else if (type == "emb") {
+                                    embeds(cfDepData[1])
+                                } else {
+                                    throw new IllegalArgumentException(
+                                            "Unrecognized dependency type: ${cfDepData[0]}"
+                                    )
+                                }
+                            }
+                        } catch (Exception ex) {
+                            logger.error("Error processing CurseForge dependency '${dep}' for "
+                                    + "subproject '${sp.name}'. Check dependency property format.")
+                            throw ex
+                        }
+                    }
+                    return void
+                }
+            }
+            final hasSpConf = prop.has("mod_loaders_${name}") && prop.has("mc_versions_${name}")
+            tasks.named("publishGithub") {
+                onlyIf {
+                    return hasSpConf
+                            && prop.has("mod_github_repo")
+                            && (it["dryRun"].get() || env.has("GITHUB_TOKEN"))
+                }
+            }
+            tasks.named("publishModrinth") {
+                onlyIf {
+                    return hasSpConf
+                            && prop.has("mod_modrinth_id")
+                            && (it["dryRun"].get() || env.has("MODRINTH_TOKEN"))
+                }
+            }
+            tasks.named("publishCurseforge") {
+                onlyIf {
+                    return hasSpConf
+                            && prop.has("mod_curseforge_id")
+                            && prop.has("mod_curseforge_slug")
+                            && (it["dryRun"].get() || env.has("CURSEFORGE_TOKEN"))
+                }
+            }
+        }
     }
 }
 
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
-    apply plugin: "com.matthewprenger.cursegradle"
-
-    archivesBaseName = rootProject.archives_base_name
-    version = rootProject.mod_version
-    group = rootProject.maven_group
-
-    repositories {
-        maven { url "https://maven.shedaniel.me/" }
-        maven { url "https://maven.terraformersmc.com" }
-        maven { url "https://maven.parchmentmc.org" }
-        maven { url "https://maven.quiltmc.org/repository/release/" }
+/*
+ This configuration, combined with the subproject configuration above, allows
+ multiple files to be uploaded to a single GitHub release.
+ */
+publishMods {
+    final env = new EnvUtil(providers)
+    final prop = new PropUtil(project)
+    version = "${mod_version}+${minecraft_version}"
+    displayName = "v${mod_version}+${minecraft_version}"
+    type = ReleaseType.of(mod_version_type)
+    dryRun = !env.has("GITHUB_TOKEN")
+    github {
+        accessToken = env.safe("GITHUB_TOKEN")
+        repository = prop.safe("mod_github_repo")
+        commitish = grgitService.service.get().grgit.branch.current().name
+        tagName = "v${mod_version}+${minecraft_version}"
+        allowEmptyFiles = true
+        // Link to header in changelog file
+        changelog = "[Changelog](./changelog.md#${mod_version.replaceAll("\\.", "")})"
     }
-
-    tasks.withType(JavaCompile).configureEach {
-        options.encoding = "UTF-8"
-        options.release = 17
+    tasks.named("publishGithub") {
+        onlyIf {
+            return prop.has("mod_github_repo")
+                    && (it["dryRun"].get() || env.has("GITHUB_TOKEN"))
+        }
     }
+}
 
-    java {
-        withSourcesJar()
+file(".").eachFile {
+    if (it.isFile() && it.name.endsWith(".gradle")
+            && it.name != "build.gradle"
+            && it.name != "settings.gradle") {
+        apply(from: it.name)
     }
 }
