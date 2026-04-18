@@ -1,6 +1,6 @@
 <div align="center"><center>
 
-<img alt="Icon" width=100 src="https://raw.githubusercontent.com/Scotsguy/now-playing/HEAD/common/src/main/resources/assets/now-playing/icon.png">
+<img alt="Icon" width=100 src="https://raw.githubusercontent.com/Scotsguy/now-playing/HEAD/common/src/main/resources/assets/nowplaying/icon.png">
 
 ## Now Playing
 
