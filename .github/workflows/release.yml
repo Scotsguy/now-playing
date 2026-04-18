@@ -114,66 +114,46 @@ jobs:
             !common/**
 
       # Publish artifacts, continuing on error. Incurs reconfiguration overhead.
-      - name: NeoForge GitHub
-        id: neoforge_github
+      - name: GitHub
+        id: github
         shell: bash
-        if: inputs.neoforge && inputs.github
+        if: inputs.github && (inputs.fabric || inputs.neoforge)
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew neoforge:publishGithub --stacktrace
-      - name: NeoForge Modrinth
-        id: neoforge_modrinth
+          FABRIC_TASK: ${{ inputs.fabric && 'fabric:publishGithub' || '' }}
+          NEOFORGE_TASK: ${{ inputs.neoforge && 'neoforge:publishGithub' || '' }}
+        run: ./gradlew $FABRIC_TASK $NEOFORGE_TASK --stacktrace
+
+      - name: Modrinth
+        id: modrinth
         shell: bash
-        if: inputs.neoforge && inputs.modrinth
+        if: inputs.modrinth && (inputs.fabric || inputs.neoforge)
         continue-on-error: true
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-        run: ./gradlew neoforge:publishModrinth --stacktrace
-      - name: NeoForge CurseForge
-        id: neoforge_curseforge
+          FABRIC_TASK: ${{ inputs.fabric && 'fabric:publishModrinth' || '' }}
+          NEOFORGE_TASK: ${{ inputs.neoforge && 'neoforge:publishModrinth' || '' }}
+        run: ./gradlew $FABRIC_TASK $NEOFORGE_TASK --stacktrace
+
+      - name: CurseForge
+        id: curseforge
         shell: bash
-        if: inputs.neoforge && inputs.curseforge
+        if: inputs.curseforge && (inputs.fabric || inputs.neoforge)
         continue-on-error: true
         env:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-        run: ./gradlew neoforge:publishCurseforge --stacktrace
-      - name: Fabric GitHub
-        id: fabric_github
-        shell: bash
-        if: inputs.fabric && inputs.github
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew fabric:publishGithub --stacktrace
-      - name: Fabric Modrinth
-        id: fabric_modrinth
-        shell: bash
-        if: inputs.fabric && inputs.modrinth
-        continue-on-error: true
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-        run: ./gradlew fabric:publishModrinth --stacktrace
-      - name: Fabric CurseForge
-        id: fabric_curseforge
-        shell: bash
-        if: inputs.fabric && inputs.curseforge
-        continue-on-error: true
-        env:
-          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-        run: ./gradlew fabric:publishCurseforge --stacktrace
+          FABRIC_TASK: ${{ inputs.fabric && 'fabric:publishCurseforge' || '' }}
+          NEOFORGE_TASK: ${{ inputs.neoforge && 'neoforge:publishCurseforge' || '' }}
+        run: ./gradlew $FABRIC_TASK $NEOFORGE_TASK --stacktrace
 
       # Finally, check for publishing errors and fail the task if one was found.
       - name: Check publishing errors
         shell: bash
         if: |
-          steps.neoforge_github.outcome == 'failure' ||
-          steps.neoforge_modrinth.outcome == 'failure' ||
-          steps.neoforge_curseforge.outcome == 'failure' ||
-          steps.fabric_github.outcome == 'failure' ||
-          steps.fabric_modrinth.outcome == 'failure' ||
-          steps.fabric_curseforge.outcome == 'failure'
+          steps.github.outcome == 'failure'
+          || steps.modrinth.outcome == 'failure'
+          || steps.curseforge.outcome == 'failure'
         run: |
           echo "Detected an error in a publish task: check the Summary for details"
           exit 1
-
