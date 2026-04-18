@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- Updated to mc26.1.2
+
 ## 2.1.0
 
 - Updated to mc26.1.1
