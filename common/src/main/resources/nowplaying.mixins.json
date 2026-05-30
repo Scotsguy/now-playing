@@ -10,10 +10,10 @@
   "mixins": [
   ],
   "client": [
-    "MixinLevelEventHandler",
-    "MixinMinecraft",
-    "MixinToastInstance",
-    "accessor.GuiAccessor",
+    "LevelEventHandlerMixin",
+    "MinecraftMixin",
+    "ToastInstanceMixin",
+    "accessor.HudAccessor",
     "accessor.MinecraftAccessor",
     "accessor.ToastManagerAccessor"
   ],

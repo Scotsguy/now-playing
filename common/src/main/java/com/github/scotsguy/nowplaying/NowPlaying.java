@@ -24,7 +24,7 @@ package com.github.scotsguy.nowplaying;
 
 import com.github.scotsguy.nowplaying.config.Config;
 import com.github.scotsguy.nowplaying.gui.toast.NowPlayingToast;
-import com.github.scotsguy.nowplaying.mixin.accessor.GuiAccessor;
+import com.github.scotsguy.nowplaying.mixin.accessor.HudAccessor;
 import com.github.scotsguy.nowplaying.mixin.accessor.MinecraftAccessor;
 import com.github.scotsguy.nowplaying.mixin.accessor.ToastManagerAccessor;
 import com.github.scotsguy.nowplaying.util.Localization;
@@ -36,9 +36,10 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.Music;
 
 import java.util.function.Supplier;
 
@@ -71,8 +72,11 @@ public class NowPlaying {
             displayLastMusic();
         }
         while (NEXT_KEY.consumeClick()) {
-            ((MinecraftAccessor)mc).nowplaying$getMusicManager().stopPlaying();
-            ((MinecraftAccessor)mc).nowplaying$getMusicManager().startPlaying(mc.getSituationalMusic());
+            Music music = mc.getSituationalMusic();
+            if (music != null) {
+                ((MinecraftAccessor)mc).nowplaying$getMusicManager().stopPlaying();
+                ((MinecraftAccessor)mc).nowplaying$getMusicManager().startPlaying(music);
+            }
         }
     }
 
@@ -84,7 +88,7 @@ public class NowPlaying {
         if (lastMusic != null) {
             displayMusic(lastMusic);
         } else {
-            Minecraft.getInstance().gui.setOverlayMessage(
+            Minecraft.getInstance().gui.hud.setOverlayMessage(
                     localized("message", "notFound").withStyle(ChatFormatting.RED), true);
         }
     }
@@ -106,20 +110,20 @@ public class NowPlaying {
 
         switch(style) {
             case Toast -> {
-                ((ToastManagerAccessor)mc.getToastManager()).nowplaying$getQueued()
+                ((ToastManagerAccessor)mc.gui.toastManager()).nowplaying$getQueued()
                         .removeIf((toast) -> toast instanceof NowPlayingToast);
-                mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
+                mc.gui.toastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                         options().toastTime * 1000L, options().toastScale, options().darkToast));
                 if (options().narrate) mc.getNarrator().saySystemNow(message);
             }
             case Hotbar -> {
-                if (isHotbarVisible(mc.screen)) {
-                    mc.gui.setOverlayMessage(message, true);
-                    ((GuiAccessor)mc.gui).nowplaying$setOverlayMessageTime(options().hotbarTime * 20);
+                if (isHotbarVisible(mc.gui.screen())) {
+                    mc.gui.hud.setOverlayMessage(message, true);
+                    ((HudAccessor)mc.gui).nowplaying$setOverlayMessageTime(options().hotbarTime * 20);
                 } else if (options().fallbackToast) {
-                    ((ToastManagerAccessor)mc.getToastManager()).nowplaying$getQueued()
+                    ((ToastManagerAccessor)mc.gui.toastManager()).nowplaying$getQueued()
                             .removeIf((toast) -> toast instanceof NowPlayingToast);
-                    mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
+                    mc.gui.toastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
                             options().toastTime * 1000L, options().toastScale, options().darkToast));
                 }
                 if (options().narrate) mc.getNarrator().saySystemNow(message);
@@ -133,13 +137,13 @@ public class NowPlaying {
 
     private static Component getTranslatedTitle(String location) {
         String key = Localization.translationKey(location);
-        if (!I18n.exists(key)) {
+        if (!Language.getInstance().has(key)) {
             String[] splitLocation = location.split("/");
             if (splitLocation.length > 0) {
                 String name = splitLocation[splitLocation.length -1];
                 if (name != null && !name.isBlank()) {
                     String oldKey = Localization.translationKey("music", name);
-                    if (I18n.exists(oldKey)) {
+                    if (Language.getInstance().has(oldKey)) {
                         return Component.translatable(oldKey);
                     }
                 }

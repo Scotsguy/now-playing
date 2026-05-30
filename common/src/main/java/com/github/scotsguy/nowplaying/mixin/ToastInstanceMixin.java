@@ -36,7 +36,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ToastManager.class)
-public abstract class MixinToastInstance {
+public abstract class ToastInstanceMixin {
 
     @WrapOperation(
             method = "lambda$update$0",
@@ -47,13 +47,16 @@ public abstract class MixinToastInstance {
     )
     void silenceWooshSound(
             Toast.Visibility instance,
-            SoundManager handler,
+            SoundManager manager,
             Operation<Void> original,
-            @Local(argsOnly = true) ToastManager.ToastInstance<?> toastInstance
+            @Local(
+                    argsOnly = true,
+                    name = "toast"
+            ) ToastManager.ToastInstance<?> toast
     ) {
-        if (!(toastInstance.getToast() instanceof NowPlayingToast
+        if (!(toast.getToast() instanceof NowPlayingToast
                 && Config.options().silenceWoosh)) {
-            original.call(instance, handler);
+            original.call(instance, manager);
         }
     }
 
@@ -68,7 +71,10 @@ public abstract class MixinToastInstance {
             SoundManager instance,
             SoundInstance sound,
             Operation<SoundEngine.PlayResult> original,
-            @Local(argsOnly = true) Toast toast
+            @Local(
+                    argsOnly = true,
+                    name = "toast"
+            ) Toast toast
     ) {
         if (!(toast instanceof NowPlayingToast && Config.options().silenceWoosh)) {
             return original.call(instance, sound);

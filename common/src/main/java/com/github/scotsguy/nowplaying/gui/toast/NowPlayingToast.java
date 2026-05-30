@@ -97,7 +97,7 @@ public class NowPlayingToast implements Toast {
         Minecraft mc = Minecraft.getInstance();
         int width = this.width();
         int height = this.height();
-        List<FormattedCharSequence> textLines = mc.gui.getFont().split(description, width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN);
+        List<FormattedCharSequence> textLines = mc.gui.hud.getFont().split(description, width - TEXT_LEFT_MARGIN - TEXT_RIGHT_MARGIN);
 
         if (width == 160 && textLines.size() <= 1) {
             // Text fits, draw the whole toast from the texture
