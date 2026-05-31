@@ -14,6 +14,9 @@ on:
       '**src/**',
       '**/*gradle*'
     ]
+  schedule:
+    # At 00:00 UTC on the second day of every second month.
+    - cron: '0 0 2 */2 *'
   workflow_dispatch:
 
 jobs:

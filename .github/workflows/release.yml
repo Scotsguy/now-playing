@@ -7,6 +7,7 @@
 name: Release
 permissions:
   contents: write
+  pull-requests: write
 
 on:
   workflow_dispatch:
@@ -53,6 +54,16 @@ on:
           - 'ubuntu-latest'
           - 'windows-latest'
         default: 'ubuntu-latest'
+      notify-prs:
+        type: boolean
+        description: Notify Included PRs
+        required: true
+        default: true
+      sync-desc-modrinth:
+        type: boolean
+        description: Sync Modrinth Description
+        required: true
+        default: false
 
 jobs:
   release:
@@ -125,6 +136,19 @@ jobs:
           NEOFORGE_TASK: ${{ inputs.neoforge && 'neoforge:publishGithub' || '' }}
         run: ./gradlew $FABRIC_TASK $NEOFORGE_TASK --stacktrace
 
+      - name: Notify PRs
+        uses: actions/github-script@v9
+        if: inputs.notify-prs && steps.github.outcome == 'success'
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const path = require('path')
+            const script = require(
+              path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/scripts/notify-prs.js')
+            )
+            await script({ github, context, core })
+
       - name: Modrinth
         id: modrinth
         shell: bash
@@ -134,6 +158,7 @@ jobs:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           FABRIC_TASK: ${{ inputs.fabric && 'fabric:publishModrinth' || '' }}
           NEOFORGE_TASK: ${{ inputs.neoforge && 'neoforge:publishModrinth' || '' }}
+          SYNC_DESC_MODRINTH: ${{ github.event.inputs.sync-desc-modrinth }}
         run: ./gradlew $FABRIC_TASK $NEOFORGE_TASK --stacktrace
 
       - name: CurseForge
