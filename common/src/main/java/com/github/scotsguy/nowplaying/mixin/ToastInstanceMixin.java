@@ -36,7 +36,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ToastManager.class)
-public abstract class MixinToastInstance {
+public abstract class ToastInstanceMixin {
 
     @WrapOperation(
             method = "lambda$update$0",

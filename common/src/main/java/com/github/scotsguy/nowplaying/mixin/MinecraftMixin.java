@@ -22,32 +22,28 @@
 
 package com.github.scotsguy.nowplaying.mixin;
 
-import com.github.scotsguy.nowplaying.NowPlaying;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.LevelEventHandler;
-import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.item.JukeboxSong;
+import com.github.scotsguy.nowplaying.util.NowPlayingListener;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.sounds.SoundManager;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(LevelEventHandler.class)
-public abstract class MixinLevelEventHandler {
+@Mixin(Minecraft.class)
+public abstract class MinecraftMixin {
 
-    @WrapOperation(
-            method = "playJukeboxSong",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/Gui;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
-            )
+    @Shadow
+    @Final
+    private SoundManager soundManager;
+
+    @Inject(
+            method = "<init>",
+            at = @At("TAIL")
     )
-    private void display(
-            Gui instance, Component text, Operation<Void> original,
-            @Local(name = "song") JukeboxSong song, @Local(name = "sound") SoundEvent sound
-    ) {
-        NowPlaying.displayDisc(song.description(), sound.location());
+    void registerSoundInstanceListener(CallbackInfo ci) {
+        soundManager.addListener(new NowPlayingListener());
     }
 }
