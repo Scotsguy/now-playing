@@ -23,6 +23,7 @@
 package com.github.scotsguy.nowplaying.platform.services;
 
 import com.github.scotsguy.nowplaying.platform.Services;
+import org.jspecify.annotations.Nullable;
 
 import java.nio.file.Path;
 
@@ -44,6 +45,16 @@ public interface PlatformServices {
      * @return {@code true} if the mod is loaded.
      */
     boolean isModLoaded(String modId);
+
+    /**
+     * @return {@code true} if the platform uses a mod-named logger in production environments.
+     */
+    boolean hasNamedLogger();
+
+    /**
+     * @return the version of the mod if it is loaded, {@code null} otherwise.
+     */
+    @Nullable String getModVersion(String modId);
 
     /**
      * @return the name of the current platform.

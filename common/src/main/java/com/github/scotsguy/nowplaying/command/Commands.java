@@ -31,10 +31,16 @@ import net.minecraft.commands.CommandBuildContext;
 
 import static net.minecraft.commands.Commands.literal;
 
-@SuppressWarnings("unchecked")
-public class Commands<S> extends CommandDispatcher<S> {
-    public void register(Minecraft mc, CommandDispatcher<S> dispatcher, CommandBuildContext buildCtx) {
-        dispatcher.register((LiteralArgumentBuilder<S>)literal("nowplaying")
+public class Commands {
+
+    private Commands() {
+        throw new UnsupportedOperationException("This class cannot be instantiated.");
+    }
+
+    public static <S> void register(CommandDispatcher<S> dispatcher, CommandBuildContext buildCtx) {
+        Minecraft mc = Minecraft.getInstance();
+        //noinspection unchecked
+        dispatcher.register((LiteralArgumentBuilder<S>) literal(NowPlaying.MOD_ID)
                 .executes(ctx -> {
                     NowPlaying.displayLastMusic();
                     return Command.SINGLE_SUCCESS;

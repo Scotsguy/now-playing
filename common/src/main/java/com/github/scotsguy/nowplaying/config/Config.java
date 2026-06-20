@@ -44,6 +44,10 @@ public class Config {
     private static final String BACKUP_FILE_NAME = NowPlaying.MOD_ID + ".unreadable.json";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    private Config() {
+        // Deserializer and self-instantiation only.
+    }
+
     // Options
 
     public final Options options = new Options();
@@ -115,23 +119,40 @@ public class Config {
         return instance;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public static Config getAndSave() {
         get();
         save();
         return instance;
     }
 
+    @SuppressWarnings("unused")
+    public static Config reloadAndSave() {
+        instance = Config.load();
+        save();
+        return instance;
+    }
+
+    @SuppressWarnings("unused")
     public static Config resetAndSave() {
         instance = new Config();
         save();
         return instance;
     }
 
+    // Validation
+
+    /**
+     * Cleanup and validation method, called after config is loaded and before it is saved.
+     */
+    private void validate() {
+    }
+
     // Load and save
 
     public static @NotNull Config load() {
         Path file = DIR_PATH.resolve(FILE_NAME);
-        Config config = null;
+        @Nullable Config config = null;
         if (Files.exists(file)) {
             config = load(file, GSON);
             if (config == null) {
@@ -139,12 +160,20 @@ public class Config {
                 NowPlaying.LOG.warn("Resetting config");
             }
         }
-        return config != null ? config : new Config();
+        if (config == null)
+            config = new Config();
+        config.validate();
+        return config;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static @Nullable Config load(Path file, Gson gson) {
-        try (InputStreamReader reader = new InputStreamReader(
-                new FileInputStream(file.toFile()), StandardCharsets.UTF_8)) {
+        try (
+                InputStreamReader reader = new InputStreamReader(
+                        new FileInputStream(file.toFile()),
+                        StandardCharsets.UTF_8
+                )
+        ) {
             return gson.fromJson(reader, Config.class);
         } catch (Exception e) {
             // Catch Exception as errors in deserialization may not fall under
@@ -157,30 +186,47 @@ public class Config {
     private static void backup() {
         try {
             NowPlaying.LOG.warn("Copying {} to {}", FILE_NAME, BACKUP_FILE_NAME);
-            if (!Files.isDirectory(DIR_PATH)) Files.createDirectories(DIR_PATH);
+            if (!Files.isDirectory(DIR_PATH))
+                Files.createDirectories(DIR_PATH);
             Path file = DIR_PATH.resolve(FILE_NAME);
             Path backupFile = file.resolveSibling(BACKUP_FILE_NAME);
-            Files.move(file, backupFile, StandardCopyOption.ATOMIC_MOVE,
-                    StandardCopyOption.REPLACE_EXISTING);
+            Files.move(
+                    file,
+                    backupFile,
+                    StandardCopyOption.ATOMIC_MOVE,
+                    StandardCopyOption.REPLACE_EXISTING
+            );
         } catch (IOException e) {
             NowPlaying.LOG.error("Unable to copy config file", e);
         }
     }
 
     public static void save() {
-        if (instance == null) return;
+        if (instance == null)
+            return;
+        instance.validate();
         try {
-            if (!Files.isDirectory(DIR_PATH)) Files.createDirectories(DIR_PATH);
+            if (!Files.isDirectory(DIR_PATH))
+                Files.createDirectories(DIR_PATH);
             Path file = DIR_PATH.resolve(FILE_NAME);
             Path tempFile = file.resolveSibling(file.getFileName() + ".tmp");
-            try (OutputStreamWriter writer = new OutputStreamWriter(
-                    new FileOutputStream(tempFile.toFile()), StandardCharsets.UTF_8)) {
+            try (
+                    OutputStreamWriter writer = new OutputStreamWriter(
+                            new FileOutputStream(tempFile.toFile()),
+                            StandardCharsets.UTF_8
+                    )
+            ) {
                 writer.write(GSON.toJson(instance));
             } catch (IOException e) {
                 throw new IOException(e);
             }
-            Files.move(tempFile, file, StandardCopyOption.ATOMIC_MOVE,
-                    StandardCopyOption.REPLACE_EXISTING);
+            Files.move(
+                    tempFile,
+                    file,
+                    StandardCopyOption.ATOMIC_MOVE,
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+            NowPlaying.onConfigSaved(instance);
         } catch (IOException e) {
             NowPlaying.LOG.error("Unable to save config", e);
         }

@@ -25,11 +25,9 @@ package com.github.scotsguy.nowplaying;
 import com.github.scotsguy.nowplaying.command.Commands;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
-import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 
@@ -40,18 +38,16 @@ public class NowPlayingFabric implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // Keybindings
-        KeyMappingHelper.registerKeyMapping(NowPlaying.DISPLAY_KEY);
-        KeyMappingHelper.registerKeyMapping(NowPlaying.NEXT_KEY);
+        // Register keybinds
+        NowPlaying.KEYBINDS.forEach(KeyMappingHelper::registerKeyMapping);
 
-        // Commands
-        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, buildContext) ->
-                new Commands<FabricClientCommandSource>().register(Minecraft.getInstance(), dispatcher, buildContext)));
+        // Register client commands
+        ClientCommandRegistrationCallback.EVENT.register(Commands::register);
 
-        // Tick events
-        ClientTickEvents.END_CLIENT_TICK.register(NowPlaying::onEndTick);
+        // Register client after-tick event
+        ClientTickEvents.END_CLIENT_TICK.register(NowPlaying::afterClientTick);
 
-        // Resource reload event
+        // Register resource reload event
         ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(
                 Identifier.fromNamespaceAndPath(
                         NowPlaying.MOD_ID,
@@ -65,7 +61,7 @@ public class NowPlayingFabric implements ClientModInitializer {
                 }
         );
 
-        // Main initialization
+        // Initialize client
         NowPlaying.init();
     }
 }

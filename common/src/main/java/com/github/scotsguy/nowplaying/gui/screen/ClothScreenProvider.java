@@ -31,6 +31,11 @@ import net.minecraft.client.gui.screens.Screen;
 import static com.github.scotsguy.nowplaying.util.Localization.localized;
 
 public class ClothScreenProvider {
+
+    private ClothScreenProvider() {
+        throw new UnsupportedOperationException("This class cannot be instantiated.");
+    }
+
     /**
      * Builds and returns a Cloth Config options screen.
      * @param parent the current screen.

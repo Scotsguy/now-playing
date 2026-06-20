@@ -25,7 +25,6 @@ package com.github.scotsguy.nowplaying;
 import com.github.scotsguy.nowplaying.command.Commands;
 import com.github.scotsguy.nowplaying.gui.screen.ConfigScreenProvider;
 import net.minecraft.client.Minecraft;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.neoforged.api.distmarker.Dist;
@@ -39,45 +38,67 @@ import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-@Mod(value = NowPlaying.MOD_ID, dist = Dist.CLIENT)
-@EventBusSubscriber(modid = NowPlaying.MOD_ID, value = Dist.CLIENT)
+@Mod(
+        value = NowPlaying.MOD_ID,
+        dist = Dist.CLIENT
+)
+@EventBusSubscriber(
+        modid = NowPlaying.MOD_ID,
+        value = Dist.CLIENT
+)
 public class NowPlayingNeoForge {
+
     public NowPlayingNeoForge() {
         // Config screen
-        ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class,
-                () -> (mc, parent) -> ConfigScreenProvider.getConfigScreen(parent));
+        ModLoadingContext.get().registerExtensionPoint(
+                IConfigScreenFactory.class,
+                () -> (mc, parent) -> ConfigScreenProvider.getConfigScreen(parent)
+        );
 
         // Main initialization
         NowPlaying.init();
     }
 
-    // Keybindings
+    /**
+     * Registers all keybinds.
+     */
     @SubscribeEvent
     static void registerKeyMappingsEvent(RegisterKeyMappingsEvent event) {
-        event.register(NowPlaying.DISPLAY_KEY);
-        event.register(NowPlaying.NEXT_KEY);
+        NowPlaying.KEYBINDS.forEach(event::register);
     }
 
-    // Resource reload event
+    /**
+     * Registers resource reload event.
+     */
     @SubscribeEvent
     public static void registerResourceReloadEvent(AddClientReloadListenersEvent event) {
-        event.addListener(Identifier.fromNamespaceAndPath(NowPlaying.MOD_ID, "resources"),
+        event.addListener(
+                Identifier.fromNamespaceAndPath(NowPlaying.MOD_ID, "resources"),
                 (ResourceManagerReloadListener) resourceManager ->
-                        NowPlaying.onResourceReload());
+                        NowPlaying.onResourceReload()
+        );
     }
 
-    @EventBusSubscriber(modid = NowPlaying.MOD_ID, value = Dist.CLIENT)
+    @EventBusSubscriber(
+            modid = NowPlaying.MOD_ID,
+            value = Dist.CLIENT
+    )
     static class ClientEventHandler {
-        // Commands
+
+        /**
+         * Registers all client commands.
+         */
         @SubscribeEvent
         static void registerClientCommands(RegisterClientCommandsEvent event) {
-            new Commands<CommandSourceStack>().register(Minecraft.getInstance(), event.getDispatcher(), event.getBuildContext());
+            Commands.register(event.getDispatcher(), event.getBuildContext());
         }
 
-        // Tick events
+        /**
+         * Registers client after-tick event.
+         */
         @SubscribeEvent
-        public static void clientTickEvent(ClientTickEvent.Post event) {
-            NowPlaying.onEndTick(Minecraft.getInstance());
+        public static void registerAfterClientTick(ClientTickEvent.Post event) {
+            NowPlaying.afterClientTick(Minecraft.getInstance());
         }
     }
 }

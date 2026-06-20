@@ -28,7 +28,7 @@ import com.github.scotsguy.nowplaying.mixin.accessor.GuiAccessor;
 import com.github.scotsguy.nowplaying.mixin.accessor.MinecraftAccessor;
 import com.github.scotsguy.nowplaying.mixin.accessor.ToastManagerAccessor;
 import com.github.scotsguy.nowplaying.util.Localization;
-import com.github.scotsguy.nowplaying.util.ModLogger;
+import com.github.scotsguy.nowplaying.util.Logging;
 import com.github.scotsguy.nowplaying.util.SpriteProvider;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
@@ -39,7 +39,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import static com.github.scotsguy.nowplaying.config.Config.options;
@@ -47,37 +49,69 @@ import static com.github.scotsguy.nowplaying.util.Localization.localized;
 import static com.github.scotsguy.nowplaying.util.Localization.translationKey;
 
 public class NowPlaying {
+
     public static final String MOD_ID = "nowplaying";
     public static final String MOD_NAME = "Now Playing";
-    public static final ModLogger LOG = new ModLogger(MOD_NAME);
+    public static final Logger LOG = Logging.getLogger(MOD_ID);
     public static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(
             Identifier.fromNamespaceAndPath(MOD_ID, "group")
     );
     public static final KeyMapping DISPLAY_KEY = new KeyMapping(
-            translationKey("key", "group.display"), InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), KEY_CATEGORY);
+            translationKey("key", "group.display"),
+            InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(),
+            KEY_CATEGORY
+    );
     public static final KeyMapping NEXT_KEY = new KeyMapping(
-            translationKey("key", "group.next"), InputConstants.Type.KEYSYM,
-            InputConstants.UNKNOWN.getValue(), KEY_CATEGORY);
+            translationKey("key", "group.next"),
+            InputConstants.Type.KEYSYM,
+            InputConstants.UNKNOWN.getValue(),
+            KEY_CATEGORY
+    );
+    public static final List<KeyMapping> KEYBINDS = List.of(
+            DISPLAY_KEY,
+            NEXT_KEY
+    );
 
     public static Identifier lastMusic;
 
+    private NowPlaying() {
+        throw new UnsupportedOperationException("This class cannot be instantiated.");
+    }
+
+    /**
+     * Client initialization.
+     */
     public static void init() {
         Config.getAndSave();
     }
 
-    public static void onEndTick(Minecraft mc) {
+    /**
+     * Client after-tick event listener.
+     */
+    public static void afterClientTick(Minecraft mc) {
         while (DISPLAY_KEY.consumeClick()) {
             displayLastMusic();
         }
         while (NEXT_KEY.consumeClick()) {
-            ((MinecraftAccessor)mc).nowplaying$getMusicManager().stopPlaying();
-            ((MinecraftAccessor)mc).nowplaying$getMusicManager().startPlaying(mc.getSituationalMusic());
+            ((MinecraftAccessor) mc).nowplaying$getMusicManager().stopPlaying();
+            ((MinecraftAccessor) mc).nowplaying$getMusicManager()
+                    .startPlaying(mc.getSituationalMusic());
         }
     }
 
+    /**
+     * Resource reload event listener.
+     */
     public static void onResourceReload() {
         SpriteProvider.onResourceReload();
+    }
+
+    /**
+     * Config save listener.
+     */
+    public static void onConfigSaved(Config config) {
+        // If you are maintaining caches based on config, update them here.
     }
 
     public static void displayLastMusic() {
@@ -91,38 +125,49 @@ public class NowPlaying {
 
     public static void displayMusic(Identifier location) {
         Component title = getTranslatedTitle(location.toString());
-        display(title, () -> SpriteProvider.getMusicSprite(location, title.getString()),
-                options().musicStyle);
+        display(
+                title, () -> SpriteProvider.getMusicSprite(location, title.getString()),
+                options().musicStyle
+        );
     }
 
     public static void displayDisc(Component text, Identifier location) {
         display(text, () -> SpriteProvider.getDiscSprite(location), options().jukeboxStyle);
     }
 
-    private static void display(Component name, Supplier<Identifier> spriteSupplier,
-                               Config.Options.Style style) {
+    private static void display(
+            Component name, Supplier<Identifier> spriteSupplier,
+            Config.Options.Style style
+    ) {
         Minecraft mc = Minecraft.getInstance();
         Component message = Component.translatable("record.nowPlaying", name);
 
-        switch(style) {
+        switch (style) {
             case Toast -> {
-                ((ToastManagerAccessor)mc.getToastManager()).nowplaying$getQueued()
+                ((ToastManagerAccessor) mc.getToastManager()).nowplaying$getQueued()
                         .removeIf((toast) -> toast instanceof NowPlayingToast);
-                mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
-                        options().toastTime * 1000L, options().toastScale, options().darkToast));
-                if (options().narrate) mc.getNarrator().saySystemNow(message);
+                mc.getToastManager().addToast(new NowPlayingToast(
+                        name, spriteSupplier.get(),
+                        options().toastTime * 1000L, options().toastScale, options().darkToast
+                ));
+                if (options().narrate)
+                    mc.getNarrator().saySystemNow(message);
             }
             case Hotbar -> {
                 if (isHotbarVisible(mc.screen)) {
                     mc.gui.setOverlayMessage(message, true);
-                    ((GuiAccessor)mc.gui).nowplaying$setOverlayMessageTime(options().hotbarTime * 20);
+                    ((GuiAccessor) mc.gui).nowplaying$setOverlayMessageTime(
+                            options().hotbarTime * 20);
                 } else if (options().fallbackToast) {
-                    ((ToastManagerAccessor)mc.getToastManager()).nowplaying$getQueued()
+                    ((ToastManagerAccessor) mc.getToastManager()).nowplaying$getQueued()
                             .removeIf((toast) -> toast instanceof NowPlayingToast);
-                    mc.getToastManager().addToast(new NowPlayingToast(name, spriteSupplier.get(),
-                            options().toastTime * 1000L, options().toastScale, options().darkToast));
+                    mc.getToastManager().addToast(new NowPlayingToast(
+                            name, spriteSupplier.get(),
+                            options().toastTime * 1000L, options().toastScale, options().darkToast
+                    ));
                 }
-                if (options().narrate) mc.getNarrator().saySystemNow(message);
+                if (options().narrate)
+                    mc.getNarrator().saySystemNow(message);
             }
         }
     }
@@ -136,7 +181,7 @@ public class NowPlaying {
         if (!I18n.exists(key)) {
             String[] splitLocation = location.split("/");
             if (splitLocation.length > 0) {
-                String name = splitLocation[splitLocation.length -1];
+                String name = splitLocation[splitLocation.length - 1];
                 if (name != null && !name.isBlank()) {
                     String oldKey = Localization.translationKey("music", name);
                     if (I18n.exists(oldKey)) {

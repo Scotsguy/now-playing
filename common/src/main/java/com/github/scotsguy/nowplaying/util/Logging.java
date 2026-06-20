@@ -22,30 +22,46 @@
 
 package com.github.scotsguy.nowplaying.util;
 
-import com.github.scotsguy.nowplaying.NowPlaying;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import com.github.scotsguy.nowplaying.platform.services.PlatformServices;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.AbstractMessageFactory;
+import org.apache.logging.log4j.message.FormattedMessage;
+import org.apache.logging.log4j.message.Message;
+import org.apache.logging.log4j.message.SimpleMessage;
 
 @SuppressWarnings("unused")
-public class Localization {
+public class Logging {
 
-    private Localization() {
+    private Logging() {
         throw new UnsupportedOperationException("This class cannot be instantiated.");
     }
 
-    public static String translationKey(String path) {
-        return NowPlaying.MOD_ID + "." + path;
+    public static Logger getLogger(String name) {
+        if (PlatformServices.getInstance().isDevEnv()
+                || PlatformServices.getInstance().hasNamedLogger()) {
+            return LogManager.getLogger(name);
+        } else {
+            return LogManager.getLogger(name, new PrefixingMessageFactory("[" + name + "/]: "));
+        }
     }
 
-    public static String translationKey(String domain, String path) {
-        return domain + "." + NowPlaying.MOD_ID + "." + path;
-    }
+    private static final class PrefixingMessageFactory extends AbstractMessageFactory {
 
-    public static MutableComponent localized(String path, Object... args) {
-        return Component.translatable(translationKey(path), args);
-    }
+        private final String prefix;
 
-    public static MutableComponent localized(String domain, String path, Object... args) {
-        return Component.translatable(translationKey(domain, path), args);
+        public PrefixingMessageFactory(String prefix) {
+            this.prefix = prefix;
+        }
+
+        @Override
+        public Message newMessage(String message) {
+            return new SimpleMessage(prefix + message);
+        }
+
+        @Override
+        public Message newMessage(String message, Object... params) {
+            return new FormattedMessage(prefix + message, params);
+        }
     }
 }
