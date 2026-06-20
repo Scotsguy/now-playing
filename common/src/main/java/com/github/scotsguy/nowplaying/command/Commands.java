@@ -23,6 +23,7 @@
 package com.github.scotsguy.nowplaying.command;
 
 import com.github.scotsguy.nowplaying.NowPlaying;
+import com.github.scotsguy.nowplaying.gui.screen.ConfigScreenProvider;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -42,9 +43,21 @@ public class Commands {
         //noinspection unchecked
         dispatcher.register((LiteralArgumentBuilder<S>) literal(NowPlaying.MOD_ID)
                 .executes(ctx -> {
-                    NowPlaying.displayLastMusic();
+                    mc.schedule(() -> mc.setScreen(ConfigScreenProvider.getConfigScreen(null)));
                     return Command.SINGLE_SUCCESS;
                 })
+                .then(literal("show")
+                        .executes(ctx -> {
+                            NowPlaying.displayLastMusic();
+                            return Command.SINGLE_SUCCESS;
+                        })
+                )
+                .then(literal("next")
+                        .executes(ctx -> {
+                            NowPlaying.playNextMusic();
+                            return Command.SINGLE_SUCCESS;
+                        })
+                )
         );
     }
 }

@@ -4,6 +4,9 @@
 
 - Reset `mc` version counter to 1 at mc1.0.0
 - Removed duplicate logger names
+- `/nowplaying` now opens the config screen
+- `/nowplaying show` now shows the notification for the most recent track
+- `/nowplaying next` now advances to the next track
 
 ## 2.2.0
 

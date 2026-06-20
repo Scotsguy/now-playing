@@ -94,9 +94,7 @@ public class NowPlaying {
             displayLastMusic();
         }
         while (NEXT_KEY.consumeClick()) {
-            ((MinecraftAccessor) mc).nowplaying$getMusicManager().stopPlaying();
-            ((MinecraftAccessor) mc).nowplaying$getMusicManager()
-                    .startPlaying(mc.getSituationalMusic());
+            playNextMusic();
         }
     }
 
@@ -129,6 +127,13 @@ public class NowPlaying {
                 title, () -> SpriteProvider.getMusicSprite(location, title.getString()),
                 options().musicStyle
         );
+    }
+
+    public static void playNextMusic() {
+        Minecraft mc = Minecraft.getInstance();
+        MinecraftAccessor mca = (MinecraftAccessor) mc;
+        mca.nowplaying$getMusicManager().stopPlaying();
+        mca.nowplaying$getMusicManager().startPlaying(mc.getSituationalMusic());
     }
 
     public static void displayDisc(Component text, Identifier location) {

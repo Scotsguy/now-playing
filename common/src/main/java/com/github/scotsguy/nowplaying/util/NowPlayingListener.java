@@ -35,7 +35,7 @@ import static com.github.scotsguy.nowplaying.config.Config.options;
 
 public class NowPlayingListener implements SoundEventListener {
     @Override
-    public void onPlaySound(@NotNull SoundInstance soundInstance, 
+    public void onPlaySound(@NotNull SoundInstance soundInstance,
                             @NotNull WeighedSoundEvents soundSet, float f) {
         if (soundInstance.getSource() == SoundSource.MUSIC) {
             Identifier location = soundInstance.getSound().getLocation();
