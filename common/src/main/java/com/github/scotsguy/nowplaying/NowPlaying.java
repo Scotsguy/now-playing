@@ -39,6 +39,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.Music;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
@@ -131,9 +132,12 @@ public class NowPlaying {
 
     public static void playNextMusic() {
         Minecraft mc = Minecraft.getInstance();
-        MinecraftAccessor mca = (MinecraftAccessor) mc;
-        mca.nowplaying$getMusicManager().stopPlaying();
-        mca.nowplaying$getMusicManager().startPlaying(mc.getSituationalMusic());
+        Music music = mc.getSituationalMusic();
+        if (music != null) {
+            MinecraftAccessor mca = (MinecraftAccessor) mc;
+            mca.nowplaying$getMusicManager().stopPlaying();
+            mca.nowplaying$getMusicManager().startPlaying(music);
+        }
     }
 
     public static void displayDisc(Component text, Identifier location) {
