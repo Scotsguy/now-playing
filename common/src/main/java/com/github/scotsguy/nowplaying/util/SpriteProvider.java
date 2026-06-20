@@ -36,26 +36,26 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SpriteProvider {
-    private static final Identifier SPRITES_FILE = 
+    private static final Identifier SPRITES_FILE =
             Identifier.fromNamespaceAndPath(NowPlaying.MOD_ID, "sprites.json");
     public static final Identifier DISC_SPRITE_DEFAULT =
             Identifier.parse("minecraft:textures/item/music_disc_cat.png");
-    
+
     private static final HashMap<String, Identifier> CACHE = new HashMap<>();
     private static boolean hasAttemptedLoad;
-    
+
     public static void onResourceReload() {
         CACHE.clear();
         hasAttemptedLoad = false;
     }
-    
+
     private static @Nullable Identifier getCustomSprite(String song) {
         if (CACHE.isEmpty() && !hasAttemptedLoad) {
             loadCache();
         }
         return CACHE.get(song);
     }
-    
+
     private static void loadCache() {
         hasAttemptedLoad = true;
 //        NowPlaying.LOG.warn("Loading sprite cache");
@@ -88,13 +88,13 @@ public class SpriteProvider {
     public static Identifier getMusicSprite(Identifier location, String title) {
         String locStr = location.toString();
         Identifier sprite = getCustomSprite(locStr);
-        
+
         if (sprite == null) {
 //            NowPlaying.LOG.warn("getCustomSprite failed for '{}'", locStr);
             String namespace = location.getNamespace();
             String path = location.getPath();
             String[] splitPath = path.split("/");
-            
+
             for (int i = splitPath.length -1; i > 0; i--) {
                 path = path.substring(0, path.length() - (splitPath[i].length() + 1));
 //                NowPlaying.LOG.warn("Trying reduced path '{}'", namespace + ":" + path);
@@ -102,7 +102,7 @@ public class SpriteProvider {
                 if (sprite != null) break;
             }
         }
-        
+
         if (sprite == null) {
 //            NowPlaying.LOG.warn("Unable to find any sprite for '{}'", locStr);
             return getDefaultSprite(title);
@@ -122,11 +122,13 @@ public class SpriteProvider {
             return Identifier.withDefaultNamespace("textures/item/music_disc_mall.png");
         } else if (title.contains("Amos Roddy")) {
             return Identifier.withDefaultNamespace("textures/item/music_disc_tears.png");
+        } else if (title.contains("fingerspit")) {
+            return Identifier.withDefaultNamespace("textures/item/music_disc_bounce.png");
         } else {
             return DISC_SPRITE_DEFAULT;
         }
     }
-    
+
     public static Identifier getDiscSprite(Identifier location) {
         String discId = location.getPath().replaceAll("\\.", "_");
         return Identifier.parse("textures/item/" + discId + ".png");

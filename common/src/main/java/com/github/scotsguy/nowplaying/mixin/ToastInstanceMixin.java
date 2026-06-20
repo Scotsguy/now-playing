@@ -47,13 +47,16 @@ public abstract class ToastInstanceMixin {
     )
     void silenceWooshSound(
             Toast.Visibility instance,
-            SoundManager handler,
+            SoundManager manager,
             Operation<Void> original,
-            @Local(argsOnly = true) ToastManager.ToastInstance<?> toastInstance
+            @Local(
+                    argsOnly = true,
+                    name = "toast"
+            ) ToastManager.ToastInstance<?> toast
     ) {
-        if (!(toastInstance.getToast() instanceof NowPlayingToast
+        if (!(toast.getToast() instanceof NowPlayingToast
                 && Config.options().silenceWoosh)) {
-            original.call(instance, handler);
+            original.call(instance, manager);
         }
     }
 
@@ -68,7 +71,10 @@ public abstract class ToastInstanceMixin {
             SoundManager instance,
             SoundInstance sound,
             Operation<SoundEngine.PlayResult> original,
-            @Local(argsOnly = true) Toast toast
+            @Local(
+                    argsOnly = true,
+                    name = "toast"
+            ) Toast toast
     ) {
         if (!(toast instanceof NowPlayingToast && Config.options().silenceWoosh)) {
             return original.call(instance, sound);

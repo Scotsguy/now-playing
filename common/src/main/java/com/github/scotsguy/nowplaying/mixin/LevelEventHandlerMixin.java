@@ -26,7 +26,7 @@ import com.github.scotsguy.nowplaying.NowPlaying;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.renderer.LevelEventHandler;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
@@ -41,12 +41,15 @@ public abstract class LevelEventHandlerMixin {
             method = "playJukeboxSong",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/Gui;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
+                    target = "Lnet/minecraft/client/gui/Hud;setNowPlaying(Lnet/minecraft/network/chat/Component;)V"
             )
     )
     private void display(
-            Gui instance, Component text, Operation<Void> original,
-            @Local(name = "song") JukeboxSong song, @Local(name = "sound") SoundEvent sound
+            Hud instance,
+            Component string,
+            Operation<Void> original,
+            @Local(name = "song") JukeboxSong song,
+            @Local(name = "sound") SoundEvent sound
     ) {
         NowPlaying.displayDisc(song.description(), sound.location());
     }

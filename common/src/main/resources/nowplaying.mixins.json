@@ -13,7 +13,7 @@
     "LevelEventHandlerMixin",
     "MinecraftMixin",
     "ToastInstanceMixin",
-    "accessor.GuiAccessor",
+    "accessor.HudAccessor",
     "accessor.MinecraftAccessor",
     "accessor.ToastManagerAccessor"
   ],

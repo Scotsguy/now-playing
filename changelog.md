@@ -1,28 +1,12 @@
 # Changelog
 
-## 2.102.0
+## 2.103.0
 
-- Reset `mc` version counter to 1 at mc1.0.0
-- Removed duplicate logger names
-- `/nowplaying` now opens the config screen
-- `/nowplaying show` now shows the notification for the most recent track
-- `/nowplaying next` now advances to the next track
+- Updated to mc26.2
+- Re-enabled config screen
 
-## 2.2.0
+## 2.3.0-beta.1
 
-- Updated to mc26.1.2
-
-## 2.1.0
-
-- Updated to mc26.1.1
-
-## 2.0.0
-
-- Updated to mc26.1
-- Mod versioning scheme is now `major.mc.minor`:
-  - `major` is incremented on 'significant' feature changes, or breaking API changes (if
-    applicable).
-  - `mc` is never reset, and is incremented on every MC release, irrespective of whether a mod
-    update was required.
-  - `minor` is reset when `major` is changed, and is incremented on every update that does not
-    change either of the previous two numbers.
+- Updated to mc26.2-pre.2
+- Temporarily disabled config screen
+- Mod versioning scheme now resets `minor` on increment of either `major` or `mc`
