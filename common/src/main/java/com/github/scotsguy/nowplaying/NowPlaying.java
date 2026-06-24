@@ -165,7 +165,7 @@ public class NowPlaying {
             case Hotbar -> {
                 if (isHotbarVisible(mc.gui.screen())) {
                     mc.gui.hud.setOverlayMessage(message, true);
-                    ((HudAccessor) mc.gui).nowplaying$setOverlayMessageTime(
+                    ((HudAccessor) mc.gui.hud).nowplaying$setOverlayMessageTime(
                             options().hotbarTime * 20);
                 } else if (options().fallbackToast) {
                     ((ToastManagerAccessor) mc.gui.toastManager()).nowplaying$getQueued()

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.103.1
+
+- Fixed a bug causing a network crash when playing a music disc
+
 ## 2.103.0
 
 - Updated to mc26.2
