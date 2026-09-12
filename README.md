@@ -14,6 +14,7 @@ Shows a popup whenever the active music track changes.
 [![Loader](https://img.shields.io/badge/Available%20for-NeoForge-f16436?logo=data:image/png;base64,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)](https://neoforged.net/)
 
 [![Available on Modrinth](https://img.shields.io/modrinth/dt/eNF4Bfla?label=Available%20on%20Modrinth&logo=modrinth&logoColor=%2300AF5C)](https://modrinth.com/project/eNF4Bfla)
+[![Available on CurseForge](https://img.shields.io/curseforge/dt/398652?label=Available%20on%20CurseForge&logo=curseforge)](https://curseforge.com/projects/398652)
 [![Available on GitHub](https://img.shields.io/github/downloads/Scotsguy/now-playing/total?label=Available%20on%20GitHub&logo=github&logoColor=white)](https://github.com/Scotsguy/now-playing)
 
 </center></div>
@@ -66,6 +67,9 @@ Now Playing supports changing which disc sprites are displayed for each backgrou
 via a resource pack. First, create a `nowplaying` folder in the `assets` folder of your pack,
 and place a `sprites.json` file in that folder, as shown below.
 
+<b>Note:</b> If you are using version `1.5.16` or earlier, the mod ID (and thus, the folder name)
+is `now-playing`.
+
 ```
 assets
 ├── minecraft
@@ -117,6 +121,9 @@ assets
 Next, populate the translation file with key-value pairs, where the key is the music resource
 location, prefixed with `nowplaying`, and the value is the translated title of the track, as
 shown below.
+
+<b>Note:</b> If you are using version `1.5.16` or earlier, the mod ID (and thus, the prefix)
+is `now-playing`.
 
 ```json
 {
