@@ -59,13 +59,13 @@ public class NowPlaying {
     );
     public static final KeyMapping DISPLAY_KEY = new KeyMapping(
             translationKey("key", "group.display"),
-            InputConstants.Type.KEYSYM,
+            InputConstants.Type.KEYBOARD,
             InputConstants.UNKNOWN.getValue(),
             KEY_CATEGORY
     );
     public static final KeyMapping NEXT_KEY = new KeyMapping(
             translationKey("key", "group.next"),
-            InputConstants.Type.KEYSYM,
+            InputConstants.Type.KEYBOARD,
             InputConstants.UNKNOWN.getValue(),
             KEY_CATEGORY
     );
