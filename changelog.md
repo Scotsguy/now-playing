@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.104.0
+
+- Updated to mc26.3
+
 ## 2.104.0-beta.1
 
 - Updated to mc26.3-rc-2

@@ -1,6 +1,6 @@
 {
   "modmenu.descriptionTranslation.nowplaying": "音楽が変更されるたびにポップアップを表示します。",
-  "fml.menu.mods.info.description.nowplaying": "音楽が変更されるたびにポップアップを表示します。",
+  "neoforge.screen.mods.info.description.nowplaying": "音楽が変更されるたびにポップアップを表示します。",
 
   "screen.nowplaying.default": "再生中",
   "screen.nowplaying.options": "Now Playing 設定",

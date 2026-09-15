@@ -1,6 +1,6 @@
 {
   "modmenu.descriptionTranslation.nowplaying": "Shows a popup whenever the active music track music changes.",
-  "fml.menu.mods.info.description.nowplaying": "Shows a popup whenever the active music track music changes.",
+  "neoforge.screen.mods.info.description.nowplaying": "Shows a popup whenever the active music track music changes.",
 
   "screen.nowplaying.default": "正在播放",
   "screen.nowplaying.options": "正在播放选项",

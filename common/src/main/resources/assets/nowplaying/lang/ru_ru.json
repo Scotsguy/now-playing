@@ -1,6 +1,6 @@
 {
   "modmenu.descriptionTranslation.nowplaying": "Показывает всплывающее окно каждый раз, когда меняется активная музыка.",
-  "fml.menu.mods.info.description.nowplaying": "Показывает всплывающее окно каждый раз, когда меняется активная музыка.",
+  "neoforge.screen.mods.info.description.nowplaying": "Показывает всплывающее окно каждый раз, когда меняется активная музыка.",
 
   "screen.nowplaying.default": "Сейчас играет",
   "screen.nowplaying.options": "Параметры воспроизведения",
