@@ -2,7 +2,7 @@
 
 ## 2.104.1
 
-- Toasts now check for Music volume alongside Master before showing
+- Added a check for Music volume level as well as Master volume level (Obey23) (#58)
 
 ## 2.104.0
 
