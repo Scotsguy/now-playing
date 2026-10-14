@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.104.1
+
+- Toasts now check for Music volume alongside Master before showing
+
 ## 2.104.0
 
 - Updated to mc26.3
