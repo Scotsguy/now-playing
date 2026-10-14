@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.102.1
+
+- Toasts now check for Music volume alongside Master before showing
+
 ## 2.102.0
 
 - Reset `mc` version counter to 1 at mc1.0.0
